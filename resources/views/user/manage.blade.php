@@ -53,25 +53,25 @@
                             <td>{{$user->referrer->user_name}}</td>
                             <td>{{\Carbon\Carbon::parse($user->rep_timestamp)->diffForHumans()}}</td>
                             @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::EDIT_AFFILIATES))
-                                <td class="value_span8">
-                                    <a class="btn btn-default btn-sm " data-toggle="tooltip" title="Edit User"
+                                <td>
+                                    <a class="btn btn-default btn-sm value_span6-1 value_span4 value_span2-2 " data-toggle="tooltip" title="Edit User"
                                        href="/aff_update.php?idrep={{$user->idrep}}">Edit</a>
                                 </td>
                             @endif
                             @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::CREATE_AFFILIATES))
-                                <td><a class="btn btn-default btn-sm " data-toggle="tooltip"
+                                <td><a class="btn btn-default btn-sm value_span5-1 value_span2-2 " data-toggle="tooltip"
                                        title="Login into this user" href="#" onclick="adminLogin({{$user->idrep}})">Login</a>
                                 </td>
                             @endif
                             @if(request('role',3) == 2 && \LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::CREATE_MANAGERS))
                                 <td>
-                                    <a class="btn btn-default btn-sm " data-toggle="tooltip" title="View Affiliates"
+                                    <a class="btn btn-default btn-sm value_span2-2 " data-toggle="tooltip" title="View Affiliates"
                                        href="/user/{{$user->idrep}}/affiliates">View Affiliates</a>
                                 </td>
                             @endif
                             @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::BAN_USERS))
-                                <td class="value_span8">
-                                    <a class="btn btn-default btn-sm " data-toggle="tooltip" title="Ban User"
+                                <td>
+                                    <a class="btn btn-default btn-sm value_span11 value_span4 " data-toggle="tooltip" title="Ban User"
                                        href="/ban_user.php?uid={{$user->idrep}}">Ban User</a>
                                 </td>
                             @endif

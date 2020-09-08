@@ -50,12 +50,27 @@ div.tableBottom a:visited {
     color:#4d555e;
 }
 
+.table>tbody>tr>td {
+	padding: 10px 20px;
+}
+
+table a.btn {
+	font-family: 'robotoregular', sans-serif;
+	width: 100%;
+	text-align: center;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	color: #fff;
+	text-transform: uppercase;
+	border: none;
+}
 
 table.table_01 {
     margin-bottom: 0; !important;
 	width: 100%;
 	border-collapse: collapse;
-    font-size: 13px; !important;
+    font-size: 16px; !important;
 }
 	/* Zebra striping */
 table.table_01 tr:nth-of-type(odd) {

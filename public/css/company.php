@@ -73,6 +73,10 @@ background: #<?php echo $valueSpan3; ?>;
 color: #<?php echo $valueSpan5; ?> ;
 }
 
+.value_span5-1 {
+  background: #<?php echo $valueSpan5; ?> ;
+}
+
 .value_span6:hover {
   color: #<?php echo $valueSpan6; ?> ;
 }
@@ -89,8 +93,12 @@ background: #<?php echo $valueSpan6; ?> ;
   color: #<?php echo $valueSpan6; ?> ;
 }
 
+.value_span6-4:before {
+  border-bottom: 12px solid #<?php echo $valueSpan6; ?> !important;
+}
+
 .value_span7 {
-background: #<?php echo $valueSpan7; ?> ;
+  background: #<?php echo $valueSpan7; ?> ;
 }
 
 .tr_row_space {

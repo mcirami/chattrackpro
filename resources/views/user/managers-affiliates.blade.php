@@ -35,7 +35,7 @@
                             <td>{{$affiliate->referrer->user_name}}</td>
                             <td>{{$affiliate->rep_timestamp}}</td>
                             <td>
-                                <a class="btn btn-default btn-sm" href="/aff_update.php?idrep={{$affiliate->idrep}}">Edit</a>
+                                <a class="btn btn-default btn-sm value_span6-1 value_span4 value_span2-2 " href="/aff_update.php?idrep={{$affiliate->idrep}}">Edit</a>
                                 <a class="btn btn-default btn-sm" href="#" onclick='adminLogin({{$affiliate->idrep}})'>Login</a>
                             </td>
                         </tr>

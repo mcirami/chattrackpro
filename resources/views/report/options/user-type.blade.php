@@ -4,7 +4,7 @@
     }
 </script>
 
-<select onchange="handleSelect(this);" class="selectBox " style="width:135px;" id="role" name="role">
+<select onchange="handleSelect(this);" class="selectBox " id="role" name="role">
 
 
     @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD)

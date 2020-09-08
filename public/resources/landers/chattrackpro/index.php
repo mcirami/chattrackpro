@@ -36,14 +36,11 @@
     </div>
     <div class="header_sec">
         <div class="holder">
-            <div class="text_wrap column">
+            <div class="text_wrap">
                 <h2>Build Your Own Affiliate Network!</h2>
                 <h3>Affiliate Network Software</h3>
                 <p>We offer state of the art tracking methods, SEO friendly affiliate links, unique features and high performance.</p>
                 <a class="btn" href="#">Get Started</a>
-            </div>
-            <div class="column">
-                <img src="images/header_img.jpg" alt="">
             </div>
         </div>
         <div class="whiteDiagonal"></div>
@@ -75,47 +72,42 @@
 </div>
 <!--section2-->
 <!--section3-->
+<div class="section3">
+    <div class="holder">
+        <div class="lft_col">
+            <h2>Ultimate</h2>
+            <h3>Affiliate Network</br>Software</h3>
+            <p>Accurate tracking, high performance and advanced affiliate marketing features. Fully scalable to fit the requirements of both large and small businesses, to create and manage successful affiliate networks.</p>
 
+            <p>Post Affiliate Network is a turnkey, ready to use affiliate network solution and is the best choice compared to a large amount of affiliate network software.</p>
+        </div>
+
+    </div>
+
+</div>
 <!--section3-->
 <!--section4-->
 <div class="section4">
-    <div class="dark_slant"></div>
-    <div class="top_section">
-        <div class="holder">
+    <div class="holder">
+        <h2>Post Affiliate Network</h2>
+        <h3>Supports Three Basic Types of Users</h3>
+        <div class="three_col_section">
             <div class="column">
-                <img src="images/dark-section-image.png" alt="">
+                <img src="images/img_networkowner.png" alt="">
+                <h4>Network owner</h4>
+                <p>A special type of merchant who has full control over all affiliates and all merchant accounts. Network owners can fully customize the design of the merchant and affiliate </p>
             </div>
+
             <div class="column">
-                <h2>Ultimate</h2>
-                <h3>Affiliate Network</br>Software</h3>
-                <p>Accurate tracking, high performance and advanced affiliate marketing features. Fully scalable to fit the requirements of both large and small businesses, to create and manage successful affiliate networks.</p>
-
-                <p>Post Affiliate Network is a turnkey, ready to use affiliate network solution and is the best choice compared to a large amount of affiliate network software.</p>
+                <img src="images/img_merchant.png" alt="">
+                <h4>Merchant</h4>
+                <p>Network owners can allow entry into their network for an unlimited number of merchants. With each merchant he/she can define their own rules and fees for using the </p>
             </div>
-        </div>
-    </div>
-    <div class="bottom_section">
-        <div class="holder">
-            <h2>Post Affiliate Network</h2>
-            <h3>Supports Three Basic Types of Users</h3>
-            <div class="three_col_section">
-                <div class="column">
-                    <img src="images/img_networkowner.png" alt="">
-                    <h4>Network owner</h4>
-                    <p>A special type of merchant who has full control over all affiliates and all merchant accounts. Network owners can fully customize the design of the merchant and affiliate </p>
-                </div>
 
-                <div class="column">
-                    <img src="images/img_merchant.png" alt="">
-                    <h4>Merchant</h4>
-                    <p>Network owners can allow entry into their network for an unlimited number of merchants. With each merchant he/she can define their own rules and fees for using the </p>
-                </div>
-
-                <div class="column">
-                    <img src="images/img_affiliate.png" alt="">
-                    <h4>Affiliate</h4>
-                    <p>Promotes products offered by merchants or network owner. This person is payed by the network owner from commissions paid to the network owner by the merchant.</p>
-                </div>
+            <div class="column">
+                <img src="images/img_affiliate.png" alt="">
+                <h4>Affiliate</h4>
+                <p>Promotes products offered by merchants or network owner. This person is payed by the network owner from commissions paid to the network owner by the merchant.</p>
             </div>
         </div>
     </div>
@@ -133,9 +125,9 @@
     <div class="holder">
         <h2>ChatTrackPro</h2>
         <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li>About Us</li>
+            <li>Features</li>
+            <li>Contact Us</li>
         </ul>
         <span class="footer_txt">&copy; 2020 ChatTrackPro</span>
     </div>

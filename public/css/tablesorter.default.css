@@ -28,12 +28,15 @@ Default Theme
 /*}*/
 .tablesorter-default .header,
 .tablesorter-default .tablesorter-header {
+	font-family: 'robotoregular', sans-serif;
 	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 	background-position: center right;
 	background-repeat: no-repeat;
 	cursor: pointer;
 	white-space: normal;
-	padding: 4px 20px 4px 4px;
+	padding: 20px;
+	border-bottom: none;
+	font-size: 16px;
 }
 .tablesorter-default thead .headerSortUp,
 .tablesorter-default thead .tablesorter-headerSortUp,

@@ -263,7 +263,7 @@ class NavBar
                 <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"#\"><span
                            ><i class=\"{$css}\"
                                                   aria-hidden=\"true\"></i><b>{$name}</b></span></a>
-                <ul class=\"dropdown-menu value_span6-1\">";
+                <ul class=\"dropdown-menu value_span6-1 value_span6-4\">";
         }
 
 

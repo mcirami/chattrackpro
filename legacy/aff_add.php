@@ -76,7 +76,8 @@ switch ($result)
 			<form action = "<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "post" id = "form"
 				  class = "form-horizontal" enctype = "multipart/form-data">
 				
-				<div class = "left_con01">
+				<div class = "left_con01 value_span7">
+          <h3>User Details</h3>
 					<p>
 						<label class = "value_span9">First Name</label>
 						
@@ -132,7 +133,8 @@ switch ($result)
 					</p>
 				
 				</div>
-				<div class = "right_con01">
+				<div class = "right_con01 value_span7">
+          <h3>Account Details</h3>
 					<p>
 						<label class = "value_span9">Username</label>
 						

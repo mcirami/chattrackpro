@@ -29,7 +29,7 @@ class IndexController extends Controller
             return redirect('404');
         }
 
-        if (Company::getSub() != "trackyourstats") {
+        if (Company::getSub() != "chattrackpro") {
             $company = Company::loadFromSession();
             if ($request->getHttpHost() !== $company->landing_page && $request->getHttpHost() !== $company->login_url) {
                 if (Company::getCustomSub() == "debug") {
