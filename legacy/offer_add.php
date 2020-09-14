@@ -58,8 +58,8 @@ if ($assignType == 0) {
                 <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="form"
                       enctype="multipart/form-data">
 
-
-                    <div class="left_con01">
+                  <div class="column_wrap">
+                    <div class="left_con01 value_span7">
                         <p>
                             <label class="value_span9">Name</label>
                             <input id="offer_name" name="offer_name" type="text" value="<?= $assign->name; ?>"
@@ -172,9 +172,9 @@ if ($assignType == 0) {
 
 
                         </p>
-                    </div>
+                    </div><!-- left_con01 -->
 
-                    <div class="right_con01">
+                    <div class="right_con01 value_span7">
                         <p>
                             <label class="value_span9">Payout</label>
 
@@ -339,9 +339,12 @@ if ($assignType == 0) {
                         </p>
                         </p>
                     </div>
+                  </div><!-- column_wrap -->
+                  <span class="btn_yellow"> <input type="submit" name="button" class="value_span6-2 value_span2 value_span1-2"
+                                                   value="Create" onclick="return selectAll();"/></span>
+                </form>
             </div>
-            <span class="btn_yellow"> <input type="submit" name="button" class="value_span6-2 value_span2 value_span1-2"
-                                             value="Create" onclick="return selectAll();"/></span>
+
 
         </div>
     </div>

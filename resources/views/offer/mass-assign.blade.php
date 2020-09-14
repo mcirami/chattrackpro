@@ -18,41 +18,43 @@
                         <input class="fixCheckBox" type="checkbox" name="updatePayouts" value="1">
                     </div>
 
+                    <div class="column_wrap">
+                        <div class="left_con01 value_span7" id="users">
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);" onclick="checkBoxesInDiv('users')">Check
+                                All</a>
 
-                    <div class="left_con01" id="users">
-                        <a class="btn btn-default btn-sm" href="javascript:void(0);" onclick="checkBoxesInDiv('users')">Check
-                            All</a>
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);"
+                               onclick="unCheckBoxesInDiv('users')">UnCheck
+                                All</a>
+                            <p>
+                                @foreach($users as $user)
+                                    <label><input class='fixCheckBox' type='checkbox' name='users[]'
+                                                  value='{{$user->idrep}}'> {{$user->user_name}} </label>
+                                @endforeach
+                            </p>
 
-                        <a class="btn btn-default btn-sm" href="javascript:void(0);"
-                           onclick="unCheckBoxesInDiv('users')">UnCheck
-                            All</a>
-                        <p>
-                            @foreach($users as $user)
-                                <label><input class='fixCheckBox' type='checkbox' name='users[]'
-                                              value='{{$user->idrep}}'> {{$user->user_name}} </label>
-                            @endforeach
-                        </p>
-                        <span class="btn_yellow"> <input type="submit" name="button"
-                                                         class="value_span6-2 value_span2 value_span1-2"
-                                                         value="Assign Users" onclick=""/></span>
-                    </div>
+                        </div><!-- left_con01 -->
 
-                    <div class="right_con01" id="offers">
-                        <a class="btn btn-default btn-sm" href="javascript:void(0);"
-                           onclick="checkBoxesInDiv('offers')">Check
-                            All</a>
-                        <a class="btn btn-default btn-sm" href="javascript:void(0);"
-                           onclick="unCheckBoxesInDiv('offers')">UnCheck
-                            All</a>
+                        <div class="right_con01 value_span7" id="offers">
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);"
+                               onclick="checkBoxesInDiv('offers')">Check
+                                All</a>
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);"
+                               onclick="unCheckBoxesInDiv('offers')">UnCheck
+                                All</a>
 
-                        <p>
-                            @foreach($offers as $offer)
-                                <label><input class='fixCheckBox' type='checkbox' name='offers[]'
-                                              value='{{$offer->idoffer}}'> {{$offer->offer_name}} </label>
-                            @endforeach
-                        </p>
+                            <p>
+                                @foreach($offers as $offer)
+                                    <label><input class='fixCheckBox' type='checkbox' name='offers[]'
+                                                  value='{{$offer->idoffer}}'> {{$offer->offer_name}} </label>
+                                @endforeach
+                            </p>
 
-                    </div>
+                        </div><!-- right_con01 -->
+                    </div><!-- column_wrap -->
+                    <span class="btn_yellow"> <input type="submit" name="button"
+                                                     class="value_span6-2 value_span2 value_span1-2"
+                                                     value="Assign Users" onclick=""/></span>
             </div>
 
 

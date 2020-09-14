@@ -117,9 +117,9 @@ $colors = \LeadMax\TrackYourStats\System\Company::loadFromSession()->getColors()
         <div class="white_box value_span8">
             <!-- style=" pointer-events: none;
 opacity: 0.4; " -->
-            <form id="form" method="post" action="<?php echo htmlspecialchars(parse_url($_SERVER["REQUEST_URI"])["path"]); ?>">
-
-                <div class="left_con01">
+            <div id="form" method="post" action="<?php echo htmlspecialchars(parse_url($_SERVER["REQUEST_URI"])["path"]); ?>">
+              <div class="column_wrap">
+                <div class="left_con01 value_span7">
 
 
                     <h2 class="value_span9">Interface Design</h2>
@@ -226,17 +226,14 @@ opacity: 0.4; " -->
 
 
                     <a id="default" class="value_span5" href="#">Reset To Default</a>
-                    <span class="btn_yellow">
-		  		<input id="button" name="button" style="margin-top:50px;"
-                       class="value_span11 value_span2 value_span4" type="submit"
-                       value="Save">
+
                         <!--<a href="#">Save</a>-->
 		  	</span>
 
 
                 </div><!-- left_con01 -->
 
-                <div class="right_con01 setting">
+                <div class="right_con01 setting value_span7">
                     <p>
 
                         <label class="value_span9">Name:</label>
@@ -313,7 +310,12 @@ opacity: 0.4; " -->
                     </form>
 
                 </div><!-- right_con01 setting -->
-
+            </div><!-- column_wrap -->
+              <span class="btn_yellow">
+		  		<input id="button" name="button" style="margin-top:50px;"
+                 class="value_span11 value_span2 value_span4" type="submit"
+                 value="Save">
+              </span>
             </form>
 
         </div><!-- white_box -->

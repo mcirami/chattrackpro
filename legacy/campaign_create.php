@@ -37,7 +37,7 @@ if(isset($_POST["offer_name"]))
                   enctype="multipart/form-data">
 
 
-                <div class="left_con01">
+                <div class="left_con01 value_span7" style="width: 100%;">
                     <p>
                         <label class="value_span9">Name</label>
                         <input id="offer_name" name="offer_name" type="text" value=""
@@ -69,9 +69,10 @@ if(isset($_POST["offer_name"]))
 <!--                        </select>-->
 <!--                    </p>-->
                 </div>
+              <span class="btn_yellow"> <input type="submit" name="button" class="value_span6-2 value_span2 value_span1-2"
+                                               value="Create" onclick="return selectAllMultiSelect('assigned');"/></span>
         </div>
-        <span class="btn_yellow"> <input type="submit" name="button" class="value_span6-2 value_span2 value_span1-2"
-                                         value="Create" onclick="return selectAllMultiSelect('assigned');"/></span>
+
 
     </div>
 </div>

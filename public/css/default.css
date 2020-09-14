@@ -430,6 +430,7 @@ img {
 	-moz-box-shadow: 0 0 8px 0 #e0e0e0;
 	-o-box-shadow: 0 0 8px 0 #e0e0e0;
 	-webkit-box-shadow: 0 0 8px 0 #e0e0e0;
+	margin-bottom: 100px;
 }
 
 .white_box_outer .manage_aff {
@@ -450,6 +451,26 @@ img {
 
 .white_box_outer.large_table {
 	width: 100%;
+}
+
+form .button_wrap {
+	width: 100%;
+	float: left;
+	margin-top: 30px;
+}
+
+.column_wrap {
+	width: 100%;
+	float: left;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
 }
 
 .left_con01 {
@@ -493,6 +514,10 @@ img {
 	font-size: 16px;
 	color: #919090;
 	height: 45px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  height: auto !important;
 }
 
 .left_con01 p select, .jump_menu select {

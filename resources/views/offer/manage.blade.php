@@ -8,7 +8,7 @@
                 <span class="lft value_span9">Offers</span>
                 @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
                     <a style='margin-left: 1%; margin-top:.3%;' href="/offer_add.php"
-                       class='btn btn-default btn-sm'><img src='/images/icons/add.png'>&nbsp;Create New Offer</a>
+                       class='btn btn-default btn-sm value_span5-1 value_span6-5 value_span2'>Create New Offer</a>
                 @endif
             </div>
 
@@ -21,7 +21,7 @@
                     <p class='form-control'>
                         When pushing a user to you link, you can pass up to 3 values by using the sub IDs below. </p>
                     <p class='form-control'>
-                        Example. http://trackyourstats.com/?repid=1&offerid=1&sub1=VALUE1&sub2=VALUE2
+                        Example. http://domain.com/?repid=1&offerid=1&sub1=VALUE1&sub2=VALUE2
                     </p>
                     <p class='form-control'>
                         &sub1=
@@ -144,7 +144,7 @@
                             @endif
                             @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
                                 <td class="value_span10">
-                                    <a target='_blank' class='btn btn-sm btn-default'
+                                    <a target='_blank' class='btn btn-sm btn-default value_span5-1'
                                        href='/offer_access.php?id={{$offer->idoffer}}'>Affiliate Access</a>
                                 </td>
                             @endif
@@ -167,7 +167,7 @@
 
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10"><a class='btn btn-default' data-toggle="tooltip"
+                                <td class="value_span10"><a class='btn btn-default value_span6-1 value_span4' data-toggle="tooltip"
                                                             title="Offer PostBack Options"
                                                             href="/offer_edit_pb.php?offid={{$offer->idoffer}}">Edit
                                         Post Back</a></td>
@@ -181,7 +181,7 @@
                             @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
                                 @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
                                     <td class="value_span10">
-                                        <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Edit Offer"
+                                        <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Edit Offer"
                                            href="/offer_update.php?idoffer={{$offer->idoffer}}">Edit</a>
                                     </td>
                                 @endif
@@ -189,7 +189,7 @@
 
                             @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("edit_offer_rules"))
                                 <td class="value_span10">
-                                    <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Edit Offer Rules"
+                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Edit Offer Rules"
                                        href="/offer_edit_rules.php?offid={{$offer->idoffer}}"> Rules</a>
                                 </td>
 
@@ -197,7 +197,7 @@
 
                             @if(\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_AFFILIATE)
                                 <td class="value_span10">
-                                    <a class="btn btn-default btn-sm" data-toggle="tooltip" title="View Offer"
+                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="View Offer"
                                        href="/offer_details.php?idoffer={{$offer->idoffer}}"> View</a>
                                 </td>
                             @else
@@ -206,12 +206,12 @@
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD)
                                 <td class="value_span10">
-                                    <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Duplicate Offer"
+                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Duplicate Offer"
                                        href="/offer/{{$offer->idoffer}}/dupe"> Duplicate </a>
                                 </td>
 
                                 <td class="value_span10">
-                                    <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Delete Offer"
+                                    <a class="btn btn-default btn-sm value_span11 value_span4" data-toggle="tooltip" title="Delete Offer"
                                        onclick="confirmSendTo('Are you sure you want to delete this offer?',
                                                '/offer/{{$offer->idoffer}}/delete')" href="javascript:void(0);">
                                         Delete </a>

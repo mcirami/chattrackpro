@@ -55,10 +55,12 @@ border-left: 3px solid #<?php /*echo $valueSpan3; */?>;
 -->
 .value_span4:hover, .value_span4.active {
 background:  #<?php echo $valueSpan4; ?> ;
+color: #fff;
 }
 
 .value_span4.active:hover {
 background: #<?php echo $valueSpan4; ?>;
+color: #fff;
 }
 
 .value_span4-1, .value_span4-2 {
@@ -97,6 +99,9 @@ background: #<?php echo $valueSpan6; ?> ;
   border-bottom: 12px solid #<?php echo $valueSpan6; ?> !important;
 }
 
+.value_span6-5:hover {
+  background: #<?php echo $valueSpan6; ?> ;
+}
 .value_span7 {
   background: #<?php echo $valueSpan7; ?> ;
 }
