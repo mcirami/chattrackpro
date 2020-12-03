@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <div class = "right_panel">
+    <div class = "right_panel member_home">
 
         <div class = "white_box_outer">
             <div class = "heading_holder">
@@ -20,13 +20,13 @@
                         <p><span class = "lft value_span9">PostBack URL:</span>
                         <p>
                             <span id = "pb1" class = "rt blue_txt\">{{$postBackURL}}</span>
-                            <button onclick = "copyToClipboard(getElementById('pb1'));" class = 'btn btn-default btn-sm'><img src = '/images/icons/page_copy.png' alt = 'Copy'></button>
+                            <button onclick = "copyToClipboard(getElementById('pb1'));" class = 'copy_text value_span6 value_span5'>Click To Copy Link</button>
                         </p>
                     @endif
 
 
                     <div class = "com_acc">
-                        <a class = "btn btn-default" href = "aff_update.php?idrep={{$userId}}"><img src = "/images/icons/user_edit.png" alt = "Edit"> &nbsp;Edit my account</a>
+                        <a class = "btn btn-default value_span11 value_span2 value_span4" href = "aff_update.php?idrep={{$userId}}">Edit my account</a>
                     </div>
                 </div><!-- com_acc -->
             </div><!-- white_box -->
