@@ -56,14 +56,14 @@ if (\LeadMax\TrackYourStats\System\Company::getSub() != "trackyourstats")
 	<script src = "js/prefixfree.min.js"></script>
 	<script src = "js/jquery_2.1.3_jquery.min.js"></script>
 	
-	<title>TRACK YOUR STATS</title>
+	<title><?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?></title>
 </head>
 <body>
 <!--header-->
 <div class = "main_bg">
 	<div class = "top_sec">
 		<div class = "holder">
-			<div class = "logo"><a href = "#"><img src = "images/logo.png" alt = "TRACK YOUR STATS" title = "TRACK YOUR STATS"/></a></div>
+			<div class = "logo"><a href = "#"><img src = "images/logo.png" alt = "<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>" title = "<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"/></a></div>
 			<div class = "btn_login"><a href = "login.php">Log In</a></div>
 			<ul>
 				<li><a href = "#">Pricing</a></li>

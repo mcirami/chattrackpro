@@ -52,7 +52,7 @@ if ($assignType == 0) {
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer">
-            <div class="heading_holder value_span9"><span class="lft">Create Offer</span></div>
+            <div class="heading_holder value_span9"><span class="lft">Create New Offer</span></div>
             <div class="white_box value_span8">
 
                 <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="form"
@@ -68,7 +68,7 @@ if ($assignType == 0) {
 
 
                         <p>
-                            <label class="value_span9">Visibility</label>
+                            <label class="value_span9">Agent Access</label>
                             <select name="selectPublic" id="selectPublic">
                                 <option value="1" <?= $assign->public == 1 ? "selected" : "" ?>>Public</option>
                                 <option value="0"<?= $assign->public == 0 ? "selected" : "" ?>>Private</option>
@@ -79,7 +79,7 @@ if ($assignType == 0) {
                         <?php if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD) {
 
                             echo "<p>
-                            <label class=\"value_span9\">Advertisers </label>
+                            <label class=\"value_span9\">Advertiser</label>
                             <select name=\"campaign\" required>";
                             $campaign = new \LeadMax\TrackYourStats\Offer\Campaigns(\LeadMax\TrackYourStats\System\Session::userType());
                             $campaigns = $campaign->selectCampaigns()->fetchAll(PDO::FETCH_OBJ);
@@ -94,7 +94,7 @@ if ($assignType == 0) {
                         ?>
 
                         <p>
-                            <label class="value_span9">Type</label>
+                            <label class="value_span9">Offer Type</label>
                             <select class="form-control input-sm " id="offer_type" name="offer_type">
 
                                 <?php
@@ -145,7 +145,7 @@ if ($assignType == 0) {
                                    id="description" required/>
                         </p>
                         <p>
-                            <label class="value_span9">URL</label>
+                            <label class="value_span9">Offer Link</label>
                             <input type="text" class="form-control" name="url" maxlength="555" id="url"
                                    value="<?= $url; ?>"
                                    required/>
@@ -176,11 +176,11 @@ if ($assignType == 0) {
 
                     <div class="right_con01 value_span7">
                         <p>
-                            <label class="value_span9">Payout</label>
+                            <label class="value_span9">Agent Payout</label>
 
                             <input type="text" name="payout" maxlength="12" value="<?= $assign->get("payout"); ?>"
                                    id="payout" required/>
-                            <span class="small_txt value_span10">The Amount paid to affiliates per conversion</span>
+                            <span class="small_txt value_span10">The Amount paid per transaction.</span>
 
                         </p>
 

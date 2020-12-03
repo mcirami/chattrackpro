@@ -49,13 +49,13 @@ if (isset($_POST["postback_url"])) {
 
 
                     <p>
-                        <label class="value_span9">TrackYourStats Vars</label>
+                        <label class="value_span9">Variables</label>
                         <span>#affid#</span><br/>
                         <span>#user#</span><br/>
                         <span>#offid#</span> <br/>
                         <span>#clickid#</span> <br/>
 
-                        <span class="small_txt value_span10">TrackYourStats vars are auto inputed into your URL if they're found.</span>
+                        <span class="small_txt value_span10">variables are auto inputed into your URL if they're found.</span>
                         <span class="small_txt value_span10">e.g. "google.com/?var1=<b>#affid#"</b> will translate to "google.com/?var1=<b>32</b>"</span>
 
                         <br/>

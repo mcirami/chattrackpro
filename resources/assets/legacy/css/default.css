@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 .searchDiv {
@@ -771,8 +771,8 @@ border-left:3px solid #2a58ad;
 .com_acc p {
 	width: 100%;
 	float: left;
-	border-bottom: 1px solid #ebeaea;
-	padding: 10px 0;
+	border-bottom: 0px solid #ebeaea;
+	padding: 5px 0;
 }
 
 .com_acc p span.lft {

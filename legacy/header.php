@@ -109,8 +109,8 @@ $navBar = new \LeadMax\TrackYourStats\System\NavBar(\LeadMax\TrackYourStats\Syst
     <div class="logo">
         <a href="<?php echo $webroot; ?>"><img
                     src="<?php echo $webroot . \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir(); ?>/logo.png"
-                    alt="TRACK YOUR STATS"
-                    title="TRACK YOUR STATS"/></a>
+                    alt="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"
+                    title="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"/></a>
     </div>
 
 

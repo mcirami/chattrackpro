@@ -238,7 +238,7 @@ opacity: 0.4; " -->
 
                         <label class="value_span9">Name:</label>
                         <input name="shortHand" placeholder="Track Your Stats" onfocus="this.placeholder = ''"
-                               onblur="this.placeholder = 'Trackyourstats'" type="text"
+                               onblur="this.placeholder = '<?php echo\LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>'" type="text"
                                value="<?php echo\LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>">
                         <span class="small_txt value_span10">This name is displayed throughout the application, including all emails, notifications, and in the header.</span>
 

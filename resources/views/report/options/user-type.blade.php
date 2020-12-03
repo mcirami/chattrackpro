@@ -16,5 +16,5 @@
     @if(\LeadMax\TrackYourStats\System\Session::permissions()->can("create_managers"))
         <option @if(request('role',3) == 2) selected @endif value='2'>Managers</option>
     @endif
-    <option @if(request('role',3 ) == 3) selected @endif value='3'>Affiliates</option>
+    <option @if(request('role',3 ) == 3) selected @endif value='3'>Agents</option>
 </select>

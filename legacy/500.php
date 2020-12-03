@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Author: Dean
  * Email: dwm348@gmail.com
@@ -101,7 +101,7 @@ $webroot = getWebRoot();
 
     </style>
 
-    <title>Rut row...</title>
+    <title>Not Good!</title>
 </head>
 <body style="background-color:#EAEEF1;">
 <div class="top_sec value_span1">
@@ -114,7 +114,7 @@ $webroot = getWebRoot();
     <section class="not_found_page">
         <div class="content_wrap">
             <h2>500 - Internal Server Issue</h2>
-            <p>Something has gone wrong on the server, but we're not really sure what is it.</p>
+            <p>Something is wrong on the server atm, dangit.</p>
         </div>
 
 

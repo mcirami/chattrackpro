@@ -5,13 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="css/arrow.css" rel="stylesheet" type="text/css"/>
 
-    <link rel="shortcut icon" type="image/ico" href="images/trackyourstats/favicon.ico"/>
-    <script src="js/prefixfree.min.js"></script>
-    <script src="js/jquery_2.1.3_jquery.min.js"></script>
+    <link rel="shortcut icon" type="image/ico" href="http://chattrackpto.com/resources/views/favicon.ico"/>
 
-    <title>TRACK YOUR STATS</title>
+    <title>Chat Track Pro</title>
 </head>
 <body>
 <!--header-->
@@ -25,9 +22,9 @@
             </div>
             <div class="header_right">
                 <ul>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#about">About us</a></li>
+                    <li><a href="#content">Features</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
                 </ul>
                 <a class="btn" href="login.php">Login</a>
             </div>
@@ -36,11 +33,12 @@
     </div>
     <div class="header_sec">
         <div class="holder">
+                <h2>Custom Tracking for Serious Marketers!</h2>
+<b>
             <div class="text_wrap column">
-                <h2>Build Your Own Affiliate Network!</h2>
-                <h3>Affiliate Network Software</h3>
-                <p>We offer state of the art tracking methods, SEO friendly affiliate links, unique features and high performance.</p>
-                <a class="btn" href="#">Get Started</a>
+                <h3>Monitor productivity of all your employees and traffic in one easy place.</h3>
+                <p>Our platform offers tiered management, agent tracking, privatized domain names, and unique design services that will make us a one stop shop for your affiliate tracking and help you stand out! Get in touch today for more information!</p>
+                <a class="btn" href="skype:live:.cid.1a53fdcac7cdeced?chat">Contact Us</a>
             </div>
             <div class="column">
                 <img src="images/header_img.jpg" alt="">
@@ -54,23 +52,49 @@
 <!--section2-->
 <div class="section2" id="content">
     <div class="holder">
-        <h2>Take a Look </h2>
-        <h3>How Post Affiliate Network Looks Inside</h3>
-        <p>The most advanced tracking features meet the ability to manage affiliate network with unlimited amount of merchants. Post Affiliate Network is your ultimate affiliate software. </p>
+        <h2>Our Features</h2>
+        <h3>Here are a few features that make us stand out!</h3>
+        <p>Join one of the most comprehensive tracking platforms on earth. Designed with you in mind, we offer real time postbacks, tracking for unlimited agents/affiliates/employees, tiered and unlimited Manager and Admin accounts, Add your own custom offers or allow us to provide offers for you. Track accurately in real time, every time with Chat Track Pro! </p>
         <div class="three_col_section">
             <div class="sub">
-                <h2>Affiliates Manager</h2>
+                <h2>Unlimited Agents</h2>
             </div>
 
             <div class="sub">
-                <h2>Campaigns</h2>
+                <h2>Unlimited Managers</h2>
             </div>
 
             <div class="sub">
-                <h2>Reports</h2>
+                <h2>Unlimited Admins</h2>
             </div>
         </div>
-        <img class="image" src="images/img_dashboard.png" alt="">
+        <div class="three_col_section">
+            <div class="sub">
+                <h2>Private Offers</h2>
+            </div>
+
+            <div class="sub">
+                <h2>Public Offers</h2>
+            </div>
+
+            <div class="sub">
+                <h2>Requestable Offers</h2>
+            </div>
+        </div>
+        <div class="three_col_section">
+            <div class="sub">
+                <h2>Real Time Stats</h2>
+            </div>
+
+            <div class="sub">
+                <h2>Unique Domains</h2>
+            </div>
+
+            <div class="sub">
+                <h2>Postback URL</h2>
+            </div>
+        </div>
+
     </div>
 </div>
 <!--section2-->
@@ -85,36 +109,34 @@
             <div class="column">
                 <img src="images/dark-section-image.png" alt="">
             </div>
-            <div class="column">
-                <h2>Ultimate</h2>
-                <h3>Affiliate Network</br>Software</h3>
-                <p>Accurate tracking, high performance and advanced affiliate marketing features. Fully scalable to fit the requirements of both large and small businesses, to create and manage successful affiliate networks.</p>
-
-                <p>Post Affiliate Network is a turnkey, ready to use affiliate network solution and is the best choice compared to a large amount of affiliate network software.</p>
+            <div class="column" id="about">
+                <h2>Straight from the Pros!</h2>
+                <h3>Get the best when you</br>work with the best!</h3>
+                <p>After decades of experience, we feel like we were able to truly design a software that will fit all of your tracking needs. Whether you are managing a small group or several offices in a large firm, we've got you covered. The ability to provide custom designs, offers, and permissions to control a tiered Userbase and track everything in real time gives us a competitive edge over many other softwares. Contact Us today to find out why Chat Track Pro manages to remain one of the best affiliate stats tracking software on the internet!</p>
             </div>
         </div>
     </div>
     <div class="bottom_section">
         <div class="holder">
-            <h2>Post Affiliate Network</h2>
-            <h3>Supports Three Basic Types of Users</h3>
+            <h2>Chat Track Pro</h2>
+            <h3>Tiered User Setup Explained</h3>
             <div class="three_col_section">
                 <div class="column">
                     <img src="images/img_networkowner.png" alt="">
-                    <h4>Network owner</h4>
-                    <p>A special type of merchant who has full control over all affiliates and all merchant accounts. Network owners can fully customize the design of the merchant and affiliate </p>
+                    <h4>Admins</h4>
+                    <p>A Admin is a User who has full access to all other Users in their network, whether those Users are Managers or Agents. Admins can track all traffic generated inside their network as well by any Agent of any Manager. Track it all in one place!</p>
                 </div>
 
                 <div class="column">
                     <img src="images/img_merchant.png" alt="">
-                    <h4>Merchant</h4>
-                    <p>Network owners can allow entry into their network for an unlimited number of merchants. With each merchant he/she can define their own rules and fees for using the </p>
+                    <h4>Managers</h4>
+                    <p>Managers can create an unlimited amount of Agent accounts for anyone they want to send traffic. Every Manager can see all traffic and monies earned from their agents but not any information of any other Manager or their Agents under an Admin.</p>
                 </div>
 
                 <div class="column">
                     <img src="images/img_affiliate.png" alt="">
-                    <h4>Affiliate</h4>
-                    <p>Promotes products offered by merchants or network owner. This person is payed by the network owner from commissions paid to the network owner by the merchant.</p>
+                    <h4>Agents</h4>
+                    <p>An Agent is the only type of User that will have an offer link to promote and generate sales using their unique marketing methods. Each agent will be able to track all clicks and sales to any offers they promote real time inside their account.</p>
                 </div>
             </div>
         </div>
@@ -122,27 +144,26 @@
 </div>
 <!--section4-->
 <div class="section5">
-    <div class="holder">
-        <p>14-Days Trial</p>
-        <h2>Just One Click Away</h2>
-        <p>From starting your own affiliate program</p>
-        <a class="btn" href="#">Get Started</a>
+    <div class="holder" id="contact">
+        <p>Interested in Your Own Network?</p>
+        <h2>Get in Touch!</h2>
+        <p>We'll walk you through each stage of the process to make sure you have the tools you need to be successful.</p>
+        <a class="btn" href="skype:live:.cid.1a53fdcac7cdeced?chat">Contact Us</a>
     </div>
 </div>
 <footer>
     <div class="holder">
         <h2>ChatTrackPro</h2>
         <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#content">Features</a></li>
+            <li><a href="#contact">Contact Us</a></li>
         </ul>
-        <span class="footer_txt">&copy; 2020 ChatTrackPro</span>
+        <span class="footer_txt">&copy; ChatTrackPro</span>
     </div>
 </footer>
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-<script src="js/index.js"></script>
 </body>
 </html>

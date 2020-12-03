@@ -233,7 +233,7 @@ $update->dumpPermissionsToJavascript();
 							   id = "password"/>
 					</p>
 					<p>
-						<label class = "value_span9">Confirm Password</label>
+						<label class = "value_span9">Re-Enter Password</label>
 						
 						<input type = "text" class = "form-control" name = "confirmpassword" minlength = "5" maxlength = "255"
 							   value = "" id = "confirmpassword"/>
@@ -251,11 +251,14 @@ $update->dumpPermissionsToJavascript();
 																		 class = "value_span6-2 value_span2 value_span1-2"
 					>Cancel</a></span>
 				
+
+<!--
 				<span class = "btn_yellow" style = "margin-left:2%;"> <a
 							onclick = "window.location = 'aff_update.php?clearAtt=1&idrep=<?PHP echo $update->selectedUser->idrep; ?>';"
 							class = "value_span6-2 value_span2 value_span1-2"
 					>Clear login attempts.</a></span>
-			</form>
+-->	
+		</form>
 		
 		
 		</div>

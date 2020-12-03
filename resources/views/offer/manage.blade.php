@@ -19,15 +19,9 @@
             @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                 <div class='form-group'>
                     <p class='form-control'>
-                        When pushing a user to you link, you can pass up to 3 values by using the sub IDs below. </p>
-                    <p class='form-control'>
-                        Example. http://domain.com/?repid=1&offerid=1&sub1=VALUE1&sub2=VALUE2
+                        Add up to 5 Sub variables as follows: http://domain.com/?repid=1&offerid=1&sub1=XXX&sub2=YYY&sub3=ZZZ&sub4=AAA&sub5=BBB
                     </p>
-                    <p class='form-control'>
-                        &sub1=
-                        &sub2=
-                        &sub3=
-                    </p>
+                    
                 </div>
             @endif
 
@@ -81,7 +75,7 @@
                         <th class="value_span9">Offer Type</th>
 
                         @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                            <th class="value_span9">Copy Url</th>
+                            <th class="value_span9">Offer URL</th>
                         @elseif(\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
                             <th class="value_span9">Affiliate Access</th>
                         @endif
@@ -136,9 +130,9 @@
                                     /?repid={{\LeadMax\TrackYourStats\System\Session::userID()}}
                                     &offerid={{$offer->idoffer}}&sub1=</p>
                                 <td class="value_span10">
-                                    <button data-toggle="tooltip" title="Copy Offer URL"
+                                    <button data-toggle="tooltip" title="Copy My Link"
                                             onclick="copyToClipboard(getElementById('url_{{$offer->idoffer}}'));"
-                                            class="btn btn-default">Copy Offer URL
+                                            class="btn btn-default">Copy My Link
                                     </button>
                                 </td>
                             @endif

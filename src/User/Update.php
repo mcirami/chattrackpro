@@ -329,7 +329,7 @@ class Update
 
             case \App\Privilege::ROLE_ADMIN:
                 if ($this->per->can("create_affiliates")) {
-                    echo "<input {$cannotDownGrade}  onclick=\"manager();appendPermissions();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\"  id=\"affRadio\" value=\"".Privilege::ROLE_AFFILIATE."\">Affiliate";
+                    echo "<input {$cannotDownGrade}  onclick=\"manager();appendPermissions();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\"  id=\"affRadio\" value=\"".Privilege::ROLE_AFFILIATE."\">Agent";
                 }
                 if ($this->per->can("create_managers")) {
                     echo "<input {$cannotDownGrade}  onclick=\"admin();appendPermissions();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\" value=\"".Privilege::ROLE_MANAGER."\">Manager";
@@ -341,7 +341,7 @@ class Update
 
             case Privilege::ROLE_MANAGER:
                 if ($this->per->can("create_affiliates")) {
-                    echo "<input {$cannotDownGrade}  onclick=\"manager();appendAffiliate();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\"  id=\"affRadio\" value=\"".Privilege::ROLE_AFFILIATE."\">Affiliate";
+                    echo "<input {$cannotDownGrade}  onclick=\"manager();appendAffiliate();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\"  id=\"affRadio\" value=\"".Privilege::ROLE_AFFILIATE."\">Agent";
                 }
                 if ($this->per->can("create_managers")) {
                     echo "<input  checked onclick=\"admin();appendManager();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\" value=\"".Privilege::ROLE_MANAGER."\">Manager";
@@ -353,7 +353,7 @@ class Update
 
             case Privilege::ROLE_AFFILIATE:
                 if ($this->per->can("create_affiliates")) {
-                    echo "<input  checked onclick=\"manager();appendAffiliate();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\"  id=\"affRadio\" value=\"".Privilege::ROLE_AFFILIATE."\">Affiliate";
+                    echo "<input  checked onclick=\"manager();appendAffiliate();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\"  id=\"affRadio\" value=\"".Privilege::ROLE_AFFILIATE."\">Agent";
                 }
                 if ($this->per->can("create_managers")) {
                     echo "<input  {$cannotUpgrade} onclick=\"admin();appendManager();\" class=\"fixCheckBox\" type=\"radio\" name=\"priv\" value=\"".Privilege::ROLE_MANAGER."\">Manager";

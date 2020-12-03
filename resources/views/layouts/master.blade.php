@@ -91,8 +91,8 @@ ini_set('display_errors', 1);
     <div class="logo">
         <a href="{{$webroot}}"><img
                     src="{{ $webroot.\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() .  "/logo.png"}}"
-                    alt="TRACK YOUR STATS"
-                    title="TRACK YOUR STATS"/></a>
+                    alt="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"
+                    title="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"/></a>
     </div>
 
     <ul class="main_menu">

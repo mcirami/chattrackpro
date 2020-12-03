@@ -5,7 +5,7 @@
     <div class="right_panel">
         <div class="white_box_outer large_table ">
             <div class="heading_holder">
-                <span class="lft value_span9">View Affiliate Records</span>
+                <span class="lft value_span9">View User Accounts</span>
 
             </div>
 
@@ -17,7 +17,7 @@
             <div class="form-group searchDiv">
 
                 <input id="searchBox" onkeyup="searchTable()" class="form-control" type="text"
-                       placeholder="Search users...">
+                       placeholder="Search Selected User Type!">
             </div>
 
             <div class="clear"></div>
@@ -25,7 +25,7 @@
                 <table class="table table-striped  table_01  " id="mainTable">
                     <thead>
                     <tr>
-                        <th class="value_span8">Aff ID</th>
+                        <th class="value_span8">User ID</th>
                         <th class="value_span8">First Name</th>
                         <th class="value_span8">Last Name</th>
                         <th class="value_span8">Cell Phone</th>
@@ -54,19 +54,19 @@
                             <td>{{\Carbon\Carbon::parse($user->rep_timestamp)->diffForHumans()}}</td>
                             @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::EDIT_AFFILIATES))
                                 <td>
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4 value_span2-2 " data-toggle="tooltip" title="Edit User"
+                                    <a class="btn btn-default btn-sm value_span6-1 value_span4 " data-toggle="tooltip" title="Edit User"
                                        href="/aff_update.php?idrep={{$user->idrep}}">Edit</a>
                                 </td>
                             @endif
                             @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::CREATE_AFFILIATES))
-                                <td><a class="btn btn-default btn-sm value_span5-1 value_span2-2 " data-toggle="tooltip"
+                                <td><a class="btn btn-default btn-sm value_span5-1 " data-toggle="tooltip"
                                        title="Login into this user" href="#" onclick="adminLogin({{$user->idrep}})">Login</a>
                                 </td>
                             @endif
                             @if(request('role',3) == 2 && \LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::CREATE_MANAGERS))
                                 <td>
-                                    <a class="btn btn-default btn-sm value_span2-2 " data-toggle="tooltip" title="View Affiliates"
-                                       href="/user/{{$user->idrep}}/affiliates">View Affiliates</a>
+                                    <a class="btn btn-sm btn-default value_span5-1" data-toggle="tooltip" title="View Agents"
+                                       href="/user/{{$user->idrep}}/affiliates">View Agents</a>
                                 </td>
                             @endif
                             @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::BAN_USERS))

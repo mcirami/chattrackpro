@@ -21,7 +21,7 @@ $users = \LeadMax\TrackYourStats\User\AffiliateSignUp::queryFetchPendingAffiliat
 <div class = "right_panel">
 	<div class = "white_box_outer large_table">
 		<div class = "heading_holder">
-			<span class = "lft value_span9">Pending Affiliates</span>
+			<span class = "lft value_span9">Pending Agents</span>
 		
 		</div>
 		

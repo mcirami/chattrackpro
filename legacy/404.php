@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 
 $webroot = getWebRoot();
@@ -96,7 +96,7 @@ $webroot = getWebRoot();
 
     </style>
 
-    <title>Rut row...</title>
+    <title>Not Good!</title>
 </head>
 <body style="background-color:#EAEEF1;">
 
@@ -104,8 +104,8 @@ $webroot = getWebRoot();
 
     <section class="not_found_page">
         <div class="content_wrap">
-            <h2>404 - File or directory not found.</h2>
-            <p>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+            <h2>404 Error.</h2>
+            <p>Whatever you're after, sure aint here!</p>
         </div>
 
 

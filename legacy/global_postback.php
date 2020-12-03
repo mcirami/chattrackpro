@@ -16,7 +16,7 @@ $postBackUrls = new \LeadMax\TrackYourStats\User\PostBackUrl(\LeadMax\TrackYourS
 
 if (isset($_POST["postback_url"]))
 {
-	$result = \LeadMax\TrackYourStats\User\PostBackUrl::updateUserPostBacks(\LeadMax\TrackYourStats\System\Session::userID(), $_POST["postback_url"] /*, $_POST["deduction_url"], $_POST["free_sign_up_url"]*/);
+	$result = \LeadMax\TrackYourStats\User\PostBackUrl::updateUserPostBacks(\LeadMax\TrackYourStats\System\Session::userID(), $_POST["postback_url"] /* , $_POST["deduction_url"], $_POST["free_sign_up_url"] */);
 
 	if ($result)
 	{
@@ -58,7 +58,7 @@ if (isset($_POST["postback_url"]))
 						<label class = "value_span9">Deduction PostBack URL:</label>
 
 						<input type = "text" class = "form-control input-sm" name = "deduction_url" maxlength = "155"
-							   value = "<?php /* $postBackUrls->getDeductionURL() */ ?>" id = "postback_url"/>
+							   value = "<?php //$postBackUrls->getDeductionURL() ?>" id = "postback_url"/>
 						<span class = "small_txt value_span10">On a conversion deduction, this url will fire.</span>
 					</p>
 
@@ -66,7 +66,7 @@ if (isset($_POST["postback_url"]))
 						<label class = "value_span9">Free Sign Up PostBack URL:</label>
 
 						<input type = "text" class = "form-control input-sm" name = "free_sign_up_url" maxlength = "155"
-							   value = "<?php /* $postBackUrls->getFreeSignUpURL() */ ?>" id = "postback_url"/>
+							   value = "<?php //$postBackUrls->getFreeSignUpURL() ?>" id = "postback_url"/>
 						<span class = "small_txt value_span10">On free sign up conversion, this url will fire. </span>
 					</p>
 -->

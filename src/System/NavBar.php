@@ -23,18 +23,18 @@ class NavBar
 
     public $menu = array(
 
-        "Affiliates" => [
+        "Users" => [
 
             "css" => "fas fa-users",
 
             'required_user_types' => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, \App\Privilege::ROLE_MANAGER],
 
-            "Manage Affiliates" => [
+            "Manage Users" => [
                 'url' => '/user/manage',
             ],
 
 
-            "Create Affiliates" => [
+            "Create Users" => [
                 'url' => '/aff_add.php',
                 'required_permissions' => ['create_affiliates'],
             ],
@@ -44,7 +44,7 @@ class NavBar
             //				"required_permissions" => [Permissions::EDIT_REPORT_PERMISSIONS]
             //			],
 
-            "Pending Affiliates" => [
+            "Pending Users" => [
                 'url' => '/view_pending_affiliates.php',
                 'required_permissions' => ['approve_affiliate_sign_ups'],
             ],
@@ -63,7 +63,7 @@ class NavBar
                 'url' => '/offer/manage',
             ],
 
-            'Create Offer' => [
+            'Create Offers' => [
                 'url' => '/offer_add.php',
                 'required_permissions' => ['create_offers'],
             ],
@@ -74,15 +74,15 @@ class NavBar
                 'required_user_types' => [\App\Privilege::ROLE_AFFILIATE],
             ],
 
-            'Mass Assign Offers' => [
+            'Multi-Assign Offers' => [
                 'url' => '/offer/mass-assign',
                 'required_permissions' => ['create_offers'],
             ],
 
-            'Mass Assign PostBack' => [
-                'url' => '/mass_assign_pb.php',
-                'required_user_types' => [\App\Privilege::ROLE_AFFILIATE],
-            ],
+    //        'Mass Assign PostBack' => [
+    //            'url' => '/mass_assign_pb.php',
+    //            'required_user_types' => [\App\Privilege::ROLE_AFFILIATE],
+    //        ],
 
             "Click Search" => [
                 'url' => "/clicksearch.php",
@@ -108,7 +108,7 @@ class NavBar
 
             "Sub Report" => ['url' => '/report/sub', "required_user_types" => [\App\Privilege::ROLE_AFFILIATE]],
 
-            "Affiliate Report" => [
+            "Agent Report" => [
                 'url' => '/report/affiliate',
                 "required_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, \App\Privilege::ROLE_MANAGER],
             ],
@@ -124,16 +124,16 @@ class NavBar
                 "required_permissions" => [Permissions::ADJUST_SALES],
             ],
 
-            "Chat Log Report" => [
-                'url' => '/report/chat-log',
-                "required_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, \App\Privilege::ROLE_MANAGER],
-            ]
-            ,
-
-            "Sale Log" => [
-                'url' => '/report/sale-log',
-                'required_user_types' => [\App\Privilege::ROLE_AFFILIATE],
-            ],
+     //       "Chat Log Report" => [
+     //           'url' => '/report/chat-log',
+     //           "required_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, \App\Privilege::ROLE_MANAGER],
+     //       ]
+     //       ,
+     //
+     //       "Sale Log" => [
+     //           'url' => '/report/sale-log',
+     //           'required_user_types' => [\App\Privilege::ROLE_AFFILIATE],
+     //       ],
 
             "Daily Report" => [
                 'url' => '/report/daily',
@@ -153,16 +153,16 @@ class NavBar
 
         ],
 
-        "Company" => [
+        "Account" => [
             "css" => "fas fa-building",
 
             "My Account" => ['url' => '/dashboard'],
 
-            "SMS Chat" => ['url' => '/sms', 'required_user_types' => [\App\Privilege::ROLE_AFFILIATE], 'required_permissions' => [Permissions::SMS_CHAT]],
+//            "SMS Chat" => ['url' => '/sms', 'required_user_types' => [\App\Privilege::ROLE_AFFILIATE], 'required_permissions' => [Permissions::SMS_CHAT]],
 
-            "Email Pools" => ['url' => '/email/pools', 'required_permissions' => [Permissions::EMAIL_POOLS]],
+//            "Email Pools" => ['url' => '/email/pools', 'required_permissions' => [Permissions::EMAIL_POOLS]],
 
-            "Assign SMS" => ['url' => '/sms/client/add', 'required_user_types' => [\App\Privilege::ROLE_GOD]],
+//            "Assign SMS" => ['url' => '/sms/client/add', 'required_user_types' => [\App\Privilege::ROLE_GOD]],
 
             "Add Sale" => ['url' => '/sales/add', 'required_permissions' => [Permissions::ADJUST_SALES]],
 
@@ -172,9 +172,9 @@ class NavBar
 
             "Notifications" => ['url' => '/notifications.php'],
 
-            "Salaries" => ["url" => "/salaries.php", "possible_permissions" => ["pay_salaries"]],
+//            "Salaries" => ["url" => "/salaries.php", "possible_permissions" => ["pay_salaries"]],
 
-            "Bonuses" => ["url" => "/bonus.php", "possible_permissions" => ["create_bonuses", "assign_bonuses"]],
+//            "Bonuses" => ["url" => "/bonus.php", "possible_permissions" => ["create_bonuses", "assign_bonuses"]],
 
             "Settings" => ["url" => "/settings.php", "required_user_types" => [\App\Privilege::ROLE_GOD]],
 

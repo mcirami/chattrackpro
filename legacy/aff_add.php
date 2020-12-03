@@ -68,7 +68,7 @@ switch ($result)
 <div class = "right_panel">
   <div class = "white_box_outer">
     <div class = "heading_holder value_span9"><span
-          class = "lft"> Add New Affiliate  </span></div>
+          class = "lft"> Create New User</span></div>
 
     <div class = "white_box value_span8">
       <span class = "small_txt value_span10"><?PHP echo $error; ?></span>
@@ -92,7 +92,7 @@ switch ($result)
                      id = "last_name"/>
             </p>
             <p>
-              <label class = "value_span9">Email</label>
+              <label class = "value_span9">Email Address</label>
 
               <input type = "text" class = "form-control input-sm" name = "email" maxlength = "155"
                      id = "email"/>
@@ -105,13 +105,13 @@ switch ($result)
                      id = "password"/>
             </p>
             <p>
-              <label class = "value_span9">Confirm Password</label>
+              <label class = "value_span9">Re-Enter Password</label>
 
               <input type = "password" class = "form-control" name = "confirmpassword" minlength = "5" maxlength = "255"
                      value = "" id = "confirmpassword"/>
             </p>
-            <p>
-              <label class = "value_span9">Cell Phone</label>
+<!--            <p>
+              <label class = "value_span9">Phone Number</label>
 
               <input type = "text" class = "form-control input-sm" name = "cell_phone" maxlength = "155"
                      placeholder = "(Optional)"
@@ -119,7 +119,9 @@ switch ($result)
             </p>
             <p>
               <label class = "value_span9">Skype</label>
-              <!-- TODO Link Referrer Payout -->
+
+-- TODO Link Referrer Payout --
+
               <input type = "text" class = "form-control" name = "skype" minlength = "5" maxlength = "255"
                      placeholder = "(Optional)"
                      value = "" id = "skype"/>
@@ -131,8 +133,8 @@ switch ($result)
               <input type = "text" class = "form-control" name = "company_name" minlength = "5" maxlength = "255"
                      placeholder = "(Optional)"
                      value = "" id = "company_name"/>
-            </p>
-
+            </p> 
+-->
           </div><!-- left_con01 -->
           <div class = "right_con01 value_span7">
             <h3>Account Details</h3>
@@ -154,13 +156,13 @@ switch ($result)
               </select>
             </p>
             <p>
-              <label class = "value_span9">Privileges</label>
+              <label class = "value_span9">Account Type</label>
                 <?php $create->printRadios(); ?>
 
 
             </p>
 
-            <label class = "value_span9">Assign To</label>
+            <label class = "value_span9">New User Owner</label>
             <select required class = "form-control input-sm " id = "referrer_repid" name = "referrer_repid">
 
             </select>
@@ -221,7 +223,7 @@ switch ($result)
         <div class="button_wrap">
             <span class = "btn_yellow"> <input type = "submit" name = "button"
                                                class = "value_span6-2 value_span2 value_span1-2"
-                                               value = "Register"/></span>
+                                               value = "Create User"/></span>
           <span class = "btn_yellow" style = "margin-left:2%;"> <a onclick = "history.go(-1);"
                                                                    class = "value_span6-2 value_span2 value_span1-2"
             >Cancel</a></span>

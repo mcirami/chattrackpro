@@ -7,7 +7,7 @@ include 'header.php';
 
 
     <!--right_panel-->
-    <div class="right_panel">
+    <div class="right_panel_account">
 
 
         <div class="white_box_outer">
@@ -25,14 +25,14 @@ include 'header.php';
                                     href="mailto:<?php \LeadMax\TrackYourStats\System\Session::userData()->email ?>"><?php echo \LeadMax\TrackYourStats\System\Session::userData()->email ?></a></span>
                     </p>
                     <p><span class="lft value_span9">Password</span><span class="rt value_span10"><a
-                                    href="<?= $webroot."aff_update.php?idrep=".\LeadMax\TrackYourStats\System\Session::userID() ?>">Change Password</a></span>
+                                    href="<?= $webroot."aff_update.php?idrep=".\LeadMax\TrackYourStats\System\Session::userID() ?>">Update Password</a></span>
                     </p>
 
                     <?php
                     if (\LeadMax\TrackYourStats\System\Session::permissions()->can("view_postback")) {
                         echo "<p><span class=\"lft value_span9\">PostBack URL:</span>";
                         $url1 = $webroot."?uid=".\LeadMax\TrackYourStats\System\Company::loadFromSession()->getUID()."&clickid=";
-                        echo "<p> <span id=\"pb1\" class=\"rt blue_txt\">{$url1}</span> <button onclick=\"copyToClipboard(getElementById('pb1'));\"  class='btn btn-default btn-sm'><img src='/images/icons/page_copy.png' alt='Copy'></button></p>";
+//                        echo "<p> <span id=\"pb1\" class=\"rt blue_txt\">{$url1}</span> <button onclick=\"copyToClipboard(getElementById('pb1'));\"  class='btn btn-default btn-sm'><img src='/images/icons/page_copy.png' alt='Copy'></button></p>";
 
 
 //                        echo "<p> <span id=\"pb2\" class=\"rt blue_txt\">{$url2}</span> <button onclick=\"copyToClipboard(getElementById('pb2'));\"  class='btn btn-default btn-sm'><img src='/images/icons/page_copy.png' alt='Copy'></button></p>";
@@ -42,10 +42,9 @@ include 'header.php';
                     ?>
 
 
-                    <div class="com_acc">
-                        <a class="btn btn-default"
-                           href="aff_update.php?idrep=<?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?>"><img
-                                    src="/images/icons/user_edit.png" alt="Edit"> &nbsp;Edit my account</a>
+                    <div class="btn btn-default">
+                        <a class="value_span11 value_span2 value_span4"
+                           href="aff_update.php?idrep=<?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?>">Update Account</a>
                     </div>
                 </div><!-- com_acc -->
             </div><!-- white_box -->

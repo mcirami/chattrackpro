@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 @font-face {
@@ -495,7 +495,7 @@ img {
 
 .white_box_outer.login_page .left_column {
 	display: inline-flex;
-	background: url(../images/login-left-bg.jpg) no-repeat;
+	background: url(../images/login-left-bg1.jpg) no-repeat;
 	background-size: cover;
 	width: 50%;
 	padding: 25% 0;
