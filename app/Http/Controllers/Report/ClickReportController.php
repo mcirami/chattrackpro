@@ -54,10 +54,7 @@ class ClickReportController extends ReportController
             'd_from' => Carbon::today()->format('Y-m-d'),
             'd_to' => Carbon::today()->format('Y-m-d'),
             'dateSelect' => 0,
-
             'rpp' => 10,
-
-
             'idoffer' => $id,
         );
 
