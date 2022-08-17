@@ -8,6 +8,10 @@
     @include('report.options.dates')
 @endsection
 
+@section('filters')
+	@include('report.options.filters')
+@endsection
+
 @section('table')
 	<div class="table_wrap">
 		<table id="reps" class="table table-striped table-bordered table-condensed table_01 tablesorter offer_clicks">

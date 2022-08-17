@@ -277,7 +277,6 @@ function refreshDates() {
 function handleDateSelect(elm) {
     var value1 = elm.value;
 
-
     var d = moment();
 
     switch (value1) {
@@ -423,5 +422,27 @@ function updateTable(arr, TABLE_NAME) {
     // }
 
     $("#" + TABLE_NAME + " > tbody:last-child").append(arr);
+
+}
+
+function handleFilterSelect(el) {
+    const value = el.value;
+
+    let url = new URL(window.location);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.has('filter')) {
+
+        const search_params = url.searchParams;
+        search_params.set('filter', value);
+        url.search = search_params.toString();
+        url = url.toString();
+
+    } else {
+        url = window.location.href + "&filter=" + value
+    }
+
+    window.location = url;
 
 }

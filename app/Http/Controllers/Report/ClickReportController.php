@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Report;
 
 use App\Offer;
+use App\Privilege;
 use App\Services\Repositories\Offer\OfferAffiliateClicksRepository;
 use App\Services\Repositories\Offer\OfferClicksRepository;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use function GuzzleHttp\Psr7\parse_query;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -40,6 +42,8 @@ class ClickReportController extends ReportController
         $clickReport = new LengthAwarePaginator($clickReport->forPage($page, $rpp), $clickReport->count(), $rpp, $page,
             ['path' => request()->fullUrlWithQuery(request()->except('page'))]);
         $affiliateReport = $affiliateRepo->between($start, $end);
+
+		$this->showManagersClicks($id);
 
         return view('report.clicks.offer', compact('offer', 'affiliateReport', 'clickReport'));
     }
@@ -91,5 +95,40 @@ class ClickReportController extends ReportController
 
         return view('report.clicks.affiliate', compact('report', 'user'));
     }
+
+	public function showManagersClicks($id) {
+
+		$dates = self::getDates();
+		$affClicks = array();
+		$start = Carbon::parse($dates['start'], 'America/Los_Angeles');
+		$end = Carbon::parse($dates['end'], 'America/Los_Angeles');
+
+
+		$managers = User::myUsers()->withRole(Privilege::ROLE_MANAGER)->get();
+		foreach ($managers as $manager) {
+
+			$data = DB::table('clicks')
+			          ->join('rep', function($join) use ($manager){
+						  $join->on('clicks.rep_idrep', '=', 'rep.idrep');
+						  $join->where('rep.referrer_repid', '=', $manager->idrep);
+					  })
+			          ->leftJoin('conversions', 'conversions.click_id', 'clicks.idclicks' )
+			          ->where('offer_idoffer', '=', $id)
+			          ->whereBetween('first_timestamp', array($start, $end))
+			          ->select([
+						  \DB::raw('COUNT(clicks.rep_idrep) as clicks'),
+				          \DB::raw('COUNT(conversions.click_id) as conversions')
+			          ])
+			          ->get();
+
+			$object = [
+				'manager' => $manager->user_name,
+				'clicks' =>  $data[0]->clicks,
+				'conversions' => $data[0]->conversions
+			];
+			array_push($affClicks, $object);
+		}
+
+	}
 
 }
