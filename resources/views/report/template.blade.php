@@ -12,10 +12,9 @@
                 @yield('table-options')
             </div>
 
-            <div class="form-group" style='float:right'>
+            <div class="form-group filter_form" style='float:right'>
                 @yield('filters')
             </div>
-
 
             <div class="clear"></div>
             <div class="white_box manage_aff large_table value_span8 @if(Route::currentRouteName() == "offerClicks" || Route::currentRouteName() == "userClicks" ) adjust_overflow @endif">

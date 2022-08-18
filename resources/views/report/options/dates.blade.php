@@ -30,7 +30,7 @@
 <script src='/js/tables.js'></script>
 
 
-<select style='width:125px;' onchange="handleDateSelect(this);" class="selectBox" id="preDefined" name="preDefined">";
+<select style='width:170px;' onchange="handleDateSelect(this);" class="selectBox" id="preDefined" name="preDefined">";
 
     <option {{request()->query('dateSelect') == 0 ? 'selected' : ''}} value='0'>Today</option>
     <option {{request()->query('dateSelect') == 1 ? 'selected' : ''}}  value='1'>Yesterday</option>
@@ -56,10 +56,11 @@
 
 
         @endphp
-
-<button id='searchBtn' class=" btn btn-default btn-sm"
-        onclick="window.location = '/{{request()->path() . "?" . http_build_query(request()->except(['d_from','d_to','dateSelect']))}}' +  processDates()  ">
-    Search
-</button>
+<div class="button_wrap">
+    <button id='searchBtn' class=" btn btn-default btn-sm"
+            onclick="window.location = '/{{request()->path() . "?" . http_build_query(request()->except(['d_from','d_to','dateSelect']))}}' +  processDates()  ">
+        Search
+    </button>
+</div>
 
 

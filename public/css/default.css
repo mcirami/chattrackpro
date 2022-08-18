@@ -82,7 +82,6 @@ td > a {
 
 .selectBox {
 	font-family: 'robotoregular', sans-serif;
-	width: 220px;
 	display: inline-block;
 	border: 1px solid #b1b1b1;
 	padding: 0 10px;
@@ -94,6 +93,16 @@ td > a {
 	height: 45px;
 }
 
+@media screen and (max-width: 1199px) {
+	.form-group.filter_form, .form-group.filter_form label {
+		width: 100%;
+	}
+
+	.form-group.filter_form .selectBox{
+		width: 170px;
+	}
+}
+
 .right_panel button {
 	background: #e6e6e6;
 	border: none;
@@ -103,6 +112,21 @@ td > a {
 	margin-left: 15px;
 	border-radius: 6px;
 	color: #676767;
+}
+
+.right_panel .button_wrap {
+	display:inline-block;
+}
+
+@media screen and (max-width: 992px) {
+	.right_panel .button_wrap {
+		width: 100%;
+		padding: 10px 0;
+	}
+
+	.right_panel .button_wrap button {
+		margin-left: 0;
+	}
 }
 
 .right_panel input#searchBox {
