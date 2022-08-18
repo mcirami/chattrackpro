@@ -9,6 +9,7 @@ use App\Services\Repositories\Offer\OfferClicksRepository;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Object_;
 use function GuzzleHttp\Psr7\parse_query;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -30,20 +31,27 @@ class ClickReportController extends ReportController
     {
         $offer = Offer::findOrFail($id);
         $dates = self::getDates();
-        $repo = new OfferClicksRepository($id, Session::user(), Session::permissions()->can(Permissions::VIEW_FRAUD_DATA));
-        $affiliateRepo = new OfferAffiliateClicksRepository($id, Session::user());
 
-        $start = Carbon::parse($dates['start'], 'America/Los_Angeles');
-        $end = Carbon::parse($dates['end'], 'America/Los_Angeles');
+	    $start = Carbon::parse( $dates['start'], 'America/Los_Angeles' );
+	    $end   = Carbon::parse( $dates['end'], 'America/Los_Angeles' );
 
-        $clickReport = $repo->between($start, $end);
-        $page = request()->query('page', 1);
-        $rpp = request()->query('rpp', 10);
-        $clickReport = new LengthAwarePaginator($clickReport->forPage($page, $rpp), $clickReport->count(), $rpp, $page,
-            ['path' => request()->fullUrlWithQuery(request()->except('page'))]);
-        $affiliateReport = $affiliateRepo->between($start, $end);
+	    $repo          = new OfferClicksRepository( $id, Session::user(),
+		    Session::permissions()->can( Permissions::VIEW_FRAUD_DATA ) );
+	    $clickReport     = $repo->between( $start, $end );
+	    $page            = request()->query( 'page', 1 );
+	    $rpp             = request()->query( 'rpp', 10 );
+	    $clickReport     = new LengthAwarePaginator( $clickReport->forPage( $page, $rpp ), $clickReport->count(),
+		    $rpp, $page,
+		    [ 'path' => request()->fullUrlWithQuery( request()->except( 'page' ) ) ] );
 
-		$this->showManagersClicks($id);
+		if (request()->query('filter') == 'affiliate') {
+
+			$affiliateRepo = new OfferAffiliateClicksRepository( $id, Session::user() );
+			$affiliateReport = $affiliateRepo->between( $start, $end );
+
+		} else {
+			$affiliateReport = $this->showManagersClicks($id);
+		}
 
         return view('report.clicks.offer', compact('offer', 'affiliateReport', 'clickReport'));
     }
@@ -99,10 +107,9 @@ class ClickReportController extends ReportController
 	public function showManagersClicks($id) {
 
 		$dates = self::getDates();
-		$affClicks = array();
+		$affClicks = [];
 		$start = Carbon::parse($dates['start'], 'America/Los_Angeles');
 		$end = Carbon::parse($dates['end'], 'America/Los_Angeles');
-
 
 		$managers = User::myUsers()->withRole(Privilege::ROLE_MANAGER)->get();
 		foreach ($managers as $manager) {
@@ -122,12 +129,15 @@ class ClickReportController extends ReportController
 			          ->get();
 
 			$object = [
-				'manager' => $manager->user_name,
+				'user_id' => $manager->idrep,
+				'user_name' => $manager->user_name,
 				'clicks' =>  $data[0]->clicks,
 				'conversions' => $data[0]->conversions
 			];
-			array_push($affClicks, $object);
+			array_push($affClicks, (object) $object);
 		}
+
+		return $affClicks;
 
 	}
 

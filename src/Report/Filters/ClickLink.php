@@ -32,7 +32,7 @@ class ClickLink implements Filter
             $i++;
             if (isset($row[$this->clicksArrayKey]) && $i !== $count) {
                 $replaced =
-                    "<a href=\"/offer/{$row[$this->offerIdArrayKey]}/clicks?d_from={$this->assign->get("d_from", Carbon::today()->format('Y-m-d'))}&d_to={$this->assign->get("d_to", Carbon::today()->format('Y-m-d'))}&dateSelect={$this->assign->get("dateSelect",0)}\" >{$row[$this->clicksArrayKey]}</a>";
+                    "<a href=\"/offer/{$row[$this->offerIdArrayKey]}/clicks?d_from={$this->assign->get("d_from", Carbon::today()->format('Y-m-d'))}&d_to={$this->assign->get("d_to", Carbon::today()->format('Y-m-d'))}&dateSelect={$this->assign->get("dateSelect",0)}&filter=affiliate\" >{$row[$this->clicksArrayKey]}</a>";
                 $data[$key][$this->clicksArrayKey] = $replaced;
             }
         }
