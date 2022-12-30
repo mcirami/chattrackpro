@@ -2,6 +2,7 @@
 
 
 @section('content')
+
     <div class = "right_panel member_home">
 
         <div class = "white_box_outer">
@@ -20,6 +21,14 @@
                         <p><span class = "lft value_span9">PostBack URL:</span>
                         <p>
                             <span id = "pb1" class = "rt blue_txt\">{{$postBackURL}}</span>
+                            <button onclick = "copyToClipboard(getElementById('pb1'));" class = 'copy_text value_span6 value_span5'>Click To Copy Link</button>
+                        </p>
+                    @endif
+
+                    @if ($userType == 2)
+                        <p><span class = "lft value_span9">Your Signup Link:</span>
+                        <p>
+                            <span id = "pb1" class = "rt blue_txt\">{{ $domain . $userId}}</span>
                             <button onclick = "copyToClipboard(getElementById('pb1'));" class = 'copy_text value_span6 value_span5'>Click To Copy Link</button>
                         </p>
                     @endif

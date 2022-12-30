@@ -19,6 +19,8 @@ class DashboardController extends Controller
             'userId' => Session::userID(),
             'firstName' => Session::userData()->first_name,
             'email' => Session::userData()->email,
+	        'userType' => Session::userType(),
+	        'domain' => request()->getSchemeAndHttpHost() . "/signup.php?mid=",
         ];
 
 

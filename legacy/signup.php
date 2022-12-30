@@ -7,11 +7,9 @@
  */
 
 
-
 $webroot = getWebRoot();
 
-
-
+$mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 
 ?>
 
@@ -23,9 +21,9 @@ $webroot = getWebRoot();
 	<meta name = "viewport" content = "width=device-width, initial-scale=1">
 	
 	<link rel = "shortcut icon" type = "image/ico"
-		  href = "<?PHP echo\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
+		  href = "<?PHP echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
 	<link rel = "shortcut icon" type = "image/ico"
-		  href = "<?PHP echo\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
+		  href = "<?PHP echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
 	<link href = "css/bootstrap.min.css" rel = "stylesheet">
 	<link href = "css/animate.css" rel = "stylesheet">
 	
@@ -109,7 +107,7 @@ $webroot = getWebRoot();
 					<div class = "heading_holder">
 						<h3 class = " value_span9">Sign Up</h3>
 					</div>
-					
+					<input name="mid" type="hidden" value="<?php echo $mid; ?>">
 					
 					<p>
 						<label class = "value_span9" for = "tys_first_name">First Name:</label>
@@ -244,6 +242,7 @@ $webroot = getWebRoot();
 			event.preventDefault();
 			
 			var postData = $("#signUpForm").serialize();
+
 			$.ajax({
 				type: "post",
 				url: "scripts/affiliate_signup.php",

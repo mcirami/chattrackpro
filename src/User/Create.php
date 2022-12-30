@@ -41,15 +41,17 @@ class Create
 
     }
 
-    public static function activateAffiliate()
+    public static function activateAffiliate($id = null, $mid = null)
     {
-        if (isset($_POST["button"]) && isset($_GET["id"])) {
-            $affiliate_id = $_GET["id"];
+        if ( (isset($_POST["button"]) && isset($_GET["id"])) || $id != null) {
+            $affiliate_id = isset($_GET["id"]) ? $_GET["id"] : intval($id);
+			$referrer_repid = isset($_POST["referrer_repid"]) ? $_POST["referrer_repid"] : $mid;
+
             $db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
             $sql = "UPDATE rep SET status = 1, referrer_repid = :referrer_repid WHERE idrep = :id";
             $prep = $db->prepare($sql);
             $prep->bindParam(":id", $affiliate_id);
-            $prep->bindParam(":referrer_repid", $_POST["referrer_repid"]);
+            $prep->bindParam(":referrer_repid", $referrer_repid);
             $prep->execute();
 
             Tree::rebuild_tree(1, 1);
@@ -72,11 +74,13 @@ class Create
                 Referrals::addReferral($_POST["referralSelectBox"], $affiliate_id, $options);
             }
 
-            Bonus::assignUsersInheritableBonuses([$affiliate_id], $_POST["referrer_repid"]);
+            Bonus::assignUsersInheritableBonuses([$affiliate_id], $referrer_repid);
 
             //User::sendWelcomeEmail($affiliate_id);
 
-            send_to("aff_update.php?idrep={$affiliate_id}");
+	        if ($id == null) {
+		        send_to( "aff_update.php?idrep={$affiliate_id}" );
+	        }
 
         }
     }

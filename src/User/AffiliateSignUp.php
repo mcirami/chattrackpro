@@ -9,6 +9,7 @@
 namespace LeadMax\TrackYourStats\User;
 
 
+use Illuminate\Support\Facades\DB;
 use LeadMax\TrackYourStats\System\Connection;
 
 class AffiliateSignUp
@@ -102,12 +103,20 @@ class AffiliateSignUp
         $skype = $this->getP("tys_skype");
         $company_name = $this->getP("tys_company_name");
 
+		if ($this->getP("mid") != "") {
+			$mid = intval($this->getP("mid"));
+			//$status = 1;
+		} else {
+			$mid = 1;
+			//$status = 0;
+		}
+
         $email = $_POST["tys_email"];
 
         $timestamp = date("Y-m-d H:i:s");
 
         $sql = "
-INSERT INTO rep (first_name, last_name, email, user_name, password, status, referrer_repid, rep_timestamp, lft,rgt, skype, company_name) VALUES(:first_name, :last_name, :email, :user_name, :password, 0, 1, :date, 0,0, :skype, :company_name);
+INSERT INTO rep (first_name, last_name, email, user_name, password, status, referrer_repid, rep_timestamp, lft,rgt, skype, company_name) VALUES(:first_name, :last_name, :email, :user_name, :password, 0, :mid, :date, 0,0, :skype, :company_name);
 ";
 
         $db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
@@ -123,10 +132,17 @@ INSERT INTO rep (first_name, last_name, email, user_name, password, status, refe
         $prep->bindParam(":date", $timestamp);
         $prep->bindParam(":skype", $skype);
         $prep->bindParam(":company_name", $company_name);
-
+	    //$prep->bindParam(":status", $status);
+	    $prep->bindParam(":mid", $mid);
 
         if ($prep->execute()) {
-            self::notifyUsersOfRegistration($db->lastInsertId());
+
+			$id = $db->lastInsertId();
+	        self::notifyUsersOfRegistration($db->lastInsertId());
+
+	        if ($mid != 1) {
+		        \LeadMax\TrackYourStats\User\Create::activateAffiliate( $id, $mid );
+	        }
 
             return true;
         } else {
