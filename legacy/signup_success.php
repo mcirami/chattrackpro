@@ -9,7 +9,7 @@
 
 $webroot = getWebRoot();
 
-
+$mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 
 ?>
 
@@ -21,9 +21,9 @@ $webroot = getWebRoot();
 	<meta name = "viewport" content = "width=device-width, initial-scale=1">
 	
 	<link rel = "shortcut icon" type = "image/ico"
-		  href = "<?PHP echo\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
+		  href = "<?PHP echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
 	<link rel = "shortcut icon" type = "image/ico"
-		  href = "<?PHP echo\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
+		  href = "<?PHP echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
 	<link href = "css/bootstrap.min.css" rel = "stylesheet">
 	<link href = "css/animate.css" rel = "stylesheet">
 	
@@ -103,23 +103,38 @@ $webroot = getWebRoot();
 		<div class = "com_acc">
 			
 			<div class = "left_con01">
-				<div class = "heading_holder">
-					<h3 class = " value_span9">Congratulations!</h3>
-				</div>
-				
+
 				<?php
 				$company =\LeadMax\TrackYourStats\System\Company::loadFromSession();
 				?>
-				
-				<p>
-					You application was successfully submitted.
-					If you have any questions please contact your manager via:
-				</p>
-				
-				<label >Skype: <?=$company->getSkype()?></label>
-				<br/>
-				<br/>
-				<label >Email: <?=$company->getEmail()?></label>
+
+				<?php
+					if ($mid == true) {
+				?>
+						<div class = "heading_holder">
+							<h3 class = " value_span9">Congratulations!</h3>
+						</div>
+						<p>
+							Your new account is setup and activated. Contact the manager who sent you your signup link with any questions.
+						</p>
+				<?php
+					} else { ?>
+						<div class = "heading_holder">
+							<h3 class = " value_span9">Congratulations!</h3>
+						</div>
+
+						<p>
+							You application was successfully submitted.
+							If you have any questions please contact your manager via:
+						</p>
+
+						<label >Skype: <?=$company->getSkype()?></label>
+						<br/>
+						<br/>
+						<label >Email: <?=$company->getEmail()?></label>
+				<?php
+					}
+				?>
 			
 			</div>
 		</div>

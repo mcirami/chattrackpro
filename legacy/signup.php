@@ -205,7 +205,10 @@ $mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 			
 			switch (responseCode) {
 				case "SUCCESS"    :
-					window.location = 'signup_success.php';
+					let mid = '<?php echo $mid; ?>';
+					mid = mid === "" ? "" : '?mid=true';
+
+					window.location = 'signup_success.php' + mid;
 					break;
 				
 				case "USERNAME_OR_EMAIL_EXISTS" :
