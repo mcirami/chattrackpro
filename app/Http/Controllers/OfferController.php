@@ -189,4 +189,11 @@ class OfferController extends Controller
         return view('offer.mass-assign', compact('users', 'offers'));
     }
 
+	public function updatePayout(Request $request) {
+
+		return response()->json([
+			'message'=> 'Payout Updated',
+		]);
+	}
+
 }

@@ -94,7 +94,7 @@ class Permissions
 
         self::EDIT_AFF_PAYOUT => [
             "description" => "Can Edit Affiliate Offer Payouts",
-            "allowed_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN],
+            "allowed_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, Privilege::ROLE_MANAGER],
         ],
 
         self::CREATE_NOTIFICATIONS => [

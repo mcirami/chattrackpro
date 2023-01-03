@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
+
+    <script>
+        let editID = null;
+    </script>
+
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer large_table">
@@ -81,9 +86,9 @@
                         @endif
 
 
-                        @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
+                        {{--@if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)--}}
                             <th class="value_span8">Payout</th>
-                        @endif
+                       {{-- @endif--}}
 
                         <th class="value_span9">Status</th>
                         @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
@@ -151,6 +156,22 @@
                                 @endif
                             @endif
 
+                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_MANAGER)
+                                <td class="value_span10">
+                                    <span id="offer_{{$offer->idoffer}}">
+                                        {{$offer->payout}}
+                                    </span>
+                                    <a class='value_span6 value_span5 offer_{{$offer->idoffer}}'
+                                       data-price='{{$offer->payout}}'
+                                       title="Offer Payout"
+                                       href="javascript:void(0);"
+                                       onclick="updatePayout({{$offer->idoffer}}, {{$offer->payout}})"
+                                    >
+                                        Edit
+                                    </a>
+                                </td>
+                            @endif
+
                             <td class="value_span10">
                                 @if($offer->status == 1)
                                     Active
@@ -158,7 +179,6 @@
                                     Inactive
                                 @endif
                             </td>
-
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                                 <td class="value_span10"><a class='btn btn-default value_span6-1 value_span4' data-toggle="tooltip"
@@ -233,7 +253,6 @@
     <script type="text/javascript">
         function requestOffer(id) {
 
-
             $("#btn_" + id).attr('disabled', true);
 
             $.ajax({
@@ -284,6 +303,87 @@
             });
 
         }
+
+		function updatePayout(offerID, offerPayout) {
+			let replaceDiv = document.getElementById('offer_' + offerID);
+			let editLink = document.querySelector('a.offer_' + offerID);
+			let form = document.createElement("form");
+			form.setAttribute("method", "post");
+			//form.setAttribute("action", "submit.php");
+			let element1 = document.createElement("input");
+			element1.setAttribute("type", "text");
+			element1.setAttribute("name", "payout");
+			element1.setAttribute("value", offerPayout);
+			element1.setAttribute("id", "offer_payout");
+			element1.setAttribute("placeholder", "Offer Payout");
+			let submit = document.createElement("input");
+			submit.setAttribute("type", "submit");
+			submit.setAttribute("value", "Submit");
+			form.appendChild(element1);
+			form.appendChild(submit);
+
+			replaceDiv.innerText = "";
+			editLink.style.display = "none";
+			replaceDiv.appendChild(form);
+
+			form.addEventListener('submit', function(e) {
+
+				e.preventDefault();
+
+				const newPayout = document.getElementById("offer_payout").value;
+				const packets = {
+					offerPayout: newPayout,
+                    offerID: offerID
+                }
+
+				return axios.post('/offer/update-payout', packets).then(
+					(response) => {
+						form.remove();
+						replaceDiv.innerText = newPayout;
+						editLink.style.display = "inline-block";
+
+						console.log(response);
+						$.notify({
+
+								title: 'Successfully',
+								message: ' Updated Payout!'
+
+							}, {
+								placement: {
+									from: 'top',
+									align: 'center'
+								},
+								type: 'info',
+								animate: {
+									enter: 'animated fadeInDown',
+									exit: 'animated fadeOutUp'
+								},
+							}
+						);
+                    }
+                ).catch(error => {
+					$.notify({
+
+							title: 'Failed to update offer payout!',
+							message: ' Please try again later or contact an admin.'
+
+						}, {
+							placement: {
+								from: 'top',
+								align: 'center'
+							},
+							type: 'danger',
+							animate: {
+								enter: 'animated fadeInDown',
+								exit: 'animated fadeOutUp'
+							},
+						}
+					);
+					console.log(error)
+                })
+            })
+
+		}
     </script>
 
     <script type="text/javascript">

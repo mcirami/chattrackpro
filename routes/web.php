@@ -65,6 +65,7 @@ Route::group(['middleware' => 'legacy.auth'], function () {
     });
     Route::group(['prefix' => 'offer'], function () {
         Route::get('manage', 'OfferController@showManage');
+	    Route::post('update-payout', 'OfferController@updatePayout');
         Route::get('{id}/request', 'OfferController@requestOffer')->middleware('role:3');
         Route::group(['middleware' => 'role:0'], function () {
             Route::get('{id}/dupe', 'OfferController@dupe');
