@@ -20,6 +20,8 @@ Route::any('/resources/landers/{subDomain}/{asset}', 'LanderController@getAsset'
 Route::get('/logout', 'LegacyLoginController@logout');
 Route::post('email/incoming', 'RelevanceReactorController@incomingEmail');
 Route::post('email/incoming/distribute', 'RelevanceReactorController@distributeEmail');
+Route::get('/contact-us', 'ContactController@show');
+Route::post('/contact-us/send', 'ContactController@contactSendMail')->name("contact.send");
 Route::group(['middleware' => 'legacy.auth'], function () {
     Route::get('dashboard', 'DashboardController@home');
     Route::group(['prefix' => 'user'], function () {

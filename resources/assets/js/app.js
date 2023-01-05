@@ -12,7 +12,7 @@ require('./bootstrap');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+/*
 window.Event = new Vue();
 
 Vue.component('chat-box', require('./components/ChatBox'));
@@ -23,5 +23,5 @@ Vue.component('user-offer-assignment', require('./components/UserOfferAssignment
 
 const app = new Vue({
   el: '#app',
-});
+});*/
 
