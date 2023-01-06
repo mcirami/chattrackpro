@@ -24,6 +24,8 @@ Offer Type(s):
 <br>
 Experience: {{$experience}}
 <br>
+Sales: {{$sales}}
+<br>
 Additional Info: {{$additionalInfo}}
 <br>
 <br>

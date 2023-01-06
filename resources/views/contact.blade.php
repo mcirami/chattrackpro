@@ -21,7 +21,7 @@ $webroot = getWebRoot();
     <!-- <link href="{{$webroot}}css/animate.css" rel="stylesheet">-->
 
     <link rel="stylesheet" type="text/css" href="<?php echo $webroot; ?>css/default.css?v=1.1"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo $webroot; ?>css/compiled/app.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $webroot; ?>css/compiled/app.min.css?v=1.3"/>
     <link rel="stylesheet" media="screen" type="text/css"
           href="<?php echo $webroot; ?>css/company.php"/>
 
@@ -33,7 +33,7 @@ $webroot = getWebRoot();
 -->
     <link rel="stylesheet" href="{{$webroot}}css/jquery-ui.min.css"/>
     <script type="text/javascript" src="<?php echo $webroot; ?>js/iscroll.min.js"></script>
-
+    <script type="text/javascript" src="<?php echo $webroot; ?>js/compiled/built.min.js"></script>
     @if(!env('APP_DEBUG') && env('APP_ENV') == 'production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127417577-1"></script>
@@ -58,36 +58,32 @@ $webroot = getWebRoot();
         <div class="row_wrap">
             <div class="nav_wrap">
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="/">
-                            <a href="{{$webroot}}">
-                                <img src="{{ $webroot.\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() .  "/logo.png"}}"
-                                     alt="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"
-                                     title="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"/>
-                            </a>
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{$webroot}}#home">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{$webroot}}#our_benefits">Our Benefits</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{$webroot}}#faq">FAQ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{$webroot}}#contact" class="nav-link">Contact</a>
-                                </li>
-                            </ul>
-                            <div class="buttons_wrap">
-                                <a class="button blue" href="{{$webroot}}login.php">Sign In</a>
-                                <a class="button transparent" href="{{$webroot}}contact-us">Contact us</a>
-                            </div>
+                    <a class="navbar-brand" href="{{$webroot}}">
+                        <img src="{{ $webroot.\LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() .  "/logo.png"}}"
+                             alt="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"
+                             title="<?php echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getShortHand(); ?>"/>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{$webroot}}#home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{$webroot}}#our_benefits">Our Benefits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{$webroot}}#faq">FAQ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{$webroot}}#contact" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+                        <div class="buttons_wrap">
+                            <a class="button blue" href="{{$webroot}}login.php">Sign In</a>
+                            <a class="button transparent" href="{{$webroot}}contact-us">Contact us</a>
                         </div>
                     </div>
                 </nav>
@@ -110,73 +106,112 @@ $webroot = getWebRoot();
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class = "heading_holder">
                             <h3>Contact Us</h3>
-                            <p>Submit the form below to let us know about yourself and the account and offers you are looking for.</p>
-                        </div>
-                        <div class="errors mb-3">
-                            @if($errors->any())
-                                @foreach ($errors as $error)
-                                    <p>{{$error}}</p>
-                                @endforeach
-                            @endif
+                            <p>Submit the form below to let us know about your group and the type of account you are looking for.</p>
                         </div>
                         <div class="mb-3">
                             <div class="row p-0">
-                                <div class="col-6">
-                                    <input id="first_name" class="form-control" type="text" name="first_name" placeholder="First Name" >
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input id="first_name" class="form-control" type="text" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required>
+                                    @if ($errors->has('first_name'))
+                                        <span class="errors">
+                                            <strong>{{ $errors->first('first_name') }}</strong>
+                                        </span>
+                                    @endif
+
                                 </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="last_name" type="text" name ="last_name" placeholder="Last Name" required>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input class="form-control" id="last_name" type="text" name ="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required>
+                                    @if ($errors->has('last_name'))
+                                        <span class="errors">
+                                            <strong>{{ $errors->first('last_name') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="row p-0">
-                                <div class="col-6">
-                                    <input class="form-control" id="office_name" type="text" name ="office_name" placeholder="Group/Office Name" required>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input class="form-control" id="office_name" type="text" name ="office_name" placeholder="Group/Office Name" value="{{ old('office_name') }}" required>
+                                    @if ($errors->has('office_name'))
+                                        <span class="errors">
+                                            <strong>{{ $errors->first('office_name') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="email" type="text" name="email" placeholder="E-mail" required>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input class="form-control" id="email" type="text" name="email" placeholder="E-mail" value="{{ old('email') }}" required>
+                                    @if ($errors->has('email'))
+                                        <span class="errors">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="row p-0">
-                                <div class="col-6">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
                                     <select name="messenger" id="messenger" class="form-control form-select" required>
                                         <option value="">Select Instant Messenger</option>
-                                        <option value="skype">Skype</option>
-                                        <option value="telegram">Telegram</option>
+                                        <option value="skype" @if(old('messenger') == 'skype') selected @endif>Skype</option>
+                                        <option value="telegram" @if(old('messenger') == 'telegram') selected @endif>Telegram</option>
                                     </select>
+                                    @if ($errors->has('messenger'))
+                                        <span class="errors">
+                                            <strong>{{ $errors->first('messenger') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="messenger_name" type="text" name="messenger_name" placeholder="Messenger Name" required>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input class="form-control" id="messenger_name" type="text" name="messenger_name" placeholder="Messenger Name" value="{{ old('messenger_name') }}" required>
+                                    @if ($errors->has('messenger_name'))
+                                        <span class="errors">
+                                            <strong>{{ $errors->first('messenger_name') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control" id="location" type="text" name="location" placeholder="Location" required>
+                            <input class="form-control" id="location" type="text" name="location" placeholder="Location" value="{{ old('location') }}" required>
+                            @if ($errors->has('location'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('location') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <select class="form-control form-select" name="account_type" id="account_type" required>
                                 <option value="">Which Best Describes you?</option>
-                                <option value="Network Owner">Network Owner</option>
-                                <option value="Office Owner">Office Owner</option>
-                                <option value="Office Manager">Office Manager</option>
-                                <option value="Office Admin">Office Admin</option>
-                                <option value="Recruiter">Recruiter</option>
+                                <option value="Network Owner" @if(old('account_type') == 'Network Owner') selected @endif>Network Owner</option>
+                                <option value="Office Owner" @if(old('account_type') == 'Office Owner') selected @endif>Office Owner</option>
+                                <option value="Office Manager" @if(old('account_type') == 'Office Manager') selected @endif>Office Manager</option>
+                                <option value="Office Admin" @if(old('account_type') == 'Office Admin') selected @endif>Office Admin</option>
+                                <option value="Recruiter" @if(old('account_type') == 'Recruiter') selected @endif>Recruiter</option>
                             </select>
+                            @if ($errors->has('account_type'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('account_type') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <select class="form-control form-select" name="agents" id="agents" required>
                                 <option value="">Number of Agents?</option>
-                                <option value="1-5">1-5</option>
-                                <option value="6-10">6-10</option>
-                                <option value="11-20">11-20</option>
-                                <option value="21-30">21-30</option>
-                                <option value="31-50">31-50</option>
-                                <option value="50-100">50-100</option>
-                                <option value="101+">101+</option>
+                                <option value="1-5" @if(old('agents') == '1-5') selected @endif>1-5</option>
+                                <option value="6-10" @if(old('agents') == '6-10') selected @endif>6-10</option>
+                                <option value="11-20" @if(old('agents') == '11-20') selected @endif>11-20</option>
+                                <option value="21-30" @if(old('agents') == '21-30') selected @endif>21-30</option>
+                                <option value="31-50" @if(old('agents') == '31-50') selected @endif>31-50</option>
+                                <option value="50-100" @if(old('agents') == '50-100') selected @endif>50-100</option>
+                                <option value="101+" @if(old('agents') == '101+') selected @endif>101+</option>
                             </select>
+                            @if ($errors->has('agents'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('agents') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <fieldset>
@@ -184,46 +219,83 @@ $webroot = getWebRoot();
                                 <p>(choose all that apply)</p>
                                <div class="checks_wrap">
                                    <div class="form-check">
-                                       <input name="offer_types[]" class="form-check-input" type="checkbox" value="Dating" id="dating">
+                                       <input name="offer_types[]" class="form-check-input" type="checkbox" value="Dating" id="dating"
+                                              @if( is_array(old('offer_types')) && in_array("Dating", old('offer_types'))) checked @endif
+                                       >
                                        <label class="form-check-label" for="dating">
                                            Dating
                                        </label>
                                    </div>
                                    <div class="form-check">
-                                       <input name="offer_types[]" class="form-check-input" type="checkbox" value="Cams" id="cams">
+                                       <input name="offer_types[]" class="form-check-input" type="checkbox" value="Cams" id="cams"
+                                              @if( is_array(old('offer_types')) && in_array("Cams", old('offer_types'))) checked @endif
+                                       >
                                        <label class="form-check-label" for="cams">
                                            Cams
                                        </label>
                                    </div>
                                    <div class="form-check">
-                                       <input name="offer_types[]"  class="form-check-input" type="checkbox" value="Nutra" id="nutra">
+                                       <input name="offer_types[]"  class="form-check-input" type="checkbox" value="Nutra" id="nutra"
+                                              @if( is_array(old('offer_types')) && in_array("Nutra", old('offer_types'))) checked @endif
+                                       >
                                        <label class="form-check-label" for="nutra">
                                            Nutra
                                        </label>
                                    </div>
                                    <div class="form-check">
-                                       <input name="offer_types[]" class="form-check-input" type="checkbox" value="Mens Health" id="mens_health">
+                                       <input name="offer_types[]" class="form-check-input" type="checkbox" value="Mens Health" id="mens_health"
+                                              @if( is_array(old('offer_types')) && in_array("Mens Health", old('offer_types'))) checked @endif
+                                       >
                                        <label class="form-check-label" for="mens_health">
                                            Mens Health
                                        </label>
                                    </div>
                                </div>
                             </fieldset>
+                            @if ($errors->has('offer_types'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('offer_types') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <select class="form-control form-select" name="experience" id="experience" required>
                                 <option value="">Years Experience</option>
-                                <option value="0-9">0-9</option>
-                                <option value="10-24">10-24</option>
-                                <option value="25-49">25-49</option>
-                                <option value="50-99">50-99</option>
-                                <option value="100-149">100-149</option>
-                                <option value="150-249">150-249</option>
-                                <option value="250+">250+</option>
+                                <option value="0-1" @if(old('experience') == '0-1') selected @endif >0-1</option>
+                                <option value="1-3" @if(old('experience') == '1-3') selected @endif >1-3</option>
+                                <option value="3-5" @if(old('experience') == '3-5') selected @endif >3-5</option>
+                                <option value="5+" @if(old('experience') == '5+') selected @endif >5+</option>
                             </select>
+                            @if ($errors->has('experience'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('experience') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" name="additional_info" id="additional_info" rows="10" placeholder="Additional Info" required></textarea>
+                            <select class="form-control form-select" name="sales" id="sales" required>
+                                <option value="">Current Sales Per Week</option>
+                                <option value="0-9" @if(old('sales') == '0-9') selected @endif >0-9</option>
+                                <option value="10-24" @if(old('sales') == '10-24') selected @endif >10-24</option>
+                                <option value="25-49" @if(old('sales') == '25-49') selected @endif >25-49</option>
+                                <option value="50-99" @if(old('sales') == '50-99') selected @endif >50-99</option>
+                                <option value="100-149" @if(old('sales') == '100-149') selected @endif >100-149</option>
+                                <option value="150-249" @if(old('sales') == '150-249') selected @endif >150-249</option>
+                                <option value="250+" @if(old('sales') == '250+') selected @endif >250+</option>
+                            </select>
+                            @if ($errors->has('sales'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('sales') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="additional_info" id="additional_info" rows="10" placeholder="Additional Info" required>{{ old('additional_info') }}</textarea>
+                            @if ($errors->has('additional_info'))
+                                <span class="errors">
+                                    <strong>{{ $errors->first('additional_info') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <input type="submit"

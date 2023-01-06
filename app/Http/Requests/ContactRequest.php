@@ -35,6 +35,7 @@ class ContactRequest extends FormRequest
 	        'agents' => 'required|max:255|string',
 	        'offer_types' => 'required|min:1',
 	        'experience' => 'required|max:255|string',
+	        'sales' => 'required|max:255|string',
 	        'additional_info' => 'max:255|string',
         ];
     }

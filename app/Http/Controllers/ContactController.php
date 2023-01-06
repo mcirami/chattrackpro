@@ -14,10 +14,10 @@ class ContactController extends Controller
 		return view('contact');
     }
 
-	public function contactSendMail(Request $request) {
+	public function contactSendMail(ContactRequest $request) {
 
-		$email = 'admin@rockphase.com';
-		//$email = 'matteo@moneylovers.com';
+		//$email = 'admin@rockphase.com';
+		$email = 'matteo@moneylovers.com';
 
 		Mail::to($email)->send(new ContactMail($request));
 

@@ -22,6 +22,7 @@ class ContactMail extends Mailable
 	public $agents;
 	public $offerTypes;
 	public $experience;
+	public $sales;
 	public $additionalInfo;
 
     /**
@@ -42,6 +43,7 @@ class ContactMail extends Mailable
 		$this->agents = $validatedData['agents'];
 		$this->offerTypes = $validatedData['offer_types'];
 		$this->experience = $validatedData['experience'];
+	    $this->sales = $validatedData['sales'];
 	    $this->additionalInfo = $validatedData['additional_info'];
     }
 
@@ -64,8 +66,9 @@ class ContactMail extends Mailable
 		                'location'      => $this->location,
 		                'accountType'   => $this->accountType,
 		                'agents'        => $this->agents,
-		                'offerTypes'     => $this->offerTypes,
+		                'offerTypes'    => $this->offerTypes,
 		                'experience'    => $this->experience,
+						'sales'         => $this->sales,
 	                    'additionalInfo' => $this->additionalInfo
 	                ]);
     }

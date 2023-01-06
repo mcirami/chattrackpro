@@ -23,10 +23,18 @@
 
                 h3 {
                     font-size: 2.5em;
+
+                    @media screen and (max-width: 550px) {
+                        font-size: 2.3em;
+                    }
                 }
 
                 p {
                     font-size: 1.2em;
+
+                    @media screen and (max-width: 550px) {
+                        font-size: 1em
+                    }
                 }
 
                 &.success {
@@ -40,8 +48,24 @@
                 color: $black;
                 text-align: left;
 
-                ::placeholder, :-ms-input-placeholder, ::-ms-input-placeholder {
+                ::placeholder, {
                     color: $black !important;
+                    opacity: 1;
+                }
+
+                :-ms-input-placeholder {
+                    color: $black !important;
+                }
+
+                ::-ms-input-placeholder{
+                    color: $black !important;
+                }
+
+                .errors {
+                    background: lightyellow;
+                    color: red;
+                    font-size: 12px;
+                    padding: 5px;
                 }
 
                 label {
@@ -87,6 +111,17 @@
                     column-gap: 20px;
                     -webkit-column-gap: 20px;
                     -moz-column-gap: 20px;
+
+                    @media screen and (max-width: 550px) {
+                        -ms-flex-wrap: wrap;
+                        flex-wrap: wrap;
+                    }
+
+                    li {
+                        @media screen and (max-width: 550px) {
+                            flex-grow: 2;
+                        }
+                    }
                 }
 
                 input[type="checkbox"] {
@@ -133,6 +168,17 @@ footer {
         justify-content: center;
         -webkit-justify-content: center;
 
+        @media screen and (max-width: 550px) {
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+        li {
+            @media screen and (max-width: 550px) {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
     }
 
     .copy {

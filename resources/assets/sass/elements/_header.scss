@@ -21,6 +21,11 @@ header {
         }
     }
 
+    &.top_sec {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     .logo {
 
         img {
@@ -30,6 +35,12 @@ header {
 
     .nav_wrap {
         width: 100%;
+
+        .navbar-expand-lg .navbar-collapse {
+            @media screen and (min-width: 992px) {
+                flex-basis: 100%;
+            }
+        }
 
         .navbar-toggler {
             background: $blue;
@@ -62,13 +73,19 @@ header {
             -moz-column-gap: 20px;
             -webkit-column-gap: 20px;
 
+            @media screen and (max-width: 1199px) {
+                column-gap: 10px;
+                -moz-column-gap: 10px;
+                -webkit-column-gap: 10px;
+            }
+
             @media screen and (max-width: 991px) {
                 margin-bottom: 20px;
                 text-align: center;
             }
 
             li {
-                @media screen and (max-width: 992px) {
+                @media screen and (max-width: 991px) {
                     border-bottom: 1px solid;
                     border-color: rgba(15, 117, 188, .3);
                     padding: 10px 0;
@@ -77,6 +94,10 @@ header {
 
             a {
                 font-size: 1.2em;
+
+                @media screen and (max-width: 1199px) {
+                    font-size: 1.7rem;
+                }
             }
         }
     }
