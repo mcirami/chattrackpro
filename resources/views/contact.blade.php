@@ -21,7 +21,7 @@ $webroot = getWebRoot();
     <!-- <link href="{{$webroot}}css/animate.css" rel="stylesheet">-->
 
     <link rel="stylesheet" type="text/css" href="<?php echo $webroot; ?>css/default.css?v=1.1"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo $webroot; ?>css/compiled/app.min.css?v=1.3"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $webroot; ?>css/compiled/app.min.css?v=1.4"/>
     <link rel="stylesheet" media="screen" type="text/css"
           href="<?php echo $webroot; ?>css/company.php"/>
 
