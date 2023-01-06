@@ -1,0 +1,108 @@
+* {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+p {
+	margin-bottom: 10px;
+}
+
+html, body {
+	min-height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+html {
+	font-size: 62.5%;
+	background: none;
+}
+
+body {
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	color: $white;
+	height: 100%;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+.button {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 18px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	text-transform: uppercase;
+
+	@media screen and (max-width: 992px) {
+		font-size: 16px;
+		padding: 10px;
+		width: 130px;
+	}
+
+	&.orange {
+		background: $orange;
+		color: $white;
+
+		&:hover {
+			background: $hoverOrange;
+			color: $white;
+		}
+	}
+
+	&.blue {
+		background: $blue;
+		color: $white;
+
+		&:hover {
+			background: $hoverBlue;
+			color: $white;
+		}
+	}
+
+	&.transparent {
+		border: 1px solid $blue;
+		background: none;
+		color: $white;
+
+		&:hover {
+			background: $blue;
+			color: $white;
+		}
+	}
+
+	&.with_arrow {
+		width: 200px;
+		padding: 20px 10px 20px 12px;
+		display: -webkit-inline-flex;
+		display: -ms-inline-flexbox;
+		display: inline-flex;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: row;
+		flex-direction: row;
+		-ms-flex-wrap: nowrap;
+		flex-wrap: nowrap;
+		align-items: center;
+		-webkit-align-items: center;
+		justify-content: space-around;
+		-webkit-justify-content: space-around;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
+}

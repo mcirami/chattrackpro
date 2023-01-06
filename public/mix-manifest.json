@@ -1,4 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/compiled/built.js": "/js/compiled/built.js",
+    "/css/compiled/app.css": "/css/compiled/app.css",
+    "/js/compiled/built.min.js": "/js/compiled/built.min.js",
+    "/css/compiled/app.min.css": "/css/compiled/app.min.css"
 }

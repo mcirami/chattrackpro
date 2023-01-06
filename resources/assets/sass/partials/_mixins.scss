@@ -1,0 +1,50 @@
+// mixins
+
+@mixin clearRow($nth) {
+	&:nth-child(#{$nth}+1) {
+		clear: both;
+	}
+}
+
+// Omega Reset
+@mixin omega-reset($nth, $columns) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter($columns); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}
+
+// Vertical Align
+@mixin vertical-align {
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+@mixin horizontal-align {
+	position: relative;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+/*@mixin proxreg {
+	font-family: 'proxima-nova-regular', sans-serif;
+	font-weight: 300;
+}
+
+@mixin proxbold {
+	font-family: 'proxima-nova-bold', sans-serif;
+	font-weight: 700;
+}
+
+@mixin proxsemi {
+	font-family: 'proxima-nova-semibold', sans-serif;
+	font-weight: 500;
+}
+
+@mixin ambold{
+	font-family: 'aero-matics-bold', sans-serif;
+	font-weight: 700;
+}*/
