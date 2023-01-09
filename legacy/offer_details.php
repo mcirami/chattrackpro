@@ -10,8 +10,11 @@ $na = new \LeadMax\TrackYourStats\Offer\Offer();
 if (isset($_GET['idoffer']))
 {
 	$rows = $na->SelectOne($_GET['idoffer']);
-}
+	$managerPayout = $na->ManagerPayout($_GET['idoffer']);
 
+	$payout = $managerPayout ? $managerPayout->payout : $rows->payout;
+	$currency = $managerPayout ? $managerPayout->currency : "USD";
+}
 
 ?>
 	
@@ -63,10 +66,18 @@ if (isset($_GET['idoffer']))
 			</div>
 			<div class = "right_con01">
 				<p>
-					<label class = "value_span9">Payout</label>
+					<label class = "value_span9">Payout
+						<?php
+							if($currency == "USD") {
+								echo " (USD)";
+							} elseif ($currency == "PHP") {
+								echo " (Philippine Pesos)";
+							}
+						?>
+					</label>
 					
 					<input type = "text" disabled class = "form-control" name = "payout" maxlength = "12"
-						   value = "<?php echo $rows->payout; ?>" id = "payout"/>
+						   value = "<?php echo $payout; ?>" id = "payout"/>
 					<span class = "small_txt value_span10">The Amount paid to affiliates per conversion</span></p>
 				
 				<?php

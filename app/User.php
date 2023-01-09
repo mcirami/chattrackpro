@@ -128,6 +128,11 @@ class User extends Authenticatable
         return User::where('lft', '>', $this->lft)->where('rgt', '<', $this->rgt);
     }
 
+	public function ManagerOfferPayout() {
+
+		return $this->hasMany(ManagerOfferPayout::class, 'rep_id');
+	}
+
 
     // GOT TO LOVE LEGACY CODE AMIRITE
     public function getRole()
@@ -183,7 +188,7 @@ class User extends Authenticatable
 
             case Privilege::ROLE_AFFILIATE:
                 return $this->belongsToMany(Offer::class, 'rep_has_offer', 'rep_idrep', 'offer_idoffer')
-                    ->withPivot('payout');
+                    ->withPivot('payout', 'currency');
         }
     }
 
@@ -210,5 +215,9 @@ class User extends Authenticatable
         return $this->hasOne(Salary::class, 'user_id', 'idrep');
     }
 
+	public function getId()
+	{
+		return $this->id;
+	}
 
 }

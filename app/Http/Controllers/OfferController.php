@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\ManagerOfferPayout;
 use App\Offer;
 use App\OfferURL;
 use App\Privilege;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -190,6 +192,32 @@ class OfferController extends Controller
     }
 
 	public function updatePayout(Request $request) {
+
+		$managerID = \LeadMax\TrackYourStats\System\Session::userID();
+		$affiliates = User::where('referrer_repid', $managerID)->get()->toArray();
+		$manager = User::where('idrep', $managerID)->first();
+
+		foreach($affiliates as $affiliate) {
+			DB::table('rep_has_offer')->where('rep_idrep', $affiliate["idrep"])->where('offer_idoffer', $request->offerID)->update([
+				'payout' => $request->offerPayout,
+				'currency' => $request->currency,
+			]);
+		}
+
+		$payouts = $manager->ManagerOfferPayout()->where('offer_id', $request->offerID)->get();
+
+		if ($payouts->isEmpty()) {
+			$manager->ManagerOfferPayout()->create([
+				'payout' => $request->offerPayout,
+				'offer_id' => $request->offerID,
+				'currency' => $request->currency
+			]);
+		} else {
+			$manager->ManagerOfferPayout()->where('offer_id', $request->offerID)->update([
+				'payout' => $request->offerPayout,
+				'currency' => $request->currency
+			]);
+		}
 
 		return response()->json([
 			'message'=> 'Payout Updated',

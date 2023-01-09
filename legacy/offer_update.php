@@ -185,6 +185,7 @@ $bonusOffer = \App\BonusOffer::where('offer_id', '=', $idoffer)->first();
 
 
                         <span class="small_txt value_span10">The offer URL where traffic will be directed to. The variables below can be used in offer URLs.</span>
+                    </p>
                     <p>
 
                         When building offer url, these values will populate automatically:
@@ -193,6 +194,8 @@ $bonusOffer = \App\BonusOffer::where('offer_id', '=', $idoffer)->first();
                         <span class="small_txt value_span10">Username: #user#</span>
                         <span class="small_txt value_span10">Click ID: #clickid#</span>
                         <span class="small_txt value_span10">Offer ID: #offid#</span>
+		                <span class="small_txt value_span10">Manager ID: #manid#</span>
+		                <span class="small_txt value_span10">Admin ID: #adminid#</span>
                     </p>
                     <p>
                         When storing values Sub ID 1-5 on incoming clicks, these tags will populate the corresponding
@@ -205,7 +208,6 @@ $bonusOffer = \App\BonusOffer::where('offer_id', '=', $idoffer)->first();
                         <span class="small_txt value_span10">Sub ID 5: #sub5#</span>
 
 
-                    </p>
                     </p>
 
                     <span class="btn_yellow"> <input type="submit" name="button"

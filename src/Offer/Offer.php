@@ -245,6 +245,18 @@ class Offer
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+	public function ManagerPayout($id) {
+		$user_id = Session::userID();
+		$db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
+		$sql = "SELECT * FROM manager_offer_payouts WHERE offer_id = :id AND rep_id = :manager_id";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+		$stmt->bindParam(':manager_id', $user_id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		return $stmt->fetch(PDO::FETCH_OBJ);
+	}
+
 
     public static function selectOwnedOffers($userType)
     {

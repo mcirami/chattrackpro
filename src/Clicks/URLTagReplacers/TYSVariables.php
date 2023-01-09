@@ -22,12 +22,18 @@ class TYSVariables implements TagReplacer
 
     private $user_name;
 
-    public function __construct($user_id, $user_name, $click_id, $offer_id)
+	private $man_id;
+
+	private $admin_id;
+
+    public function __construct($user_id, $user_name, $click_id, $offer_id, $man_id, $admin_id)
     {
         $this->user_id = $user_id;
         $this->user_name = $user_name;
         $this->click_id = $click_id;
         $this->offer_id = $offer_id;
+	    $this->man_id = $man_id;
+	    $this->admin_id = $admin_id;
     }
 
     public function encodeClickId()
@@ -41,6 +47,8 @@ class TYSVariables implements TagReplacer
         $url = str_replace("#offid#", $this->offer_id, $url);
         $url = str_replace("#clickid#", $this->click_id, $url);
         $url = str_replace("#user#", $this->user_name, $url);
+	    $url = str_replace('#manid#', $this->man_id, $url);
+	    $url = str_replace('#adminid#', $this->admin_id, $url);
 
         return $url;
     }

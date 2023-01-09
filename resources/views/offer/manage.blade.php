@@ -2,10 +2,6 @@
 
 @section('content')
 
-    <script>
-        let editID = null;
-    </script>
-
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer large_table">
@@ -150,22 +146,34 @@
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
                                 @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                                    <td class="value_span10">${{$offer->pivot->payout}}</td>
+                                    <td class="value_span10">
+                                        @if($offer->pivot->currency == "USD" || !$offer->pivot->currency)
+                                            ${{$offer->pivot->payout}}
+                                        @elseif($offer->pivot->currency == "PHP")
+                                            {{$offer->pivot->payout}} PHP
+                                        @endif
+                                    </td>
                                 @else
                                     <td class="value_span10">${{$offer->payout}}</td>
                                 @endif
                             @endif
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_MANAGER)
-                                <td class="value_span10">
+                                <td class="value_span10 edit_payout">
                                     <span id="offer_{{$offer->idoffer}}">
-                                        {{$offer->payout}}
+                                         @if($offer->currency == "USD" || !$offer->currency)
+                                            ${{$offer->payout}}
+                                        @elseif($offer->currency == "PHP")
+                                            {{$offer->payout}} PHP
+                                        @endif
+
                                     </span>
                                     <a class='value_span6 value_span5 offer_{{$offer->idoffer}}'
                                        data-price='{{$offer->payout}}'
+                                       data-currency='{{$offer->currency}}'
                                        title="Offer Payout"
                                        href="javascript:void(0);"
-                                       onclick="updatePayout({{$offer->idoffer}}, {{$offer->payout}})"
+                                       onclick="updatePayout({{$offer->idoffer}})"
                                     >
                                         Edit
                                     </a>
@@ -304,21 +312,50 @@
 
         }
 
-		function updatePayout(offerID, offerPayout) {
+		function updatePayout(offerID) {
+			let offer = document.querySelector('.offer_' + offerID);
+			let offerPayout = offer.dataset.price;
+			let currency = offer.dataset.currency;
+
 			let replaceDiv = document.getElementById('offer_' + offerID);
 			let editLink = document.querySelector('a.offer_' + offerID);
 			let form = document.createElement("form");
 			form.setAttribute("method", "post");
-			//form.setAttribute("action", "submit.php");
+			form.setAttribute("class", "payout_update");
+			//text input element
 			let element1 = document.createElement("input");
 			element1.setAttribute("type", "text");
 			element1.setAttribute("name", "payout");
 			element1.setAttribute("value", offerPayout);
-			element1.setAttribute("id", "offer_payout");
+			element1.setAttribute("id", "offer_payout_" + offerID);
+			element1.setAttribute("class", "form-control");
 			element1.setAttribute("placeholder", "Offer Payout");
+
+			//select element
+			let elementSelect = document.createElement("select");
+			elementSelect.setAttribute("id", offerID + "_currency");
+			elementSelect.setAttribute("class", "form-control")
+			let elementOption1 = document.createElement("option");
+			elementOption1.setAttribute('value', 'USD');
+			elementOption1.text = 'USD'
+            if (currency === "USD") {
+	            elementOption1.setAttribute("selected", true);
+            }
+			let elementOption2 = document.createElement("option");
+			elementOption2.setAttribute('value', 'PHP');
+			elementOption2.text = "PHP";
+			if (currency === "PHP") {
+				elementOption2.setAttribute("selected", true);
+			}
+			elementSelect.add(elementOption1);
+			elementSelect.add(elementOption2);
+
+			//submit button
 			let submit = document.createElement("input");
 			submit.setAttribute("type", "submit");
 			submit.setAttribute("value", "Submit");
+			submit.setAttribute("class", "btn btn-default btn-sm value_span6-1 value_span4")
+			form.appendChild(elementSelect);
 			form.appendChild(element1);
 			form.appendChild(submit);
 
@@ -330,19 +367,23 @@
 
 				e.preventDefault();
 
-				const newPayout = document.getElementById("offer_payout").value;
+				const newPayout = document.getElementById("offer_payout_" + offerID).value;
+				const currency = document.getElementById(offerID + "_currency").value;
 				const packets = {
 					offerPayout: newPayout,
-                    offerID: offerID
+                    offerID: offerID,
+                    currency: currency
                 }
 
 				return axios.post('/offer/update-payout', packets).then(
 					(response) => {
 						form.remove();
-						replaceDiv.innerText = newPayout;
+						replaceDiv.innerText = currency === "USD" ? "$" + newPayout : newPayout + " PHP";
 						editLink.style.display = "inline-block";
 
-						console.log(response);
+						offer.dataset.price = newPayout;
+						offer.dataset.currency = currency;
+
 						$.notify({
 
 								title: 'Successfully',

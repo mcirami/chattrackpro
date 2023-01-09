@@ -33,6 +33,8 @@ abstract class URLEvent
 
     public $clickSubVarsArray;
 
+	protected $adminId;
+
 //	public function __construct($click_id)
 //	{
 //		$this->clickId = $click_id;
@@ -49,7 +51,7 @@ abstract class URLEvent
         $offer_id = $this->offerData->idoffer;
 
         $subVarReplacer = new SubVariables($this->clickSubVarsArray);
-        $tysReplacer = new TYSVariables($this->userData->idrep, $this->userData->user_name, $encodedClickId, $offer_id);
+        $tysReplacer = new TYSVariables($this->userData->idrep, $this->userData->user_name, $encodedClickId, $offer_id, $this->userData->referrer_repid, $this->adminId);
 
 
         $urlProcessor = new URLProcessor($url);
@@ -73,6 +75,8 @@ abstract class URLEvent
     protected function getUserDataFromDatabase($user_id)
     {
         $this->userData = User::SelectOne($user_id);
+	    $this->adminId = \App\User::query()->select('referrer_repid as id')->where('idrep',
+		    $this->userData->referrer_repid)->get()->first()->id;
     }
 
     protected function getOfferDataFromDatabase($offer_id)

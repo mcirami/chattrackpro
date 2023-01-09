@@ -190,7 +190,7 @@ class ClickRegistrationEvent extends URLEvent
         $encodedClickId = UID::encode($this->clickId);
 
         $subVarReplacer = new SubVariables($this->subVarArray);
-        $tysReplacer = new TYSVariables($user_id, $this->userData->user_name, $encodedClickId, $offer_id);
+        $tysReplacer = new TYSVariables($user_id, $this->userData->user_name, $encodedClickId, $offer_id, $this->userData->referrer_repid,$this->adminId);
 
         $urlProcessor = new URLProcessor($this->offerData->url);
         $urlProcessor->addTagReplacer($subVarReplacer);

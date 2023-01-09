@@ -158,6 +158,8 @@ if ($assignType == 0) {
                             <span class="small_txt value_span10">Username: #user#</span>
                             <span class="small_txt value_span10">Click ID: #clickid#</span>
                             <span class="small_txt value_span10">Offer ID: #offid#</span>
+	                        <span class="small_txt value_span10">Manager ID: #manid#</span>
+	                        <span class="small_txt value_span10">Admin ID: #adminid#</span>
                         </p>
                         <p>
                             When storing values Sub ID 1-5 on incoming clicks, these tags will populate the

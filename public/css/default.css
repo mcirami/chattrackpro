@@ -2373,3 +2373,47 @@ table.offer_clicks th:first-child {
 .white_box_outer .manage_aff.white_box.adjust_overflow .table_wrap {
 	overflow-x: scroll;
 }
+
+td.edit_payout a{
+	float: right;
+}
+
+form.payout_update {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	-webkit-justify-content: flex-start;
+}
+
+form.payout_update select {
+	border: 1px solid #b1b1b1;
+	height: 35px;
+	font-size: .8em;
+	width: 75px;
+	margin-right: 5px;
+}
+
+form.payout_update input[type="text"] {
+	height: 35px;
+	border-right: none;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+form.payout_update .btn {
+	border-left: none;
+	width: 60px;
+	font-size: .8em;
+	border-top-left-radius: 0;
+	-webkit-border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	color: #fff;
+}
