@@ -193,7 +193,7 @@ class OfferController extends Controller
 
 	public function updatePayout(Request $request) {
 
-		$managerID = \LeadMax\TrackYourStats\System\Session::userID();
+		$managerID = $request->managerID;
 		$affiliates = User::where('referrer_repid', $managerID)->get()->toArray();
 		$manager = User::where('idrep', $managerID)->first();
 

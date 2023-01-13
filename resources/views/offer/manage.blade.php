@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer large_table">
@@ -77,14 +76,14 @@
 
                         @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                             <th class="value_span9">Offer URL</th>
-                        @elseif(\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
+                        @elseif (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
                             <th class="value_span9">Affiliate Access</th>
                         @endif
 
 
-                        {{--@if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)--}}
+                        @if ( \LeadMax\TrackYourStats\System\Session::permissions()->can("edit_aff_payout") || \LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE))
                             <th class="value_span8">Payout</th>
-                       {{-- @endif--}}
+                        @endif
 
                         <th class="value_span9">Status</th>
                         @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
@@ -158,7 +157,7 @@
                                 @endif
                             @endif
 
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_MANAGER)
+                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_MANAGER && \LeadMax\TrackYourStats\System\Session::permissions()->can("edit_aff_payout"))
                                 <td class="value_span10 edit_payout">
                                     <span id="offer_{{$offer->idoffer}}">
                                          @if($offer->currency == "USD" || !$offer->currency)
@@ -171,6 +170,7 @@
                                     <a class='value_span6 value_span5 offer_{{$offer->idoffer}}'
                                        data-price='{{$offer->payout}}'
                                        data-currency='{{$offer->currency}}'
+                                       data-manid='{{$offer->referrer_repid}}'
                                        title="Offer Payout"
                                        href="javascript:void(0);"
                                        onclick="updatePayout({{$offer->idoffer}})"
@@ -316,6 +316,7 @@
 			let offer = document.querySelector('.offer_' + offerID);
 			let offerPayout = offer.dataset.price;
 			let currency = offer.dataset.currency;
+			let manid = offer.dataset.manid;
 
 			let replaceDiv = document.getElementById('offer_' + offerID);
 			let editLink = document.querySelector('a.offer_' + offerID);
@@ -372,11 +373,13 @@
 				const packets = {
 					offerPayout: newPayout,
                     offerID: offerID,
-                    currency: currency
+                    currency: currency,
+                    managerID: manid
                 }
 
 				return axios.post('/offer/update-payout', packets).then(
 					(response) => {
+						console.log(response);
 						form.remove();
 						replaceDiv.innerText = currency === "USD" ? "$" + newPayout : newPayout + " PHP";
 						editLink.style.display = "inline-block";
