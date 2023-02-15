@@ -3,7 +3,6 @@
 namespace LeadMax\TrackYourStats\Report\Repositories\Employee;
 
 
-use App\User;
 use Carbon\Carbon;
 use LeadMax\TrackYourStats\Report\Repositories\Repository;
 use LeadMax\TrackYourStats\System\Session;
@@ -239,45 +238,7 @@ class AdminEmployeeRepository extends Repository
     private function getConversions($dateFrom, $dateTo)
     {
         $db = $this->getDB();
-
-	    $userRole = Session::user()->getRole();
-	    if($userRole == 1) {
-		    $managers = User::where('referrer_repid',  Session::userID())->get()->pluck('idrep')->toArray();
-		    $managerIDs = implode(',', array_map('intval', $managers));
-
-		    $sql = "
-				SELECT
-					rep.idrep,
-					rep.user_name,
-					count(c.id) Conversions,
-					sum(c.paid) Revenue,
-					count(u.id) FreeSignUps,
-					sum(deducted.paid) Deductions,
-					rep.lft,
-					rep.rgt
-				FROM
-					rep
-					
-				INNER JOIN privileges p on rep.idrep = p.rep_idrep
-				
-				LEFT JOIN clicks rawClicks ON rawClicks.rep_idrep = rep.idrep
-				
-				LEFT JOIN conversions c on rawClicks.idclicks = c.click_id
-				
-				
-				LEFT JOIN deductions ON deductions.conversion_id = c.id
-				
-				LEFT JOIN conversions deducted ON deducted.id = deductions.conversion_id
-				
-				LEFT JOIN free_sign_ups u on rawClicks.idclicks = u.click_id
-				
-				WHERE
-					c.timestamp BETWEEN :dateFrom AND :dateTo AND rep.referrer_repid IN (" . $managerIDs . ")
-				 
-			 GROUP BY  rep.idrep
-			 ORDER BY Conversions DESC ";
-	    } else {
-		    $sql = "
+        $sql = "
 				SELECT
 					rep.idrep,
 					rep.user_name,
@@ -310,7 +271,6 @@ class AdminEmployeeRepository extends Repository
 				 
 			 GROUP BY  rep.idrep
 			 ORDER BY Conversions DESC ";
-	    }
 
         $stmt = $db->prepare($sql);
 
@@ -330,64 +290,31 @@ class AdminEmployeeRepository extends Repository
 
     private function getClicks($dateFrom, $dateTo)
     {
-	    $db = $this->getDB();
-
-		$userRole = Session::user()->getRole();
-		if($userRole == 1) {
-			$managers = User::where('referrer_repid',  Session::userID())->get()->pluck('idrep')->toArray();
-			$managerIDs = implode(',', array_map('intval', $managers));
-
-			$sql = "
-					SELECT
-						rep.idrep,
-						rep.user_name,
-						count(rawClicks.idclicks) Clicks,
-						SUM(CASE WHEN rawClicks.click_type = 0 THEN 1 ELSE 0 END) UniqueClicks,
-						count(pc.id) PendingConversions,
-						rep.lft,
-						rep.rgt
-					FROM
-						rep
-						
-					INNER JOIN privileges p on rep.idrep = p.rep_idrep
+        $db = $this->getDB();
+        $sql = "
+				SELECT
+					rep.idrep,
+					rep.user_name,
+					count(rawClicks.idclicks) Clicks,
+					SUM(CASE WHEN rawClicks.click_type = 0 THEN 1 ELSE 0 END) UniqueClicks,
+					count(pc.id) PendingConversions,
+					rep.lft,
+					rep.rgt
+				FROM
+					rep
 					
-					LEFT JOIN clicks rawClicks ON rawClicks.rep_idrep = rep.idrep
-					
-					LEFT JOIN pending_conversions pc on rawClicks.idclicks = pc.click_id AND pc.converted = 0
-					
-					WHERE
-						rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2 AND rep.referrer_repid IN (" . $managerIDs . ")
-					
-				 GROUP BY  rep.idrep
-				 ORDER BY Clicks DESC
-			";
-
-		} else {
-				$sql = "
-					SELECT
-						rep.idrep,
-						rep.user_name,
-						count(rawClicks.idclicks) Clicks,
-						SUM(CASE WHEN rawClicks.click_type = 0 THEN 1 ELSE 0 END) UniqueClicks,
-						count(pc.id) PendingConversions,
-						rep.lft,
-						rep.rgt
-					FROM
-						rep
-						
-					INNER JOIN privileges p on rep.idrep = p.rep_idrep
-					
-					LEFT JOIN clicks rawClicks ON rawClicks.rep_idrep = rep.idrep
-					
-					LEFT JOIN pending_conversions pc on rawClicks.idclicks = pc.click_id AND pc.converted = 0
-					
-					WHERE
-						rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2
-					 
-				 GROUP BY  rep.idrep
-				 ORDER BY Clicks DESC
-			";
-		}
+				INNER JOIN privileges p on rep.idrep = p.rep_idrep
+				
+				LEFT JOIN clicks rawClicks ON rawClicks.rep_idrep = rep.idrep
+				
+				LEFT JOIN pending_conversions pc on rawClicks.idclicks = pc.click_id AND pc.converted = 0
+				
+				WHERE
+					rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2
+				 
+			 GROUP BY  rep.idrep
+			 ORDER BY Clicks DESC
+		";
 
 
         $stmt = $db->prepare($sql);

@@ -3,9 +3,7 @@
 namespace LeadMax\TrackYourStats\Report\Repositories\Offer;
 
 
-use App\User;
 use LeadMax\TrackYourStats\Report\Repositories\Repository;
-use LeadMax\TrackYourStats\System\Session;
 
 class AdminOfferRepository extends Repository
 {
@@ -46,59 +44,28 @@ class AdminOfferRepository extends Repository
     private function getClicks($dateFrom, $dateTo)
     {
         $db = $this->getDB();
+        $sql = "
+				SELECT
+					offer.idoffer,
+					offer.offer_name,
+					count(rawClicks.idclicks) Clicks,
+					SUM(CASE WHEN rawClicks.click_type = 0 THEN 1 ELSE 0 END) UniqueClicks,
+                    count(pc.id) as PendingConversions
+				FROM
+					offer
+					
+				LEFT JOIN clicks rawClicks ON rawClicks.offer_idoffer = offer.idoffer
+				
+                LEFT JOIN pending_conversions pc
+                    ON pc.click_id = rawClicks.idclicks  
+					AND pc.converted = 0
+                
+                WHERE
+					rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2
+			 GROUP BY offer.idoffer, rawClicks.offer_idoffer
+				
+		";
 
-	    $userRole = Session::user()->getRole();
-
-	    if($userRole == 1) {
-		    $managers = User::where('referrer_repid',  Session::userID())->get()->pluck('idrep')->toArray();
-		    $managerIDs = implode(',', array_map('intval', $managers));
-
-		    $sql = "
-					SELECT
-						offer.idoffer,
-						offer.offer_name,
-						count(rawClicks.idclicks) Clicks,
-						SUM(CASE WHEN rawClicks.click_type = 0 THEN 1 ELSE 0 END) UniqueClicks,
-	                    count(pc.id) as PendingConversions
-					FROM
-						offer
-						
-					LEFT JOIN clicks rawClicks ON rawClicks.offer_idoffer = offer.idoffer
-					
-	                LEFT JOIN pending_conversions pc
-	                    ON pc.click_id = rawClicks.idclicks  
-						AND pc.converted = 0
-					
-	                WHERE
-						rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2
-						
-				 GROUP BY offer.idoffer, rawClicks.offer_idoffer
-					
-			";
-
-	    } else {
-			    $sql = "
-					SELECT
-						offer.idoffer,
-						offer.offer_name,
-						count(rawClicks.idclicks) Clicks,
-						SUM(CASE WHEN rawClicks.click_type = 0 THEN 1 ELSE 0 END) UniqueClicks,
-	                    count(pc.id) as PendingConversions
-					FROM
-						offer
-						
-					LEFT JOIN clicks rawClicks ON rawClicks.offer_idoffer = offer.idoffer
-					
-	                LEFT JOIN pending_conversions pc
-	                    ON pc.click_id = rawClicks.idclicks  
-						AND pc.converted = 0
-	                
-	                WHERE
-						rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2
-				 GROUP BY offer.idoffer, rawClicks.offer_idoffer
-					
-			";
-	    }
 
         $stmt = $db->prepare($sql);
 
