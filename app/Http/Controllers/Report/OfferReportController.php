@@ -67,15 +67,17 @@ class OfferReportController extends ReportController
 
         $reporter
             ->addFilter(new Filters\DeductionColumnFilter())
-            ->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'FreeSignUps', 'PendingConversions', 'Conversions', 'Revenue', 'Deductions', 'TOTAL'], ['Revenue', 'Deductions']))
-            ->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
-            ->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC', 'TOTAL']));
+            ->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'Conversions']));
+            //->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
+            //->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC', 'TOTAL']));
 
         if (\request()->expectsJson()) {
             return response($reporter->fetchReport($dates['startDate'], $dates['endDate']));
         }
 
-        return view('report.offer.affiliate', compact('reporter', 'report', 'dates'));
+		$userType = Session::userType();
+
+        return view('report.offer.affiliate', compact('reporter', 'report', 'dates', 'userType'));
     }
 
     public function show()

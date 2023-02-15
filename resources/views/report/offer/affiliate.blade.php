@@ -9,37 +9,52 @@
 @endsection
 
 @section('table')
-    <table class="table table-bordered table-striped table_01 tablesorter" id="mainTable">
+
+    <table class="table table-bordered table-striped table_01 tablesorter @if($userType == 3) agent @endif" id="mainTable">
         <thead>
         <tr>
             <th class="value_span9">Offer ID</th>
             <th class="value_span9">Offer Name</th>
             <th class="value_span9">Raw</th>
             <th class="value_span9">Unique</th>
-            <th class="value_span9">Free Sign Ups</th>
-            <th class="value_span9">Pending Conversions</th>
+            @if (!$userType == 3)
+                <th class="value_span9">Free Sign Ups</th>
+                <th class="value_span9">Pending Conversions</th>
+            @endif
             <th class="value_span9">Conversions</th>
-            <th class="value_span9">Revenue</th>
-            <th class="value_span9">Deductions</th>
-            <th class="value_span9">EPC</th>
-            <th class="value_span9">TOTAL</th>
+            @if (!$userType == 3)
+                <th class="value_span9">Revenue</th>
+                <th class="value_span9">Deductions</th>
+                <th class="value_span9">EPC</th>
+                <th class="value_span9">TOTAL</th>
+            @endif
         </tr>
         </thead>
         <tbody>
         @php
-            $reporter->between($dates['startDate'], $dates['endDate'], new LeadMax\TrackYourStats\Report\Formats\HTML(true, [
-                'idoffer',
-                'offer_name',
-                'Clicks',
-                'UniqueClicks',
-                'FreeSignUps',
-                'PendingConversions',
-                'Conversions',
-                'Revenue',
-                'Deductions',
-                'EPC',
-                'TOTAL',
-            ]));
+            if ($userType == 3) {
+				$reporter->between($dates['startDate'], $dates['endDate'], new LeadMax\TrackYourStats\Report\Formats\HTML(true, [
+                    'idoffer',
+                    'offer_name',
+                    'Clicks',
+                    'UniqueClicks',
+                    'Conversions',
+                ]));
+            } else {
+                $reporter->between($dates['startDate'], $dates['endDate'], new LeadMax\TrackYourStats\Report\Formats\HTML(true, [
+                    'idoffer',
+                    'offer_name',
+                    'Clicks',
+                    'UniqueClicks',
+                    'FreeSignUps',
+                    'PendingConversions',
+                    'Conversions',
+                    'Revenue',
+                    'Deductions',
+                    'EPC',
+                    'TOTAL',
+                ]));
+			}
         @endphp
         </tbody>
     </table>

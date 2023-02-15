@@ -935,6 +935,10 @@ input[type="radio"], input[type="checkbox"] {
 	min-width: 1275px;
 }
 
+.table.agent {
+	min-width: 600px;
+}
+
 .tr_bottom_space {
 	margin-bottom: 40px;
 }
