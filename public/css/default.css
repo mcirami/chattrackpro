@@ -2373,3 +2373,9 @@ table.offer_clicks th:first-child {
 .white_box_outer .manage_aff.white_box.adjust_overflow .table_wrap {
 	overflow-x: scroll;
 }
+
+@media screen and (max-width: 768px) {
+	li.agent_menu i {
+		margin-right: 10px;
+	}
+}

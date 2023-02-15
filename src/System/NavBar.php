@@ -203,31 +203,58 @@ class NavBar
     public function printNav($mobile = false)
     {
 
-        foreach ($this->menu as $menuName => $menuItems) {
+		foreach ( $this->menu as $menuName => $menuItems ) {
 
-            if ($this->checkUserType($menuItems) && $this->checkPermissions($menuItems) && $this->checkPossiblePermissions($menuItems)) {
+			if($this->userType == 3) {
 
+				if ($menuName == "Offers") {
 
-                $this->printMenuStart($menuName, $menuItems["css"], $mobile);
+					echo "   <li class=\"value_span6-3 drawer-menu-item agent_menu\">
+                                <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"{$menuItems["Manage Offers"]["url"]}\">
+                                    <span><i class=\"{$menuItems["css"]}\" aria-hidden=\"true\"></i><b>{$menuName}</b></span>
+                                </a>
+                             </li>";
+				} else if ($menuName == "Reports") {
+					echo "   <li class=\"value_span6-3 drawer-menu-item agent_menu\">
+                                <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"{$menuItems["Offer Report"]["url"]}\">
+                                    <span><i class=\"{$menuItems["css"]}\" aria-hidden=\"true\"></i><b>{$menuName}</b></span>
+                                </a>
+                             </li>";
+				} else if ($menuName == "Account") {
+					echo "   <li class=\"value_span6-3 drawer-menu-item agent_menu\">
+                                <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"{$menuItems["My Account"]["url"]}\">
+                                    <span><i class=\"{$menuItems["css"]}\" aria-hidden=\"true\"></i><b>{$menuName}</b></span>
+                                </a>
+                             </li>";
+				}
 
+			} else {
 
-                foreach ($menuItems as $key => $vals) {
-                    if ($this->isMenuItem($key)) {
+				if ( $this->checkUserType( $menuItems ) && $this->checkPermissions( $menuItems ) && $this->checkPossiblePermissions( $menuItems ) ) {
 
-                        if ($this->checkPermissions($vals) && $this->checkUserType($vals) && $this->checkPossiblePermissions($vals)) {
+					$this->printMenuStart( $menuName, $menuItems["css"], $mobile );
 
-                            $this->printSubMenuItem($key, $vals["url"], $this->hasDateOptions($vals), $mobile);
+					foreach ( $menuItems as $key => $vals ) {
+						if ( $this->isMenuItem( $key ) ) {
 
-                        }
-                    }
+							if ( $this->checkPermissions( $vals ) && $this->checkUserType( $vals ) && $this->checkPossiblePermissions( $vals ) ) {
 
-                }
-                echo "</ul></li>";
+								$this->printSubMenuItem( $key, $vals["url"], $this->hasDateOptions( $vals ), $mobile );
 
-            }
+							}
+						}
 
+					}
+					echo "</ul></li>";
 
-        }
+				}
+			}
+		}
+
+	    if($this->userType == 3) {
+	        echo "</ul>";
+		}
+
     }
 
 
