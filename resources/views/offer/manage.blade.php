@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer large_table">
@@ -16,14 +17,14 @@
                 @include('report.options.active')
             @endif
 
-            @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
+           {{-- @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                 <div class='form-group'>
                     <p class='form-control'>
                         Add up to 5 Sub variables as follows: http://domain.com/?repid=1&offerid=1&sub1=XXX&sub2=YYY&sub3=ZZZ&sub4=AAA&sub5=BBB
                     </p>
                     
                 </div>
-            @endif
+            @endif--}}
 
 
             <script type="text/javascript">
@@ -34,7 +35,7 @@
             </script>
 
 
-            <div style="margin:0 0 1px 0; padding:5px; width:250px;">
+            {{--<div style="margin:0 0 1px 0; padding:5px; width:250px;">
 
                 @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
 
@@ -54,7 +55,7 @@
                     </select>
 
                 @endif
-            </div>
+            </div>--}}
 
 
             <div class="form-group searchDiv">
@@ -66,14 +67,15 @@
             <div class="white_box manage_aff white_box_x_scroll large_table value_span8">
 
 
-                <table class="table table-condensed table-bordered table_01" id="mainTable">
+                <table class="table table-condensed table-bordered table_01 adjust_width" id="mainTable">
                     <thead>
 
                     <tr>
                         <th class="value_span9">Offer ID</th>
                         <th class="value_span9">Offer Name</th>
-                        <th class="value_span9">Offer Type</th>
-
+                        @if($userType != 3)
+                            <th class="value_span9">Offer Type</th>
+                        @endif
                         @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                             <th class="value_span9">Offer URL</th>
                         @elseif(\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
@@ -81,20 +83,24 @@
                         @endif
 
 
-                        @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
+                        @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER && $userType != 3)
                             <th class="value_span8">Payout</th>
                         @endif
 
-                        <th class="value_span9">Status</th>
-                        @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                            <th class="value_span9">Postback Options</th>
+                        @if ($userType != 3)
+                            <th class="value_span9">Status</th>
                         @endif
+                        {{--@if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
+                            <th class="value_span9">Postback Options</th>
+                        @endif--}}
 
                         @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
                             <th class="value_span9">Offer Timestamp</th>
                         @endif
 
-                        <th class="value_span9">Actions</th>
+                        @if ($userType != 3)
+                            <th class="value_span9">Actions</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -123,7 +129,9 @@
                         <tr>
                             <td>{{$offer->idoffer}}</td>
                             <td>{{ucwords($offer->offer_name)}}</td>
-                            <td>{{\LeadMax\TrackYourStats\Offer\Offer::offerTypeAsString($offer->offer_type)}}</td>
+                            @if($userType != 3)
+                                <td>{{\LeadMax\TrackYourStats\Offer\Offer::offerTypeAsString($offer->offer_type)}}</td>
+                            @endif
                             @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
 
                                 <p style='display:none;' id="url_{{$offer->idoffer}}">http://{{$urls[request('url',0)]}}
@@ -143,29 +151,34 @@
                                 </td>
                             @endif
 
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
+                           {{-- @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
                                 @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                                     <td class="value_span10">${{$offer->pivot->payout}}</td>
                                 @else
                                     <td class="value_span10">${{$offer->payout}}</td>
                                 @endif
+                            @endif--}}
+                            @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER && \LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_AFFILIATE)
+                                <td class="value_span10">${{$offer->payout}}</td>
                             @endif
 
-                            <td class="value_span10">
-                                @if($offer->status == 1)
-                                    Active
-                                @else
-                                    Inactive
-                                @endif
-                            </td>
+                            @if($userType != 3)
+                                <td class="value_span10">
+                                    @if($offer->status == 1)
+                                        Active
+                                    @else
+                                        Inactive
+                                    @endif
+                                </td>
+                            @endif
 
 
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
+                           {{-- @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
                                 <td class="value_span10"><a class='btn btn-default value_span6-1 value_span4' data-toggle="tooltip"
                                                             title="Offer PostBack Options"
                                                             href="/offer_edit_pb.php?offid={{$offer->idoffer}}">Edit
                                         Post Back</a></td>
-                            @endif
+                            @endif--}}
 
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
@@ -194,8 +207,6 @@
                                     <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="View Offer"
                                        href="/offer_details.php?idoffer={{$offer->idoffer}}"> View</a>
                                 </td>
-                            @else
-                                <td></td>
                             @endif
 
                             @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD)

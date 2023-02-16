@@ -80,8 +80,9 @@ class OfferController extends Controller
         $paginate = new Paginate(request('rpp', 10), $offers->count());
         $offers = $offers->paginate(request('rpp', 10));
 
-        $data = array_merge(compact('paginate', 'offers'), $data);
+	    $userType = \LeadMax\TrackYourStats\System\Session::userType();
 
+        $data = array_merge(compact('paginate', 'offers', 'userType'), $data);
 
         return view('offer.manage', $data);
     }
