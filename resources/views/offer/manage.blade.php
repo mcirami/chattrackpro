@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer large_table">
@@ -204,8 +203,10 @@
 
                             @if(\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_AFFILIATE)
                                 <td class="value_span10">
+                                    {{--<a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="View Offer"
+                                       href="/offer_details.php?idoffer={{$offer->idoffer}}"> View</a>--}}
                                     <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="View Offer"
-                                       href="/offer_details.php?idoffer={{$offer->idoffer}}"> View</a>
+                                       target="_blank" href="https://bigbucksglobal.com/?repid=1005&offerid={{$offer->idoffer}}&sub1="> View</a>
                                 </td>
                             @endif
 
