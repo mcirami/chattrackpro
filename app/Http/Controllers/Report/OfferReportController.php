@@ -17,6 +17,24 @@ use LeadMax\TrackYourStats\Report\Filters;
 class OfferReportController extends ReportController
 {
 
+	public function god() {
+		$dates = self::getDates();
+		$repo = new AdminOfferRepository(\DB::getPdo());
+
+		$reporter = new Reporter($repo);
+
+
+		$reporter
+			->addFilter(new Filters\DeductionColumnFilter())
+			->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'FreeSignUps', 'PendingConversions', 'Conversions', 'Revenue', 'Deductions']))
+			->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
+			->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC']))
+			->addFilter(new Filters\ClickLink(request()));
+
+		$userType = Session::userType();
+
+		return view('report.offer.admin', compact('reporter', 'dates', 'userType'));
+	}
 
     public function admin()
     {
@@ -25,15 +43,17 @@ class OfferReportController extends ReportController
 
         $reporter = new Reporter($repo);
 
+	    $userType = Session::userType();
 
         $reporter
             ->addFilter(new Filters\DeductionColumnFilter())
-            ->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'FreeSignUps', 'PendingConversions', 'Conversions', 'Revenue', 'Deductions']))
-            ->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
-            ->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC']))
+            ->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'Conversions']))
+            //->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
+            //->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC']))
             ->addFilter(new Filters\ClickLink(request()));
 
-        return view('report.offer.admin', compact('reporter', 'dates'));
+
+        return view('report.offer.admin', compact('reporter', 'dates', 'userType'));
     }
 
     public function manager()
@@ -46,12 +66,14 @@ class OfferReportController extends ReportController
 
         $reporter
             ->addFilter(new Filters\DeductionColumnFilter())
-            ->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'FreeSignUps', 'PendingConversions', 'Conversions', 'Revenue', 'Deductions']))
-            ->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
-            ->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC']))
+            ->addFilter(new Filters\Total(['Clicks', 'UniqueClicks', 'Conversions']))
+            //->addFilter(new Filters\EarningPerClick('UniqueClicks', 'Revenue'))
+            //->addFilter(new Filters\DollarSign(['Revenue', 'Deductions', 'EPC']))
             ->addFilter(new Filters\ClickLink(request()));
 
-        return view('report.offer.admin', compact('reporter', 'dates'));
+	    $userType = Session::userType();
+
+        return view('report.offer.admin', compact('reporter', 'dates', 'userType'));
     }
 
     public function affiliate()
@@ -84,6 +106,8 @@ class OfferReportController extends ReportController
     {
         switch (Session::userType()) {
             case Privilege::ROLE_GOD:
+	            return $this->god();
+
             case Privilege::ROLE_ADMIN:
                 return $this->admin();
 

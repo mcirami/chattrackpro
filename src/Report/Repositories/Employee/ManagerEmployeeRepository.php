@@ -21,23 +21,35 @@ class ManagerEmployeeRepository extends Repository
 
         $report = $this->mergeReport($report, $this->getReferralRevenue($dateFrom, $dateTo));
 
-        $report = $this->setRequiredKeysIfNotSet($report, [
-                'idrep' => '',
-                'user_name' => '',
-                'Clicks' => 0,
-                'UniqueClicks' => 0,
-                'FreeSignUps' => 0,
-                'PendingConversions' => 0,
-                'Conversions' => 0,
-                'Revenue' => 0,
-                'Deductions' => 0,
-                'EPC' => 0,
-                'BonusRevenue' => 0,
-                'ReferralRevenue' => 0,
-                'TOTAL' => 0,
-            ]
-        );
+	    $userType = Session::userType();
 
+	    if ($userType == 0) {
+		    $report = $this->setRequiredKeysIfNotSet( $report, [
+				    'idrep'              => '',
+				    'user_name'          => '',
+				    'Clicks'             => 0,
+				    'UniqueClicks'       => 0,
+				    'FreeSignUps'        => 0,
+				    'PendingConversions' => 0,
+				    'Conversions'        => 0,
+				    'Revenue'            => 0,
+				    'Deductions'         => 0,
+				    'EPC'                => 0,
+				    'BonusRevenue'       => 0,
+				    'ReferralRevenue'    => 0,
+				    'TOTAL'              => 0,
+			    ]
+		    );
+	    } else {
+		    $report = $this->setRequiredKeysIfNotSet( $report, [
+				    'idrep'              => '',
+				    'user_name'          => '',
+				    'Clicks'             => 0,
+				    'UniqueClicks'       => 0,
+				    'Conversions'        => 0,
+			    ]
+		    );
+	    }
 
         return $report;
     }

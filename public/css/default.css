@@ -935,7 +935,7 @@ input[type="radio"], input[type="checkbox"] {
 	min-width: 1275px;
 }
 
-.table.agent {
+.table.adjust_width {
 	min-width: 600px;
 }
 
@@ -2379,7 +2379,7 @@ table.offer_clicks th:first-child {
 }
 
 @media screen and (max-width: 768px) {
-	li.agent_menu i {
+	li i.mobile_icon {
 		margin-right: 10px;
 	}
 }

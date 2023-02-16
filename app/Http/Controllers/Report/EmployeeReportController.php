@@ -73,8 +73,9 @@ class EmployeeReportController extends ReportController
         $dates = self::getDates();
         $reporter = $this->report($repository, $request);
 
+	    $userType = Session::userType();
 
-        return view('report.employee', compact('reporter', 'dates'));
+        return view('report.employee', compact('reporter', 'dates', 'userType'));
     }
 
 

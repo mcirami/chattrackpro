@@ -10,19 +10,19 @@
 
 @section('table')
 
-    <table class="table table-bordered table-striped table_01 tablesorter @if($userType == 3) agent @endif" id="mainTable">
+    <table class="table table-bordered table-striped table_01 tablesorter @if($userType != 0) adjust_width @endif" id="mainTable">
         <thead>
         <tr>
             <th class="value_span9">Offer ID</th>
             <th class="value_span9">Offer Name</th>
             <th class="value_span9">Raw</th>
             <th class="value_span9">Unique</th>
-            @if (!$userType == 3)
+            @if ($userType == 0)
                 <th class="value_span9">Free Sign Ups</th>
                 <th class="value_span9">Pending Conversions</th>
             @endif
             <th class="value_span9">Conversions</th>
-            @if (!$userType == 3)
+            @if ($userType == 0)
                 <th class="value_span9">Revenue</th>
                 <th class="value_span9">Deductions</th>
                 <th class="value_span9">EPC</th>
@@ -32,16 +32,8 @@
         </thead>
         <tbody>
         @php
-            if ($userType == 3) {
+            if ($userType == 0) {
 				$reporter->between($dates['startDate'], $dates['endDate'], new LeadMax\TrackYourStats\Report\Formats\HTML(true, [
-                    'idoffer',
-                    'offer_name',
-                    'Clicks',
-                    'UniqueClicks',
-                    'Conversions',
-                ]));
-            } else {
-                $reporter->between($dates['startDate'], $dates['endDate'], new LeadMax\TrackYourStats\Report\Formats\HTML(true, [
                     'idoffer',
                     'offer_name',
                     'Clicks',
@@ -53,6 +45,14 @@
                     'Deductions',
                     'EPC',
                     'TOTAL',
+                ]));
+            } else {
+                $reporter->between($dates['startDate'], $dates['endDate'], new LeadMax\TrackYourStats\Report\Formats\HTML(true, [
+                    'idoffer',
+                    'offer_name',
+                    'Clicks',
+                    'UniqueClicks',
+                    'Conversions',
                 ]));
 			}
         @endphp

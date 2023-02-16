@@ -205,33 +205,51 @@ class NavBar
 
 		foreach ( $this->menu as $menuName => $menuItems ) {
 
-			if($this->userType == 3) {
+			if ( $this->checkUserType( $menuItems ) && $this->checkPermissions( $menuItems ) && $this->checkPossiblePermissions( $menuItems ) ) {
 
-				if ($menuName == "Offers") {
-
-					echo "   <li class=\"value_span6-3 drawer-menu-item agent_menu\">
-                                <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"{$menuItems["Manage Offers"]["url"]}\">
-                                    <span><i class=\"{$menuItems["css"]}\" aria-hidden=\"true\"></i><b>{$menuName}</b></span>
-                                </a>
-                             </li>";
-				} else if ($menuName == "Reports") {
-					echo "   <li class=\"value_span6-3 drawer-menu-item agent_menu\">
-                                <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"{$menuItems["Offer Report"]["url"]}\">
-                                    <span><i class=\"{$menuItems["css"]}\" aria-hidden=\"true\"></i><b>{$menuName}</b></span>
-                                </a>
-                             </li>";
-				} else if ($menuName == "Account") {
-					echo "   <li class=\"value_span6-3 drawer-menu-item agent_menu\">
-                                <a class=\"value_span2-2 value_span3-2 value_span5 value_span6\" href=\"{$menuItems["My Account"]["url"]}\">
-                                    <span><i class=\"{$menuItems["css"]}\" aria-hidden=\"true\"></i><b>{$menuName}</b></span>
-                                </a>
-                             </li>";
+				if ($mobile) {
+					$classes = "value_span6-1 value_span2 drawer-menu-item value_span2-2 value_span3-2 value_span5 value_span6";
+				} else {
+					$classes = "value_span2-2 value_span3-2 value_span5 value_span6";
 				}
 
-			} else {
+				if ($menuName == "Offers" && ($this->userType == 2 || $this->userType == 3 || $this->userType == 1)) {
 
-				if ( $this->checkUserType( $menuItems ) && $this->checkPermissions( $menuItems ) && $this->checkPossiblePermissions( $menuItems ) ) {
+					echo "  <li class=\"value_span6-3\">
+                                <a class=\"{$classes}\" href=\"{$menuItems["Manage Offers"]["url"]}\">
+                                    <span>";
+                                    if(!$mobile) {
+	                                    echo "<i class=\"{$menuItems["css"]} mobile_icon\" aria-hidden=\"true\"></i>";
+									}
+									echo "<b>{$menuName}</b>
+                                    </span>
+                                </a>
+                            </li>";
 
+				} else if ($menuName == "Reports" && $this->userType == 3){
+					echo "   <li class=\"value_span6-3\">
+                            <a class=\"{$classes}\" href=\"{$menuItems["Offer Report"]["url"]}\">
+                                <span>";
+								if(!$mobile) {
+									echo "<i class=\"{$menuItems["css"]} mobile_icon\" aria-hidden=\"true\"></i>";
+								}
+								echo "
+                                    <b>{$menuName}</b>
+                                </span>
+                            </a>
+                         </li>";
+				} else if ( $menuName == "Account" && ($this->userType == 3 || $this->userType == 2 || $this->userType == 1)) {
+					echo "   <li class=\"value_span6-3\">
+                            <a class=\"{$classes}\" href=\"{$menuItems["My Account"]["url"]}\">
+                                <span>";
+									if(!$mobile) {
+										echo "<i class=\"{$menuItems["css"]} mobile_icon\" aria-hidden=\"true\"></i>";
+									}
+									echo "<b>{$menuName}</b>
+                                 </span>
+                            </a>
+                         </li>";
+				} else {
 					$this->printMenuStart( $menuName, $menuItems["css"], $mobile );
 
 					foreach ( $menuItems as $key => $vals ) {
@@ -239,16 +257,21 @@ class NavBar
 
 							if ( $this->checkPermissions( $vals ) && $this->checkUserType( $vals ) && $this->checkPossiblePermissions( $vals ) ) {
 
-								$this->printSubMenuItem( $key, $vals["url"], $this->hasDateOptions( $vals ), $mobile );
+								if ($key == "Daily Report" && ($this->userType == 2 || $this->userType == 1)) {
+									continue;
+								} else {
+									$this->printSubMenuItem( $key, $vals["url"], $this->hasDateOptions( $vals ), $mobile );
+								}
 
 							}
 						}
 
 					}
-					echo "</ul></li>";
 
+					echo "</ul></li>";
 				}
 			}
+
 		}
 
 	    if($this->userType == 3) {

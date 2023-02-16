@@ -24,22 +24,36 @@ class AdminEmployeeRepository extends Repository
 
         $report = $this->mergeReport($report, $this->getReferralRevenue($dateFrom, $dateTo));
 
-        $report = $this->setRequiredKeysIfNotSet($report, [
-                'idrep' => '',
-                'user_name' => '',
-                'Clicks' => 0,
-                'UniqueClicks' => 0,
-                'FreeSignUps' => 0,
-                'PendingConversions' => 0,
-                'Conversions' => 0,
-                'Revenue' => 0,
-                'Deductions' => 0,
-                'EPC' => 0,
-                'BonusRevenue' => 0,
-                'ReferralRevenue' => 0,
-                'TOTAL' => 0,
-            ]
-        );
+		$userType = Session::userType();
+
+		if ($userType == 0) {
+			$report = $this->setRequiredKeysIfNotSet($report, [
+					'idrep' => '',
+					'user_name' => '',
+					'Clicks' => 0,
+					'UniqueClicks' => 0,
+					'FreeSignUps' => 0,
+					'PendingConversions' => 0,
+					'Conversions' => 0,
+					'Revenue' => 0,
+					'Deductions' => 0,
+					'EPC' => 0,
+					'BonusRevenue' => 0,
+					'ReferralRevenue' => 0,
+					'TOTAL' => 0,
+				]
+			);
+		} else {
+			$report = $this->setRequiredKeysIfNotSet($report, [
+					'idrep' => '',
+					'user_name' => '',
+					'Clicks' => 0,
+					'UniqueClicks' => 0,
+					'Conversions' => 0,
+				]
+			);
+		}
+
 
 
         $report = $this->sortByRequestedUserType($report);
@@ -75,30 +89,46 @@ class AdminEmployeeRepository extends Repository
 
     private function addArrayValuesToOtherArray($initial, $output)
     {
-        $output["Clicks"] += $initial["Clicks"];
-        $output["UniqueClicks"] += $initial["UniqueClicks"];
-        $output['PendingConversions'] += $initial['PendingConversions'];
-        $output["Conversions"] += $initial["Conversions"];
-        $output["Revenue"] += $initial["Revenue"];
-        $output["Deductions"] += $initial["Deductions"];
-        $output["FreeSignUps"] += $initial["FreeSignUps"];
-        $output["BonusRevenue"] += $initial["BonusRevenue"];
-        $output["ReferralRevenue"] += $initial["ReferralRevenue"];
+	    $userType = Session::userType();
+
+	    if ($userType == 0) {
+	        $output["Clicks"] += $initial["Clicks"];
+	        $output["UniqueClicks"] += $initial["UniqueClicks"];
+	        $output['PendingConversions'] += $initial['PendingConversions'];
+	        $output["Conversions"] += $initial["Conversions"];
+	        $output["Revenue"] += $initial["Revenue"];
+	        $output["Deductions"] += $initial["Deductions"];
+	        $output["FreeSignUps"] += $initial["FreeSignUps"];
+	        $output["BonusRevenue"] += $initial["BonusRevenue"];
+	        $output["ReferralRevenue"] += $initial["ReferralRevenue"];
+		} else {
+		    $output["Clicks"] += $initial["Clicks"];
+		    $output["UniqueClicks"] += $initial["UniqueClicks"];
+		    $output["Conversions"] += $initial["Conversions"];
+	    }
 
         return $output;
     }
 
     private function defaultArrayReportKeys($array)
     {
-        $array["Clicks"] = 0;
-        $array["UniqueClicks"] = 0;
-        $array['PendingConversions'] = 0;
-        $array["Conversions"] = 0;
-        $array["Revenue"] = 0;
-        $array["Deductions"] = 0;
-        $array["FreeSignUps"] = 0;
-        $array["BonusRevenue"] = 0;
-        $array["ReferralRevenue"] = 0;
+	    $userType = Session::userType();
+
+	    if ($userType == 0) {
+		    $array["Clicks"]             = 0;
+		    $array["UniqueClicks"]       = 0;
+		    $array['PendingConversions'] = 0;
+		    $array["Conversions"]        = 0;
+		    $array["Revenue"]            = 0;
+		    $array["Deductions"]         = 0;
+		    $array["FreeSignUps"]        = 0;
+		    $array["BonusRevenue"]       = 0;
+		    $array["ReferralRevenue"]    = 0;
+	    } else {
+		    $array["Clicks"]             = 0;
+		    $array["UniqueClicks"]       = 0;
+		    $array["Conversions"]        = 0;
+	    }
 
         return $array;
     }
