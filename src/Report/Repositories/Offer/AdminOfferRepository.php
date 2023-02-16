@@ -69,8 +69,10 @@ class AdminOfferRepository extends Repository
 	                    ON pc.click_id = rawClicks.idclicks  
 						AND pc.converted = 0
 					
+					LEFT JOIN rep ON rep.idrep = rawClicks.rep_idrep
+					
 	                WHERE
-						rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2
+						rawClicks.first_timestamp BETWEEN :dateFrom AND :dateTo  and rawClicks.click_type !=2 and rep.referrer_repid IN (" . $managerIDs . ")
 						
 				 GROUP BY offer.idoffer, rawClicks.offer_idoffer
 					
@@ -118,35 +120,74 @@ class AdminOfferRepository extends Repository
     private function getConversions($dateFrom, $dateTo)
     {
         $db = $this->getDB();
-        $sql = "
-				SELECT
-					offer.idoffer,
-					offer.offer_name,
-					count(f.id) FreeSignUps,
-					count(conversions.id) Conversions,
-					sum(conversions.paid) Revenue,
-					sum(deducted.paid) Deductions
-				FROM
-					offer
-					
-				LEFT JOIN clicks rawClicks ON rawClicks.offer_idoffer = offer.idoffer
-				
-				LEFT JOIN conversions ON conversions.click_id = rawClicks.idclicks
-				
-				LEFT JOIN free_sign_ups f ON f.click_id = rawClicks.idclicks
-				
-				
-				LEFT JOIN deductions ON deductions.conversion_id = conversions.id
-				
-				LEFT JOIN conversions deducted ON deducted.id = deductions.conversion_id
-				
-				WHERE
-					conversions.timestamp BETWEEN :dateFrom AND :dateTo 
-				 
-			 GROUP BY offer.idoffer, rawClicks.offer_idoffer
-				
-		";
 
+	    $userRole = Session::user()->getRole();
+
+	    if($userRole == 1) {
+		    $managers   = User::where( 'referrer_repid', Session::userID() )->get()->pluck( 'idrep' )->toArray();
+		    $managerIDs = implode( ',', array_map( 'intval', $managers ) );
+
+		    $sql = "
+					SELECT
+						offer.idoffer,
+						offer.offer_name,
+						count(f.id) FreeSignUps,
+						count(conversions.id) Conversions,
+						sum(conversions.paid) Revenue,
+						sum(deducted.paid) Deductions
+					FROM
+						offer
+						
+					LEFT JOIN clicks rawClicks ON rawClicks.offer_idoffer = offer.idoffer
+					
+					LEFT JOIN conversions ON conversions.click_id = rawClicks.idclicks
+					
+					LEFT JOIN free_sign_ups f ON f.click_id = rawClicks.idclicks
+					
+					
+					LEFT JOIN deductions ON deductions.conversion_id = conversions.id
+					
+					LEFT JOIN conversions deducted ON deducted.id = deductions.conversion_id
+					
+					LEFT JOIN rep ON rep.idrep = conversions.user_id
+					
+					WHERE
+						conversions.timestamp BETWEEN :dateFrom AND :dateTo and rep.referrer_repid IN (" . $managerIDs . ")
+					 
+				 GROUP BY offer.idoffer, rawClicks.offer_idoffer
+					
+			";
+
+	    } else {
+			    $sql = "
+					SELECT
+						offer.idoffer,
+						offer.offer_name,
+						count(f.id) FreeSignUps,
+						count(conversions.id) Conversions,
+						sum(conversions.paid) Revenue,
+						sum(deducted.paid) Deductions
+					FROM
+						offer
+						
+					LEFT JOIN clicks rawClicks ON rawClicks.offer_idoffer = offer.idoffer
+					
+					LEFT JOIN conversions ON conversions.click_id = rawClicks.idclicks
+					
+					LEFT JOIN free_sign_ups f ON f.click_id = rawClicks.idclicks
+					
+					
+					LEFT JOIN deductions ON deductions.conversion_id = conversions.id
+					
+					LEFT JOIN conversions deducted ON deducted.id = deductions.conversion_id
+					
+					WHERE
+						conversions.timestamp BETWEEN :dateFrom AND :dateTo 
+					 
+				 GROUP BY offer.idoffer, rawClicks.offer_idoffer
+					
+			";
+	    }
 
         $stmt = $db->prepare($sql);
 
