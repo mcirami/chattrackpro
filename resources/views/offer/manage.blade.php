@@ -55,17 +55,12 @@
 
                 @endif
             </div>
-
-
             <div class="form-group searchDiv">
-                <input id="searchBox" onkeyup="searchTable()" class="form-control" type="text"
-                       placeholder="Search offers...">
+                <input id="searchBox" onkeyup="searchTable()" class="form-control" type="text" placeholder="Search offers..." />
             </div>
 
             <div class="clear"></div>
             <div class="white_box manage_aff white_box_x_scroll large_table value_span8">
-
-
                 <table class="table table-condensed table-bordered table_01" id="mainTable">
                     <thead>
 

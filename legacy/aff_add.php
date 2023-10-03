@@ -281,8 +281,8 @@ switch ($result)
 
 					});
 
-					if (cap_enabled)
-						$("#enable_cap").click();
+					/*if (cap_enabled)
+						$("#enable_cap").click();*/
 
 				});
 

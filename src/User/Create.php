@@ -222,8 +222,9 @@ class Create
     {
         $new_replist = new User();
         $this->assignTos = $new_replist->selectAssignablesManager();
+	    $userType = Session::userType();
 
-        if (Session::userType() == \App\Privilege::ROLE_MANAGER) {
+        if ($userType == \App\Privilege::ROLE_MANAGER) {
             $this->filterManagerAssignables();
         }
 
@@ -231,23 +232,62 @@ class Create
         $this->listAdmin = array();
         $this->listManager = array();
 
+	    $userData = Session::userData();
+	    if ($userType == \App\Privilege::ROLE_ADMIN) {
 
-        foreach ($this->assignTos as $key => $value) {
-            $user_name = $value["user_name"];
-            $idrep = $value["idrep"];
-            if ($value["is_god"] == 1) {
-                $this->listGod[] = $idrep.";".$user_name;
-            }
-            if ($value["is_admin"] == 1) {
-                $this->listAdmin[] = $idrep.";".$user_name;
-            }
-            if ($value["is_manager"] == 1) {
-                $this->listManager[] = $idrep.";".$user_name;
-            }
+		    foreach ( $this->assignTos as $key => $value ) {
+			    $user_name = $value["user_name"];
+			    $idrep     = $value["idrep"];
 
+			    if ( $value["is_god"] == 1 ) {
+				    $this->listGod[] = $idrep . ";" . $user_name;
+			    }
+			    if ( $value["is_admin"] == 1 ) {
+				    if ( $idrep == $userData->idrep ) {
+					    $this->listAdmin[] = $idrep . ";" . $user_name;
+				    }
+			    }
+			    if ( $value["is_manager"] == 1 ) {
+				    if ( $value["referrer_repid"] == $userData->idrep ) {
+					    $this->listManager[] = $idrep . ";" . $user_name;
+				    }
+			    }
+		    }
+	    } else if ($userType == \App\Privilege::ROLE_MANAGER) {
+		    foreach ( $this->assignTos as $key => $value ) {
+			    $user_name = $value["user_name"];
+			    $idrep     = $value["idrep"];
 
-        }
+			    /*if ( $value["is_god"] == 1 ) {
+				    $this->listGod[] = $idrep . ";" . $user_name;
+			    }*/
+			    if ( $value["is_admin"] == 1 ) {
+				    if ( $idrep == $userData->referrer_repid ) {
+					    $this->listAdmin[] = $idrep . ";" . $user_name;
+				    }
+			    }
+			    if ( $value["is_manager"] == 1 ) {
+				    if ( $idrep== Session::userID() ) {
+					    $this->listManager[] = $idrep . ";" . $user_name;
+				    }
+			    }
+		    }
+	    } else {
+		    foreach ( $this->assignTos as $key => $value ) {
+			    $user_name = $value["user_name"];
+			    $idrep     = $value["idrep"];
 
+			    if ( $value["is_god"] == 1 ) {
+				    $this->listGod[] = $idrep . ";" . $user_name;
+			    }
+			    if ( $value["is_admin"] == 1 ) {
+					$this->listAdmin[] = $idrep . ";" . $user_name;
+			    }
+			    if ( $value["is_manager"] == 1 ) {
+					$this->listManager[] = $idrep . ";" . $user_name;
+			    }
+		    }
+	    }
 
     }
 
