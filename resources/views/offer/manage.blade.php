@@ -119,10 +119,6 @@
                         @endforeach
                     @endif
 
-                    <script>
-                        let userType = "<?php echo \LeadMax\TrackYourStats\System\Session::userType(); ?>"
-                        console.log("userType: ", userType);
-                    </script>
                     @foreach($offers as $offer)
                         <tr>
                             <td>{{$offer->idoffer}}</td>
@@ -298,9 +294,6 @@
                     sortList: [[1, 0]],
                     widgets: ['staticRow']
                 });
-
-	        const offers = <?php echo json_encode($offers); ?>;
-	        console.log("offers; ", offers);
         });
 
 
