@@ -16,7 +16,7 @@ $postBackUrls = new \LeadMax\TrackYourStats\User\PostBackUrl(\LeadMax\TrackYourS
 
 if (isset($_POST["postback_url"]))
 {
-	$result = \LeadMax\TrackYourStats\User\PostBackUrl::updateUserPostBacks(\LeadMax\TrackYourStats\System\Session::userID(), $_POST["postback_url"], $_POST["deduction_url"], $_POST["free_sign_up_url"]);
+	$result = \LeadMax\TrackYourStats\User\PostBackUrl::updateUserPostBacks(\LeadMax\TrackYourStats\System\Session::userID(), $_POST["postback_url"], $_POST["free_sign_up_url"]);
 
 	if ($result)
 	{
@@ -61,7 +61,7 @@ if (isset($_POST["postback_url"]))
 							   value = "<?= $postBackUrls->getDeductionURL() ?>" id = "postback_url"/>
 						<span class = "small_txt value_span10">On a conversion deduction, this url will fire.</span>
 					</p>
-
+-->
 					<p>
 						<label class = "value_span9">Free Sign Up PostBack URL:</label>
 
@@ -69,7 +69,7 @@ if (isset($_POST["postback_url"]))
 							   value = "<?= $postBackUrls->getFreeSignUpURL() ?>" id = "postback_url"/>
 						<span class = "small_txt value_span10">On free sign up conversion, this url will fire. </span>
 					</p>
--->
+
 					<p>
 						<label class = "value_span9">Variables To Choose From:</label>
 						<span>#affid#</span><br/>

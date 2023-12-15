@@ -83,7 +83,7 @@ class OfferController extends Controller
         $data = array_merge(compact('paginate', 'offers'), $data);
 
 
-        return view('offer.manage', $data);
+        return view('offer.manage', $data)->with(['data' => $data]);
     }
 
     public function showCreate()

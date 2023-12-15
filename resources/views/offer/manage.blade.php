@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+
     <!--right_panel-->
     <div class="right_panel">
         <div class="white_box_outer large_table">
@@ -58,7 +59,7 @@
 
 
             <div class="form-group searchDiv">
-                <input id="searchBox" onkeyup="searchTable()" class="form-control" type="text"
+                <input id="searchBox" onkeyup="searchTable(`{{json_encode($offers)}}`)" class="form-control" type="text"
                        placeholder="Search offers...">
             </div>
 
@@ -118,7 +119,10 @@
                         @endforeach
                     @endif
 
-
+                    <script>
+                        let userType = "<?php echo \LeadMax\TrackYourStats\System\Session::userType(); ?>"
+                        console.log("userType: ", userType);
+                    </script>
                     @foreach($offers as $offer)
                         <tr>
                             <td>{{$offer->idoffer}}</td>
@@ -294,7 +298,13 @@
                     sortList: [[1, 0]],
                     widgets: ['staticRow']
                 });
+
+	        const offers = <?php echo json_encode($offers); ?>;
+	        console.log("offers; ", offers);
         });
+
+
     </script>
+
 @endsection
 

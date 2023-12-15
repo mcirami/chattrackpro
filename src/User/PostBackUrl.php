@@ -117,11 +117,10 @@ class PostBackUrl
         }
 
         $db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
-        $sql = "UPDATE user_postbacks SET url = :global, deduction_url = :deduction_url, free_sign_up_url = :free WHERE user_id = :user_id";
+        $sql = "UPDATE user_postbacks SET url = :global, free_sign_up_url = :free WHERE user_id = :user_id";
         $prep = $db->prepare($sql);
         $prep->bindParam(":user_id", $user_id);
         $prep->bindParam(":global", $global);
-        $prep->bindParam(":deduction_url", $deduction);
         $prep->bindParam(":free", $free);
 
         return $prep->execute();

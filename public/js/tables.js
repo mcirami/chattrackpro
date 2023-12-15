@@ -3,20 +3,22 @@
  */
 
 
-function searchTable() {
+function searchTable(offers) {
     // Declare variables
-    var input, filter, table, tr, td, i;
+    let input, filter, table, tr, td, i;
     input = document.getElementById("searchBox");
     filter = input.value.toUpperCase();
     table = document.getElementById("mainTable");
     tr = table.getElementsByTagName("tr");
+
+    console.log("offers: ", JSON.parse(offers));
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td");
 
 
-        for (k = 0; k < td.length; k++) {
+        for (let k = 0; k < td.length; k++) {
             if (td[k].innerHTML.indexOf("TOTAL") > -1) {
                 tr[i].style.display = "";
                 return;
