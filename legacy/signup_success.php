@@ -111,27 +111,52 @@ $mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 				<?php
 					if ($mid == true) {
 				?>
-						<div class = "heading_holder">
-							<h3 class = " value_span9">Congratulations!</h3>
-						</div>
+					<div class = "heading_holder">
+						<h3 class = " value_span9">Congratulations!</h3>
 						<p>
 							Your new account is setup and activated. Contact the manager who sent you your signup link with any questions.
 						</p>
+					</div>
 				<?php
 					} else { ?>
-						<div class = "heading_holder">
-							<h3 class = " value_span9">Congratulations!</h3>
+
+						<div class="action-details">
+							<div class = "heading_holder">
+								<h2 class = " value_span9">Thank you for registering with Money Lovers!</h2>
+							</div>
+							<h3>Please contact us for approval</h3>
+							<div class="columns_wrap">
+								<div class="column">
+									<h4>Jeff:</h4>
+									<p>
+										<span>Skype:</span>
+										<a href="skype:moneylovers.jeff?add">moneylovers.jeff</a>
+									</p>
+									<p>
+										<span>Email: </span>
+										<a href="mailto:jeff@moneylovers.com">jeff@moneylovers.com</a></p>
+									<p>
+										<span>Telegram:</span>
+										<a href="https://t.me/jefftoch">jefftoch</a>
+									</p>
+								</div>
+								<div class="column">
+									<h4>Matteo</h4>
+									<p>
+										<span>Skype:</span>
+										<a href="skype:moneylovers.matteo?add">moneylovers.matteo</a>
+									</p>
+									<p>
+										<span>Email:</span>
+										<a href="mailto:matteo@moneylovers.com">matteo@moneylovers.com</a>
+									</p>
+									<p>
+										<span>Telegram:</span>
+										<a href="https://t.me/moneylovers_matteo">moneylovers_matteo</a>
+									</p>
+								</div>
+							</div>
 						</div>
-
-						<p>
-							You application was successfully submitted.
-							If you have any questions please contact your manager via:
-						</p>
-
-						<label >Skype: <?=$company->getSkype()?></label>
-						<br/>
-						<br/>
-						<label >Email: <?=$company->getEmail()?></label>
 				<?php
 					}
 				?>
