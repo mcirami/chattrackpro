@@ -2373,3 +2373,46 @@ table.offer_clicks th:first-child {
 .white_box_outer .manage_aff.white_box.adjust_overflow .table_wrap {
 	overflow-x: scroll;
 }
+
+.action-details .heading_holder {
+	text-align: center;
+}
+
+.action-details h3 {
+	margin-top: 20px;
+}
+
+.action-details p {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+
+.action-details p span {
+	font-family: 'Lato-Bold', sans-serif;
+}
+
+.action-details h4 {
+	font-family: 'Lato-Bold', sans-serif;
+	margin-bottom: 10px;
+}
+
+.action-details a {
+	color: blue;
+	text-decoration: underline;
+}
+
+.action-details .columns_wrap {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+}
+
+#signUpForm sup {
+	color: red;
+}

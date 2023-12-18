@@ -110,20 +110,20 @@ $mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 					<input name="mid" type="hidden" value="<?php echo $mid; ?>">
 					
 					<p>
-						<label class = "value_span9" for = "tys_first_name">First Name:</label>
+						<label class = "value_span9" for = "tys_first_name">First Name: <sup>*</sup></label>
 						<input class = "form-control" type = "text" name = "tys_first_name">
 					</p>
 					
 					<p>
 						
-						<label for = "tys_last_name">Last Name:</label>
+						<label for = "tys_last_name">Last Name: <sup>*</sup></label>
 						<input type = "text" name = "tys_last_name">
 					</p>
 					
 					
 					<p>
 						
-						<label for = "tys_email">Email:</label>
+						<label for = "tys_email">Email: <sup>*</sup></label>
 						<input type = "text" name = "tys_email">
 					</p>
 					
@@ -131,21 +131,23 @@ $mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 					<p>
 						
 						<!-- MUST BE GREATER THAN FOUR CHARACTERS -->
-						<label for = "tys_username">Username:</label>
+						<label for = "tys_username">Username: <sup>*</sup></label>
 						<input type = "text" name = "tys_username">
+						<small>(MUST BE GREATER THAN 4 CHARACTERS)</small>
 					</p>
 					
 					<p>
 						
 						<!-- MUST BE GREATER THAN 6 CHARACTERS -->
-						<label for = "tys_password">Password:</label>
+						<label for = "tys_password">Password: <sup>*</sup></label>
 						<input type = "password" name = "tys_password">
+						<small>(MUST BE GREATER THAN 6 CHARACTERS)</small>
 					</p>
 					
 					
 					<p>
 						
-						<label for = "tys_confirm_password">Confirm Password:</label>
+						<label for = "tys_confirm_password">Confirm Password: <sup>*</sup></label>
 						<input type = "password" name = "tys_confirm_password">
 					</p>
 					
@@ -244,7 +246,7 @@ $mid = (isset($_GET["mid"]) && $_GET["mid"] != "") ? $_GET["mid"] : "";
 			// stops form from submitting
 			event.preventDefault();
 			
-			var postData = $("#signUpForm").serialize();
+			let postData = $("#signUpForm").serialize();
 
 			$.ajax({
 				type: "post",

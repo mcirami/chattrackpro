@@ -272,13 +272,10 @@ INSERT INTO rep (first_name, last_name, email, user_name, password, status, refe
     {
         if (!isset($_POST["tys_first_name"])
             || !isset($_POST["tys_last_name"])
-            || !isset($_POST["tys_company_name"])
-            || !isset($_POST["tys_skype"])
-
         ) {
             return false;
         } else {
-            if (strlen($_POST["tys_first_name"]) <= 2 || strlen($_POST["tys_last_name"]) <= 2 || strlen($_POST["tys_company_name"]) <= 2 || strlen($_POST["tys_skype"]) <= 2) {
+            if (strlen($_POST["tys_first_name"]) <= 2 || strlen($_POST["tys_last_name"]) <= 2 ) {
                 return false;
             }
 
