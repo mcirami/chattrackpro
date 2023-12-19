@@ -2416,3 +2416,20 @@ table.offer_clicks th:first-child {
 #signUpForm sup {
 	color: red;
 }
+
+.pagination-container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 20px;
+}
+
+.pagination-container a {
+	padding: 5px 10px;
+	text-decoration: none;
+	transition: background-color 0.3s ease-in-out;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}

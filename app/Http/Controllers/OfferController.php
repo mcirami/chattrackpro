@@ -67,7 +67,7 @@ class OfferController extends Controller
 
 
         $status = request('showInactive', 0) == 1 ? 0 : 1;
-        $offers = \LeadMax\TrackYourStats\System\Session::user()->offers()->where('offer.status','=', $status);
+        $offers = \LeadMax\TrackYourStats\System\Session::user()->offers()->where('offer.status','=', $status)->get();
 
         if (\LeadMax\TrackYourStats\System\Session::userType() == Privilege::ROLE_AFFILIATE) {
             $offers->leftJoin('bonus_offers', 'bonus_offers.offer_id', '=', 'offer.idoffer');
@@ -78,7 +78,7 @@ class OfferController extends Controller
 
 
         $paginate = new Paginate(request('rpp', 10), $offers->count());
-        $offers = $offers->paginate(request('rpp', 10));
+        //$offers = $offers->paginate(request('rpp', 10));
 
         $data = array_merge(compact('paginate', 'offers'), $data);
 

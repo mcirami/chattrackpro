@@ -59,7 +59,7 @@
 
 
             <div class="form-group searchDiv">
-                <input id="searchBox" onkeyup="searchTable(`{{json_encode($offers)}}`)" class="form-control" type="text"
+                <input id="searchBox" {{--onkeyup="searchTable(`{{json_encode($offers)}}`)"--}} class="form-control" type="text"
                        placeholder="Search offers...">
             </div>
 
@@ -98,7 +98,7 @@
                         <th class="value_span9">Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="offers_container">
 
 
                     @if(isset($requestableOffers))
@@ -119,108 +119,11 @@
                         @endforeach
                     @endif
 
-                    @foreach($offers as $offer)
-                        <tr>
-                            <td>{{$offer->idoffer}}</td>
-                            <td>{{ucwords($offer->offer_name)}}</td>
-                            <td>{{\LeadMax\TrackYourStats\Offer\Offer::offerTypeAsString($offer->offer_type)}}</td>
-                            @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-
-                                <p style='display:none;' id="url_{{$offer->idoffer}}">http://{{$urls[request('url',0)]}}
-                                    /?repid={{\LeadMax\TrackYourStats\System\Session::userID()}}
-                                    &offerid={{$offer->idoffer}}&sub1=</p>
-                                <td class="value_span10">
-                                    <button data-toggle="tooltip" title="Copy My Link"
-                                            onclick="copyToClipboard(getElementById('url_{{$offer->idoffer}}'));"
-                                            class="btn btn-default">Copy My Link
-                                    </button>
-                                </td>
-                            @endif
-                            @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
-                                <td class="value_span10">
-                                    <a target='_blank' class='btn btn-sm btn-default value_span5-1'
-                                       href='/offer_access.php?id={{$offer->idoffer}}'>Affiliate Access</a>
-                                </td>
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
-                                @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                                    <td class="value_span10">${{$offer->pivot->payout}}</td>
-                                @else
-                                    <td class="value_span10">${{$offer->payout}}</td>
-                                @endif
-                            @endif
-
-                            <td class="value_span10">
-                                @if($offer->status == 1)
-                                    Active
-                                @else
-                                    Inactive
-                                @endif
-                            </td>
-
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10"><a class='btn btn-default value_span6-1 value_span4' data-toggle="tooltip"
-                                                            title="Offer PostBack Options"
-                                                            href="/offer_edit_pb.php?offid={{$offer->idoffer}}">Edit
-                                        Post Back</a></td>
-                            @endif
-
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10">{{\Carbon\Carbon::parse($offer->offer_timestamp)->diffForHumans()}}</td>
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
-                                @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
-                                    <td class="value_span10">
-                                        <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Edit Offer"
-                                           href="/offer_update.php?idoffer={{$offer->idoffer}}">Edit</a>
-                                    </td>
-                                @endif
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("edit_offer_rules"))
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Edit Offer Rules"
-                                       href="/offer_edit_rules.php?offid={{$offer->idoffer}}"> Rules</a>
-                                </td>
-
-                            @endif
-
-                            @if(\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="View Offer"
-                                       href="/offer_details.php?idoffer={{$offer->idoffer}}"> View</a>
-                                </td>
-                            @else
-                                <td></td>
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD)
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Duplicate Offer"
-                                       href="/offer/{{$offer->idoffer}}/dupe"> Duplicate </a>
-                                </td>
-
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span11 value_span4" data-toggle="tooltip" title="Delete Offer"
-                                       onclick="confirmSendTo('Are you sure you want to delete this offer?',
-                                               '/offer/{{$offer->idoffer}}/delete')" href="javascript:void(0);">
-                                        Delete </a>
-                                </td>
-
-                            @endif
-
-
-                        </tr>
-                    @endforeach
-
 
                     </tbody>
                 </table>
-                @include('report.options.pagination')
+
+                <div id="pagination" class="pagination-container"></div>
 
             </div>
         </div>
@@ -294,10 +197,174 @@
                     sortList: [[1, 0]],
                     widgets: ['staticRow']
                 });
+
+			document.querySelectorAll('.delete_offer').forEach((offer) => {
+				offer.addEventListener('click', (e) =>{
+					e.preventDefault();
+					const offerID = e.target.dataset.offer;
+					confirmSendTo('Are you sure you want to delete this offer?', "/offer/" + offerID + "/delete");
+				})
+            });
+
+	        let itemsPerPage = 10;
+	        let offersCollection = '<?php echo $offers; ?>';
+	        let offers = JSON.parse(offersCollection);
+            const paginationContainer = "#pagination";
+
+			document.getElementById('searchBox').addEventListener('input', (e) => {
+				const userInput = e.target.value.trim().toLowerCase();
+				let filteredOffers = offers.filter((offer) => {
+					return offer.offer_name.toLowerCase().includes(userInput);
+				})
+				paginate(filteredOffers, itemsPerPage, paginationContainer);
+			});
+
+	        paginate(offers, itemsPerPage, paginationContainer);
+
+	        function paginate(items, itemsPerPage, paginationContainer) {
+		        let currentPage = 1;
+		        const totalPages = Math.ceil(items.length / itemsPerPage);
+
+		        function showItems(page) {
+			        const startIndex = (page - 1) * itemsPerPage;
+			        const endIndex = startIndex + itemsPerPage;
+			        const pageItems = items.slice(startIndex, endIndex);
+
+			        const itemsContainer = document.querySelector("#offers_container");
+			        itemsContainer.innerHTML = "";
+
+			        let html = "";
+			        let userType = '<?php echo \LeadMax\TrackYourStats\System\Session::userType(); ?>';
+			        let url = '<?php echo $urls[request('url',0)]; ?>';
+			        let permissions = '<?php echo json_encode(\LeadMax\TrackYourStats\System\Session::permissions()); ?>'
+
+			        pageItems.forEach((offer) => {
+				        html += "<tr id='offer_row'> " +
+					        "<td>" + offer['idoffer'] + "</td>" +
+					        "<td>" + offer['offer_name'] + "</td>" +
+					        "<td>CPA</td>";
+
+				        if (userType == 3) {
+					        html += "<p style='display:none;' id='url_'" + offer['idoffer'] + ">http://" + url +
+						        "/?repid=" + <?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?> +
+							        "&offerid=" + offer["idoffer"] + "&sub1=</p>" +
+						        "<td class='value_span10'>" +
+						        "<button data-toggle='tooltip' title='Copy My Link' " +
+						        onclick(copyToClipboard(document.getElementById('url_' + offer['idoffer']))) +
+						        "class='btn btn-default'>Copy My Link" +
+						        "</button></td>";
+				        }
+
+				        if (permissions.includes('create_offers')) {
+					        html += "<td class='value_span10'>" +
+						        "<a target='_blank' class='btn btn-sm btn-default value_span5-1' href='/offer_access.php?id=" +
+						        offer["idoffer"] + "'>Affiliate Access</a>" +
+						        "</td>";
+				        }
+
+				        if (userType != 2) {
+					        if (userType == 3) {
+						        html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
+					        } else {
+						        html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
+					        }
+				        }
+
+				        html += "<td class='value_span10'>";
+				        if (offer['status'] === 1) {
+					        html += "Active";
+				        } else {
+					        html += "Inactive";
+				        }
+
+				        html += "</td>";
+
+				        if (userType == 3) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default value_span6-1 value_span4' data-toggle='tooltip' title='Offer PostBack Options' " +
+						        "href='/offer_edit_pb.php?offid='" + offer["idoffer"] + "'>" +
+						        "Edit Post Back</a>" +
+						        "</td>";
+				        }
+
+				        if (userType != 3) {
+					        html += "<td class='value_span10'>" + offer['offer_timestamp'] + "</td>";
+				        }
+
+				        if (userType != 3) {
+					        if (permissions.includes('create_offers')) {
+						        html += "<td class='value_span10'>" +
+							        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer' " +
+							        "href='/offer_update.php?idoffer=" + offer['idoffer'] + "'>Edit</a>" +
+							        "</td>";
+					        }
+				        }
+
+				        if(permissions.includes("edit_offer_rules")) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer Rules' " +
+						        "href='/offer_edit_rules.php?offid=" + offer["idoffer"] + "'> Rules</a>" +
+						        "</td>";
+				        }
+
+				        if(userType != 3) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='View Offer' " +
+						        "href='/offer_details.php?idoffer=" + offer['idoffer'] + "'> View</a>" +
+						        "</td>";
+				        } else {
+					        html += "<td></td>";
+				        }
+
+				        if (userType == 0) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Duplicate Offer' " +
+						        "href='/offer/" + offer['idoffer'] + "/dupe'> Duplicate </a>" +
+						        "</td>" +
+						        "<td class='value_span10'>" +
+						        "<a class='delete_offer btn btn-default btn-sm value_span11 value_span4' data-toggle='tooltip' data-offer='" + offer['idoffer'] +"' title='Delete Offer' " +
+						        "href='#'>Delete</a>" +
+						        "</td>";
+				        }
+
+				        html += "</tr>";
+				        itemsContainer.innerHTML = html;
+			        });
+		        }
+
+		        function setupPagination() {
+			        const pagination = document.querySelector(paginationContainer);
+			        pagination.innerHTML = "";
+
+			        for (let i = 1; i <= totalPages; i++) {
+				        const link = document.createElement("a");
+				        link.href = "#";
+				        link.innerText = i;
+						link.classList.add("value_span2-2", "value_span3-2", "value_span6-1", "value_span2", "value_span6");
+
+				        if (i === currentPage) {
+					        link.classList.add("value_span4", "active");
+				        }
+
+				        link.addEventListener("click", (event) => {
+					        event.preventDefault();
+					        currentPage = i;
+					        showItems(currentPage);
+
+					        const currentActive = pagination.querySelector(".active");
+					        currentActive.classList.remove("active", "value_span4");
+					        link.classList.add("active", "value_span4");
+				        });
+
+				        pagination.appendChild(link);
+			        }
+		        }
+
+		        showItems(currentPage);
+		        setupPagination();
+	        }
+
         });
-
-
     </script>
-
 @endsection
 
