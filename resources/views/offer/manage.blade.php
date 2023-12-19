@@ -206,7 +206,7 @@
 				})
             });
 
-	        let itemsPerPage = 10;
+	        let itemsPerPage = 20;
 	        let offersCollection = '<?php echo $offers; ?>';
 	        let offers = JSON.parse(offersCollection);
             const paginationContainer = "#pagination";
