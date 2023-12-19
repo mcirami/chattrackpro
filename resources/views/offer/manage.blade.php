@@ -119,108 +119,11 @@
                         @endforeach
                     @endif
 
-                    {{--@foreach($offers as $offer)--}}
-                        {{--<tr id="offer_row">--}}
-                            {{--<td>{{$offer->idoffer}}</td>
-                            <td>{{ucwords($offer->offer_name)}}</td>
-                            <td>{{\LeadMax\TrackYourStats\Offer\Offer::offerTypeAsString($offer->offer_type)}}</td>
-                            @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-
-                                <p style='display:none;' id="url_{{$offer->idoffer}}">http://{{$urls[request('url',0)]}}
-                                    /?repid={{\LeadMax\TrackYourStats\System\Session::userID()}}
-                                    &offerid={{$offer->idoffer}}&sub1=</p>
-                                <td class="value_span10">
-                                    <button data-toggle="tooltip" title="Copy My Link"
-                                            onclick="copyToClipboard(getElementById('url_{{$offer->idoffer}}'));"
-                                            class="btn btn-default">Copy My Link
-                                    </button>
-                                </td>
-                            @endif
-                            @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
-                                <td class="value_span10">
-                                    <a target='_blank' class='btn btn-sm btn-default value_span5-1'
-                                       href='/offer_access.php?id={{$offer->idoffer}}'>Affiliate Access</a>
-                                </td>
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_MANAGER)
-                                @if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                                    <td class="value_span10">${{$offer->pivot->payout}}</td>
-                                @else
-                                    <td class="value_span10">${{$offer->payout}}</td>
-                                @endif
-                            @endif
-
-                            <td class="value_span10">
-                                @if($offer->status == 1)
-                                    Active
-                                @else
-                                    Inactive
-                                @endif
-                            </td>
-
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10"><a class='btn btn-default value_span6-1 value_span4' data-toggle="tooltip"
-                                                            title="Offer PostBack Options"
-                                                            href="/offer_edit_pb.php?offid={{$offer->idoffer}}">Edit
-                                        Post Back</a></td>
-                            @endif
-
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10">{{\Carbon\Carbon::parse($offer->offer_timestamp)->diffForHumans()}}</td>
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
-                                @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("create_offers"))
-                                    <td class="value_span10">
-                                        <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Edit Offer"
-                                           href="/offer_update.php?idoffer={{$offer->idoffer}}">Edit</a>
-                                    </td>
-                                @endif
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::permissions()->can("edit_offer_rules"))
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Edit Offer Rules"
-                                       href="/offer_edit_rules.php?offid={{$offer->idoffer}}"> Rules</a>
-                                </td>
-
-                            @endif
-
-                            @if(\LeadMax\TrackYourStats\System\Session::userType() !== \App\Privilege::ROLE_AFFILIATE)
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="View Offer"
-                                       href="/offer_details.php?idoffer={{$offer->idoffer}}"> View</a>
-                                </td>
-                            @else
-                                <td></td>
-                            @endif
-
-                            @if (\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD)
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span6-1 value_span4" data-toggle="tooltip" title="Duplicate Offer"
-                                       href="/offer/{{$offer->idoffer}}/dupe"> Duplicate </a>
-                                </td>
-
-                                <td class="value_span10">
-                                    <a class="btn btn-default btn-sm value_span11 value_span4" data-toggle="tooltip" title="Delete Offer"
-                                       onclick="confirmSendTo('Are you sure you want to delete this offer?',
-                                               '/offer/{{$offer->idoffer}}/delete')" href="javascript:void(0);">
-                                        Delete </a>
-                                </td>
-
-                            @endif--}}
-
-
-                        {{--</tr>--}}
-                    {{--@endforeach--}}
-
 
                     </tbody>
                 </table>
-               {{-- @include('report.options.pagination')--}}
+
+                <div id="pagination" class="pagination-container"></div>
 
             </div>
         </div>
@@ -409,6 +312,59 @@
 					confirmSendTo('Are you sure you want to delete this offer?', "/offer/" + offerID + "/delete");
 				})
             });
+
+	        const paginationContainer = "#pagination";
+	        paginate(offers, itemsPerPage, paginationContainer);
+
+	        function paginate(items, itemsPerPage, paginationContainer) {
+		        let currentPage = 1;
+		        const totalPages = Math.ceil(items.length / itemsPerPage);
+
+		        function showItems(page) {
+			        const startIndex = (page - 1) * itemsPerPage;
+			        const endIndex = startIndex + itemsPerPage;
+			        const pageItems = items.slice(startIndex, endIndex);
+
+			        const itemsContainer = document.querySelector("#items");
+			        itemsContainer.innerHTML = "";
+
+			        pageItems.forEach((item) => {
+				        const li = document.createElement("li");
+				        li.innerText = item;
+				        itemsContainer.appendChild(li);
+			        });
+		        }
+
+		        function setupPagination() {
+			        const pagination = document.querySelector(paginationContainer);
+			        pagination.innerHTML = "";
+
+			        for (let i = 1; i <= totalPages; i++) {
+				        const link = document.createElement("a");
+				        link.href = "#";
+				        link.innerText = i;
+
+				        if (i === currentPage) {
+					        link.classList.add("active");
+				        }
+
+				        link.addEventListener("click", (event) => {
+					        event.preventDefault();
+					        currentPage = i;
+					        showItems(currentPage);
+
+					        const currentActive = pagination.querySelector(".active");
+					        currentActive.classList.remove("active");
+					        link.classList.add("active");
+				        });
+
+				        pagination.appendChild(link);
+			        }
+		        }
+
+		        showItems(currentPage);
+		        setupPagination();
+	        }
 
         });
     </script>
