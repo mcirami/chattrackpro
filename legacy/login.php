@@ -109,6 +109,11 @@ else
 		</div>
 	
 	</div> <!-- top_sec -->
+	<div class="info_message text-center">
+		<p>EFFECTIVE 12/20/23 @ 12pm CST - MoneyLovers has updated tracking software! If your login no longer works,
+			<a href="https://moneylovers.com/contact">Contact Us</a> or <a href="https://moneylovers.com/signup">Signup</a>
+		</p>
+	</div>
 	
 	<style>
 		
