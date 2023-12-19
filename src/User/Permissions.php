@@ -66,8 +66,8 @@ class Permissions
 
         self::EDIT_AFFILIATES => [
             "description" => "Can Edit Agent Accounts",
-            "required_permissions" => [self::CREATE_AFFILIATES],
-            "allowed_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, Privilege::ROLE_MANAGER],
+            /*"required_permissions" => [self::CREATE_AFFILIATES],*/
+            "allowed_user_types" => [\App\Privilege::ROLE_GOD, \App\Privilege::ROLE_ADMIN, Privilege::ROLE_MANAGER, Privilege::ROLE_AFFILIATE],
         ],
 
         self::CREATE_OFFERS => ["description" => "Can Create Offers", "allowed_user_types" => [\App\Privilege::ROLE_GOD]],

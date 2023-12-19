@@ -32,6 +32,7 @@ class UserController extends Controller
 
         $users = User::myUsers()->withRole(request('role', Privilege::ROLE_AFFILIATE))->with('referrer');
 
+
         if (request('showInactive', 0) == 1) {
             $users->where('status', 0);
         } else {
@@ -39,7 +40,6 @@ class UserController extends Controller
         }
 
         $users = $users->get();
-
 
         return view('user.manage', compact('users'));
     }
