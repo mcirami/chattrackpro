@@ -340,9 +340,10 @@
 				        const link = document.createElement("a");
 				        link.href = "#";
 				        link.innerText = i;
+						link.classList.add("value_span2-2", "value_span3-2", "value_span6-1", "value_span2", "value_span6");
 
 				        if (i === currentPage) {
-					        link.classList.add("active");
+					        link.classList.add("value_span4", "active");
 				        }
 
 				        link.addEventListener("click", (event) => {
@@ -351,8 +352,8 @@
 					        showItems(currentPage);
 
 					        const currentActive = pagination.querySelector(".active");
-					        currentActive.classList.remove("active");
-					        link.classList.add("active");
+					        currentActive.classList.remove("active", "value_span4");
+					        link.classList.add("active", "value_span4");
 				        });
 
 				        pagination.appendChild(link);
