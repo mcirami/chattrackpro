@@ -59,7 +59,7 @@
 
 
             <div class="form-group searchDiv">
-                <input id="searchBox" onkeyup="searchTable(`{{json_encode($offers)}}`)" class="form-control" type="text"
+                <input id="searchBox" {{--onkeyup="searchTable(`{{json_encode($offers)}}`)"--}} class="form-control" type="text"
                        placeholder="Search offers...">
             </div>
 
@@ -198,113 +198,6 @@
                     widgets: ['staticRow']
                 });
 
-	        let itemsPerPage = 10;
-	        let currentPage = 1;
-			let offersCollection = '<?php echo $offers; ?>';
-			let offers = JSON.parse(offersCollection);
-			let tableContainer = document.getElementById('offers_container');
-			let html = "";
-			let userType = '<?php echo \LeadMax\TrackYourStats\System\Session::userType(); ?>';
-	        let url = '<?php echo $urls[request('url',0)]; ?>';
-			let permissions = '<?php echo json_encode(\LeadMax\TrackYourStats\System\Session::permissions()); ?>'
-	        console.log("offers: ", offers);
-			const offerMap = offers.map((offer, index) => {
-				if (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) {
-					html += "<tr id='offer_row'> " +
-						"<td>" + offer['idoffer'] + "</td>" +
-						"<td>" + offer['offer_name'] + "</td>" +
-						"<td>CPA</td>";
-
-					if (userType == 3) {
-						html += "<p style='display:none;' id='url_'" + offer['idoffer'] + ">http://" + url +
-							"/?repid=" + <?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?> +
-								"&offerid=" + offer["idoffer"] + "&sub1=</p>" +
-							"<td class='value_span10'>" +
-							"<button data-toggle='tooltip' title='Copy My Link' " +
-							onclick(copyToClipboard(document.getElementById('url_' + offer['idoffer']))) +
-							"class='btn btn-default'>Copy My Link" +
-							"</button></td>";
-					}
-
-					if (permissions.includes('create_offers')) {
-						html += "<td class='value_span10'>" +
-							"<a target='_blank' class='btn btn-sm btn-default value_span5-1' href='/offer_access.php?id=" +
-							offer["idoffer"] + "'>Affiliate Access</a>" +
-							"</td>";
-					}
-
-					if (userType != 2) {
-						if (userType == 3) {
-							html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
-						} else {
-							html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
-						}
-					}
-
-					html += "<td class='value_span10'>";
-					if (offer['status'] === 1) {
-						html += "Active";
-					} else {
-						html += "Inactive";
-					}
-
-					html += "</td>";
-
-					if (userType == 3) {
-						html += "<td class='value_span10'>" +
-							"<a class='btn btn-default value_span6-1 value_span4' data-toggle='tooltip' title='Offer PostBack Options' " +
-                            "href='/offer_edit_pb.php?offid='" + offer["idoffer"] + "'>" +
-                            "Edit Post Back</a>" +
-                            "</td>";
-					}
-
-                    if (userType != 3) {
-	                    html += "<td class='value_span10'>" + offer['offer_timestamp'] + "</td>";
-                    }
-
-                    if (userType != 3) {
-                        if (permissions.includes('create_offers')) {
-	                        html += "<td class='value_span10'>" +
-		                        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer' " +
-                                "href='/offer_update.php?idoffer=" + offer['idoffer'] + "'>Edit</a>" +
-	                        "</td>";
-                        }
-                    }
-
-                    if(permissions.includes("edit_offer_rules")) {
-	                    html += "<td class='value_span10'>" +
-		                    "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer Rules' " +
-                            "href='/offer_edit_rules.php?offid=" + offer["idoffer"] + "'> Rules</a>" +
-	                    "</td>";
-                    }
-
-                    if(userType != 3) {
-	                    html += "<td class='value_span10'>" +
-		                    "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='View Offer' " +
-		                       "href='/offer_details.php?idoffer=" + offer['idoffer'] + "'> View</a>" +
-	                    "</td>";
-                    } else {
-						html += "<td></td>";
-                    }
-
-                    if (userType == 0) {
-	                    html += "<td class='value_span10'>" +
-		                    "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Duplicate Offer' " +
-		                       "href='/offer/" + offer['idoffer'] + "/dupe'> Duplicate </a>" +
-	                    "</td>" +
-	                    "<td class='value_span10'>" +
-		                    "<a class='delete_offer btn btn-default btn-sm value_span11 value_span4' data-toggle='tooltip' data-offer='" + offer['idoffer'] +"' title='Delete Offer' " +
-                            "href='#'>Delete</a>" +
-                            "</td>";
-                    }
-
-					html += "</tr>";
-				}
-				return offer;
-            });
-
-	        tableContainer.innerHTML = html;
-
 			document.querySelectorAll('.delete_offer').forEach((offer) => {
 				offer.addEventListener('click', (e) =>{
 					e.preventDefault();
@@ -313,7 +206,19 @@
 				})
             });
 
-	        const paginationContainer = "#pagination";
+	        let itemsPerPage = 10;
+	        let offersCollection = '<?php echo $offers; ?>';
+	        let offers = JSON.parse(offersCollection);
+            const paginationContainer = "#pagination";
+
+			document.getElementById('searchBox').addEventListener('input', (e) => {
+				const userInput = e.target.value.trim().toLowerCase();
+				let filteredOffers = offers.filter((offer) => {
+					return offer.offer_name.toLowerCase().includes(userInput);
+				})
+				paginate(filteredOffers, itemsPerPage, paginationContainer);
+			});
+
 	        paginate(offers, itemsPerPage, paginationContainer);
 
 	        function paginate(items, itemsPerPage, paginationContainer) {
@@ -325,13 +230,105 @@
 			        const endIndex = startIndex + itemsPerPage;
 			        const pageItems = items.slice(startIndex, endIndex);
 
-			        const itemsContainer = document.querySelector("#items");
+			        const itemsContainer = document.querySelector("#offers_container");
 			        itemsContainer.innerHTML = "";
 
-			        pageItems.forEach((item) => {
-				        const li = document.createElement("li");
-				        li.innerText = item;
-				        itemsContainer.appendChild(li);
+			        let html = "";
+			        let userType = '<?php echo \LeadMax\TrackYourStats\System\Session::userType(); ?>';
+			        let url = '<?php echo $urls[request('url',0)]; ?>';
+			        let permissions = '<?php echo json_encode(\LeadMax\TrackYourStats\System\Session::permissions()); ?>'
+
+			        pageItems.forEach((offer) => {
+				        html += "<tr id='offer_row'> " +
+					        "<td>" + offer['idoffer'] + "</td>" +
+					        "<td>" + offer['offer_name'] + "</td>" +
+					        "<td>CPA</td>";
+
+				        if (userType == 3) {
+					        html += "<p style='display:none;' id='url_'" + offer['idoffer'] + ">http://" + url +
+						        "/?repid=" + <?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?> +
+							        "&offerid=" + offer["idoffer"] + "&sub1=</p>" +
+						        "<td class='value_span10'>" +
+						        "<button data-toggle='tooltip' title='Copy My Link' " +
+						        onclick(copyToClipboard(document.getElementById('url_' + offer['idoffer']))) +
+						        "class='btn btn-default'>Copy My Link" +
+						        "</button></td>";
+				        }
+
+				        if (permissions.includes('create_offers')) {
+					        html += "<td class='value_span10'>" +
+						        "<a target='_blank' class='btn btn-sm btn-default value_span5-1' href='/offer_access.php?id=" +
+						        offer["idoffer"] + "'>Affiliate Access</a>" +
+						        "</td>";
+				        }
+
+				        if (userType != 2) {
+					        if (userType == 3) {
+						        html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
+					        } else {
+						        html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
+					        }
+				        }
+
+				        html += "<td class='value_span10'>";
+				        if (offer['status'] === 1) {
+					        html += "Active";
+				        } else {
+					        html += "Inactive";
+				        }
+
+				        html += "</td>";
+
+				        if (userType == 3) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default value_span6-1 value_span4' data-toggle='tooltip' title='Offer PostBack Options' " +
+						        "href='/offer_edit_pb.php?offid='" + offer["idoffer"] + "'>" +
+						        "Edit Post Back</a>" +
+						        "</td>";
+				        }
+
+				        if (userType != 3) {
+					        html += "<td class='value_span10'>" + offer['offer_timestamp'] + "</td>";
+				        }
+
+				        if (userType != 3) {
+					        if (permissions.includes('create_offers')) {
+						        html += "<td class='value_span10'>" +
+							        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer' " +
+							        "href='/offer_update.php?idoffer=" + offer['idoffer'] + "'>Edit</a>" +
+							        "</td>";
+					        }
+				        }
+
+				        if(permissions.includes("edit_offer_rules")) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer Rules' " +
+						        "href='/offer_edit_rules.php?offid=" + offer["idoffer"] + "'> Rules</a>" +
+						        "</td>";
+				        }
+
+				        if(userType != 3) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='View Offer' " +
+						        "href='/offer_details.php?idoffer=" + offer['idoffer'] + "'> View</a>" +
+						        "</td>";
+				        } else {
+					        html += "<td></td>";
+				        }
+
+				        if (userType == 0) {
+					        html += "<td class='value_span10'>" +
+						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Duplicate Offer' " +
+						        "href='/offer/" + offer['idoffer'] + "/dupe'> Duplicate </a>" +
+						        "</td>" +
+						        "<td class='value_span10'>" +
+						        "<a class='delete_offer btn btn-default btn-sm value_span11 value_span4' data-toggle='tooltip' data-offer='" + offer['idoffer'] +"' title='Delete Offer' " +
+						        "href='#'>Delete</a>" +
+						        "</td>";
+				        }
+
+				        html += "</tr>";
+				        itemsContainer.innerHTML = html;
 			        });
 		        }
 
