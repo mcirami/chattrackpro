@@ -95,7 +95,9 @@
                             <th class="value_span9">Offer Timestamp</th>
                         @endif
 
-                        <th class="value_span9">Actions</th>
+						@if (\LeadMax\TrackYourStats\System\Session::userType() != \App\Privilege::ROLE_AFFILIATE)
+                        	<th class="value_span9">Actions</th>
+						@endif
                     </tr>
                     </thead>
                     <tbody id="offers_container">
@@ -209,6 +211,7 @@
 	        let itemsPerPage = 20;
 	        let offersCollection = '<?php echo $offers; ?>';
 	        let offers = JSON.parse(offersCollection);
+
             const paginationContainer = "#pagination";
 
 			document.getElementById('searchBox').addEventListener('input', (e) => {
@@ -245,17 +248,20 @@
 					        "<td>CPA</td>";
 
 				        if (userType == 3) {
-					        html += "<p style='display:none;' id='url_'" + offer['idoffer'] + ">http://" + url +
-						        "/?repid=" + <?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?> +
-							        "&offerid=" + offer["idoffer"] + "&sub1=</p>" +
+					        html +=
 						        "<td class='value_span10'>" +
-						        "<button data-toggle='tooltip' title='Copy My Link' " +
-						        onclick(copyToClipboard(document.getElementById('url_' + offer['idoffer']))) +
-						        "class='btn btn-default'>Copy My Link" +
+									"<p  style='display:none;' id='url_" + offer['idoffer'] + "'>http://" + url +
+										"/?repid=" + <?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?> +
+										"&offerid=" + offer["idoffer"] + "&sub1=</p>" +
+						        "<button data-url='http://" + url +
+									"/?repid=" + <?php echo \LeadMax\TrackYourStats\System\Session::userID(); ?> +
+											"&offerid=" + offer["idoffer"] + "&sub1=' data-toggle='tooltip' title='Copy My Link' " +
+						        /*onclick(handleClick(offer['idoffer'])) +*/
+						        "class='copy_button btn btn-default'>Copy My Link" +
 						        "</button></td>";
 				        }
 
-				        if (permissions.includes('create_offers')) {
+				        if (permissions.includes('create_offers') && userType != 3 ) {
 					        html += "<td class='value_span10'>" +
 						        "<a target='_blank' class='btn btn-sm btn-default value_span5-1' href='/offer_access.php?id=" +
 						        offer["idoffer"] + "'>Affiliate Access</a>" +
@@ -300,7 +306,7 @@
 					        }
 				        }
 
-				        if(permissions.includes("edit_offer_rules")) {
+				        if(permissions.includes("edit_offer_rules") && userType != 3) {
 					        html += "<td class='value_span10'>" +
 						        "<a class='btn btn-default btn-sm value_span6-1 value_span4' data-toggle='tooltip' title='Edit Offer Rules' " +
 						        "href='/offer_edit_rules.php?offid=" + offer["idoffer"] + "'> Rules</a>" +
@@ -359,6 +365,20 @@
 				        pagination.appendChild(link);
 			        }
 		        }
+
+				setTimeout(() => {
+					document.querySelectorAll('.copy_button').forEach((button) => {
+						button.addEventListener("pointerdown", (e) => {
+							const url = e.target.dataset.url;
+							const unsecuredCopyToClipboard = (text) => { const textArea = document.createElement("textarea"); textArea.value=text; document.body.appendChild(textArea); textArea.focus();textArea.select(); try{document.execCommand('copy')}catch(err){console.error('Unable to copy to clipboard',err)}document.body.removeChild(textArea)};
+							if (window.isSecureContext && navigator.clipboard) {
+								navigator.clipboard.writeText(url);
+							} else {
+								unsecuredCopyToClipboard(url);
+							}
+						})
+					})
+				}, 5000)
 
 		        showItems(currentPage);
 		        setupPagination();
