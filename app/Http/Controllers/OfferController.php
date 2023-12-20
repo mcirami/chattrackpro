@@ -67,20 +67,20 @@ class OfferController extends Controller
 
 
         $status = request('showInactive', 0) == 1 ? 0 : 1;
-        $offers = \LeadMax\TrackYourStats\System\Session::user()->offers()->where('offer.status','=', $status)->get();
+        $offers = \LeadMax\TrackYourStats\System\Session::user()->offers()->where('offer.status','=', $status);
 
         if (\LeadMax\TrackYourStats\System\Session::userType() == Privilege::ROLE_AFFILIATE) {
-            $offers->leftJoin('bonus_offers', 'bonus_offers.offer_id', '=', 'offer.idoffer');
+	        $offers = $offers->leftJoin('bonus_offers', 'bonus_offers.offer_id', '=', 'offer.idoffer')->get();
             $data['requestableOffers'] = Offer::where('is_public', \LeadMax\TrackYourStats\Offer\Offer::VISIBILITY_REQUESTABLE)
                 ->whereRaw('offer.idoffer NOT IN (SELECT offer_idoffer FROM rep_has_offer WHERE rep_has_offer.rep_idrep = ' . \LeadMax\TrackYourStats\System\Session::userID() . ')')->get();
+        } else {
+	        $offers = $offers->get();
         }
 
-
-
-        $paginate = new Paginate(request('rpp', 10), $offers->count());
+        //$paginate = new Paginate(request('rpp', 10), $offers->count());
         //$offers = $offers->paginate(request('rpp', 10));
 
-        $data = array_merge(compact('paginate', 'offers'), $data);
+        $data = array_merge(compact('offers'), $data);
 
 
         return view('offer.manage', $data)->with(['data' => $data]);
