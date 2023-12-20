@@ -270,7 +270,7 @@
 
 				        if (userType != 2) {
 					        if (userType == 3) {
-						        html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
+						        html += "<td class='value_span10'>$" + offer["pivot"]["payout"] + "</td>";
 					        } else {
 						        html += "<td class='value_span10'>$" + offer["payout"] + "</td>";
 					        }
