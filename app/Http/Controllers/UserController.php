@@ -92,4 +92,13 @@ class UserController extends Controller
 		return response()->json(['success' => true]);
 	}
 
+	public function unblockUserSubId(Request $request) {
+
+		$userID = $request->user_id;
+		$subID = $request->sub_id;
+
+		DB::table('blocked_sub_ids')->where('rep_idrep', '=', $userID)->where('sub_id', '=', $subID)->delete();
+
+		return response()->json(['success' => true]);
+	}
 }

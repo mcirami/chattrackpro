@@ -2455,3 +2455,27 @@ table.offer_clicks th:first-child {
 .info_message a:hover {
 	color: darkred;
 }
+
+.right_panel table.sub_ids .button_wrap {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	-webkit-justify-content:  flex-start;
+	align-items: center;
+	-webkit-align-items: center;
+}
+
+.right_panel table.sub_ids thead th:first-child {
+	width: 20%;
+}
+
+.right_panel table.sub_ids thead th:last-child {
+	width: 80%;
+}

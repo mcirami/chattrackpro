@@ -298,22 +298,24 @@ $update->dumpPermissionsToJavascript();
 				<?php foreach ($subIds as $subId) : ?>
 						<tr>
 							<td> <?php echo $subId["subId"]; ?> </td>
-							<td>
+							<td class="button_wrap">
 								<?php if ($subId["blocked"]) : ?>
-									<button disabled="disabled">Blocked</button>
-									<div class="btn_yellow">
-										<a href="#" class="value_span6-2 value_span2 value_span1-2">UnBlock</a>
-									</div>
+									<button class="block_sub_id"
+											disabled="disabled"
+									        data-subid=<?php echo $subId["subId"]; ?>
+									>Blocked</button>
+									<button class="unblock_button value_span6-2 value_span2 value_span1-2"
+									        data-subid=<?php echo $subId["subId"]; ?>
+									>UnBlock</button>
 								<?php else : ?>
-									<div class="btn_yellow">
-										<a href="#"
-										   class="block_sub_id value_span6-2 value_span2 value_span1-2"
-										   data-subid=<?php echo $subId["subId"]; ?>
-										>Block ID</a>
-									</div>
-									<div class="btn_yellow">
-										<a href="#" class="unblock_button value_span6-2 value_span2 value_span1-2">UnBlock</a>
-									</div>
+									<button class="block_sub_id value_span6-2 value_span2 value_span1-2"
+									        data-subid=<?php echo $subId["subId"]; ?>
+									>Block ID</button>
+									<button style="display: none;"
+									        disabled="disabled"
+									        class="unblock_button value_span6-2 value_span2 value_span1-2"
+									        data-subid=<?php echo $subId["subId"]; ?>
+									>UnBlock</button>
 								<?php endif; ?>
 
 							</td>
@@ -427,6 +429,39 @@ $update->dumpPermissionsToJavascript();
 							button.innerHTML = "Blocked"
 							button.disabled = true;
 							button.classList.remove("value_span6-2", "value_span2", "value_span1-2");
+							const unblockButton = button.nextElementSibling;
+							unblockButton.disabled = false;
+							unblockButton.style.display = "block";
+						} else {
+							console.log(response);
+						}
+					})
+
+				})
+			});
+		}
+		const unblock_buttons = document.querySelectorAll('.unblock_button');
+		if(unblock_buttons) {
+			unblock_buttons.forEach((button) => {
+				button.addEventListener('click', (e) => {
+					e.preventDefault();
+					const button = e.target;
+					const userID = '<?php echo $idrep; ?>';
+					const subID = button.dataset.subid;
+
+					const packets = {
+						user_id: userID,
+						sub_id: subID
+					}
+
+					axios.post('user/unblock-sub-id', packets).then((response) => {
+						if (response.data.success) {
+							button.disabled = true;
+							button.style.display = "none";
+							const blockButton = button.previousElementSibling;
+							blockButton.innerHTML = "Block ID";
+							blockButton.disabled = false;
+							blockButton.classList.add("value_span6-2", "value_span2", "value_span1-2");
 						} else {
 							console.log(response);
 						}
