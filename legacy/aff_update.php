@@ -1,4 +1,6 @@
 <?php
+use App\Http\Controllers\UserController;
+
 $section = "affiliate-list";
 require('header.php');
 
@@ -262,9 +264,26 @@ $update->dumpPermissionsToJavascript();
 
 
 		</div>
+		<?php
+		if(\LeadMax\TrackYourStats\System\Session::userType() == \App\Privilege::ROLE_GOD) :
 
-		<!--<div class = "heading_holder value_span9">
-			<span class = "lft"><?php /*echo $update->selectedUser->first_name . " " . $update->selectedUser->last_name; */?>'s Sub Id's</span>
+			$userClass = new UserController;
+			$subIds = $userClass->getUserSubIds();
+		?>
+
+
+		<!--
+		    click vars table where sub1 not = ""
+		    where sub1 unique ?? distinct?
+		    leftJoin clicks
+		        where clicks.idclicks = click_vars.click_id
+		        where clicks.rep_idrep = current user editing.repid
+
+		    blocked_sub_ids where rep id = blocked_sub_ids.rep_idrep = current user editing.repid
+
+		 -->
+		<div class = "heading_holder value_span9">
+			<span class = "lft"><?php echo $update->selectedUser->first_name . " " . $update->selectedUser->last_name; ?>'s Sub Id's</span>
 		</div>
 		<div class="white_box value_span8">
 			<table class="table_01 large_table" id="mainTable">
@@ -276,9 +295,26 @@ $update->dumpPermissionsToJavascript();
 				</thead>
 				<tbody>
 
+				<?php foreach ($subIds as $subId) : ?>
+						<tr>
+							<td> <?php echo $subId["subId"]; ?> </td>
+							<td>
+								<?php if ($subId["blocked"]) : ?>
+									<button disabled="disabled">Blocked</button>
+								<?php else : ?>
+									<button
+											class="block_sub_id"
+											data-subid=<?php echo $subId["subId"]; ?>
+									>Block ID</button>
+								<?php endif; ?>
+
+							</td>
+						</tr>
+				<?php endforeach; ?>
 				</tbody>
 			</table>
-		</div>-->
+		</div>
+		<?php endif; ?>
 
 		<?php
 
@@ -341,7 +377,7 @@ $update->dumpPermissionsToJavascript();
 <?php $update->checkBox() ?>
 
 <!--right_panel-->
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script type = "text/javascript">
 
@@ -355,14 +391,41 @@ $update->dumpPermissionsToJavascript();
 	// A $( document ).ready() block.
 	$(document).ready(function () {
 
-		console.log("ready!");
+		$("#mainTable").tablesorter(
+			{
+				sortList: [[5, 1]],
+				widgets: ['staticRow']
+			});
+
 		if ($('#affRadio').is(':checked'))
 			$("#referralP").show();
 
+		const blockButtons = document.querySelectorAll('.block_sub_id');
+		if (blockButtons) {
+			blockButtons.forEach((button) => {
+				button.addEventListener('click', (e) => {
 
-//        jQuery(function ($) {
-//            $("#cell_phone").mask("(999) 999-9999");
-//        });
+					const button = e.target;
+					const userID = '<?php echo $idrep; ?>';
+					const subID = button.dataset.subid;
+
+					const packets = {
+						user_id: userID,
+						sub_id: subID
+					}
+
+					axios.post('user/block-sub-id', packets).then((response) => {
+						if (response.data.success) {
+							button.innerHTML = "Blocked"
+							button.disabled = true;
+						} else {
+							console.log(response);
+						}
+					})
+
+				})
+			});
+		}
 	});
 
 	function setTwoNumberDecimal(event) {
@@ -370,16 +433,5 @@ $update->dumpPermissionsToJavascript();
 	}
 
 
-</script>
-
-<script type = "text/javascript">
-
-	$(document).ready(function () {
-		$("#mainTable").tablesorter(
-			{
-				sortList: [[5, 1]],
-				widgets: ['staticRow']
-			});
-	});
 </script>
 <?php include 'footer.php'; ?>
