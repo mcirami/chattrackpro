@@ -286,7 +286,7 @@ $update->dumpPermissionsToJavascript();
 			<span class = "lft"><?php echo $update->selectedUser->first_name . " " . $update->selectedUser->last_name; ?>'s Sub Id's</span>
 		</div>
 		<div class="white_box value_span8">
-			<table class="table_01 large_table" id="mainTable">
+			<table class="table_01 large_table sub_ids" id="mainTable">
 				<thead>
 					<tr>
 						<th class="value_span9">Sub ID</th>
@@ -301,11 +301,19 @@ $update->dumpPermissionsToJavascript();
 							<td>
 								<?php if ($subId["blocked"]) : ?>
 									<button disabled="disabled">Blocked</button>
+									<div class="btn_yellow">
+										<a href="#" class="value_span6-2 value_span2 value_span1-2">UnBlock</a>
+									</div>
 								<?php else : ?>
-									<button
-											class="block_sub_id"
-											data-subid=<?php echo $subId["subId"]; ?>
-									>Block ID</button>
+									<div class="btn_yellow">
+										<a href="#"
+										   class="block_sub_id value_span6-2 value_span2 value_span1-2"
+										   data-subid=<?php echo $subId["subId"]; ?>
+										>Block ID</a>
+									</div>
+									<div class="btn_yellow">
+										<a href="#" class="unblock_button value_span6-2 value_span2 value_span1-2">UnBlock</a>
+									</div>
 								<?php endif; ?>
 
 							</td>
@@ -404,7 +412,7 @@ $update->dumpPermissionsToJavascript();
 		if (blockButtons) {
 			blockButtons.forEach((button) => {
 				button.addEventListener('click', (e) => {
-
+					e.preventDefault();
 					const button = e.target;
 					const userID = '<?php echo $idrep; ?>';
 					const subID = button.dataset.subid;
@@ -418,6 +426,7 @@ $update->dumpPermissionsToJavascript();
 						if (response.data.success) {
 							button.innerHTML = "Blocked"
 							button.disabled = true;
+							button.classList.remove("value_span6-2", "value_span2", "value_span1-2");
 						} else {
 							console.log(response);
 						}
