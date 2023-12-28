@@ -179,7 +179,6 @@ class Login
 
         $loginResult = $prep->fetchAll(\PDO::FETCH_ASSOC);
 
-
         if ($prep->rowCount() > 0) {
 
             //checks if there is more than one active login session
@@ -193,7 +192,6 @@ class Login
                 }
 
             }
-
 
             if (date("U") - $loginResult[0]["last_action_time"] < 86400) {
                 $sql = "UPDATE logins SET last_action_time = :date WHERE ip = :ip AND session_id = :sesh";
@@ -352,7 +350,7 @@ class Login
         $salt = "";
         $characterList = "./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         while ($i < $max) {
-            $salt .= $characterList{(mt_rand(0, (strlen($characterList) - 1)))};
+            $salt .= $characterList[ (mt_rand(0, ( strlen($characterList) - 1))) ];
             $i++;
         }
 
