@@ -193,7 +193,7 @@ class Login
 
             }
 
-            if (date("U") - $loginResult[0]["last_action_time"] < 86400) {
+            /*if (date("U") - $loginResult[0]["last_action_time"] < 86400) {*/
                 $sql = "UPDATE logins SET last_action_time = :date WHERE ip = :ip AND session_id = :sesh";
 
 
@@ -208,7 +208,7 @@ class Login
                 $prep->execute();
 
                 return true;
-            }
+           /* }*/
         } else {
             return false;
         }
