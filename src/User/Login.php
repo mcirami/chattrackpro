@@ -182,7 +182,7 @@ class Login
         if ($prep->rowCount() > 0) {
 
             //checks if there is more than one active login session
-            /*foreach ($loginResult as $row => $key) {
+            foreach ($loginResult as $row => $key) {
                 if ($key["success"] != 1) {
                     if ($logoutOnFailure) {
                         $this->logout();
@@ -191,7 +191,7 @@ class Login
                     return false;
                 }
 
-            }*/
+            }
 
             if (date("U") - $loginResult[0]["last_action_time"] < 86400) {
                 $sql = "UPDATE logins SET last_action_time = :date WHERE ip = :ip AND session_id = :sesh";
