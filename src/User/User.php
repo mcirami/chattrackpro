@@ -973,6 +973,4 @@ class User extends Login
 
 } // end class
 
-?>
-     
     
