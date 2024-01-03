@@ -1,6 +1,6 @@
 <?php
 // composer auto load
-    include $_SERVER["DOCUMENT_ROOT"]. __DIR__ . "/../vendor/autoload.php";
+    include $_SERVER["DOCUMENT_ROOT"]. "/../vendor/autoload.php";
 
 // .env
     $dotEnv = new Dotenv\Dotenv(__DIR__."/../");
