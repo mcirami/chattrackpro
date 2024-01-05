@@ -127,4 +127,39 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    const offerPayoutInputs = document.querySelectorAll('.update_aff_payout');
+    if (offerPayoutInputs) {
+        ["keydown", "focusout"].forEach(evt => {
+            offerPayoutInputs.forEach((offer) => {
+                offer.addEventListener(evt, (e) => {
+                   if( (evt === "keydown" && e.keyCode === 13) || evt === "focusout") {
+                       const payout = e.target.value;
+                       const offer = e.target.dataset.offer;
+                       const rep = e.target.dataset.rep;
+
+                       const packets = {
+                           payout: payout,
+                           offer_id: offer,
+                           rep: rep
+                       }
+
+                       axios.post('user/change-aff-payout', packets).then((response) => {
+                           if (response.data.success) {
+                               e.target.classList.add('updated_animation');
+
+                               setTimeout(() => {
+                                   e.target.classList.remove('updated_animation');
+                               },3000)
+                           } else {
+                               console.log(response);
+                           }
+                       })
+                   }
+
+                })
+            });
+        })
+
+    }
+
 });
