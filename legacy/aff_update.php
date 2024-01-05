@@ -39,7 +39,7 @@ if ($idrep !== \LeadMax\TrackYourStats\System\Session::userID())
 
 $update = new \LeadMax\TrackYourStats\User\Update($assign);
 
-$update->updateAffiliatePayout();
+//$update->updateAffiliatePayout();
 
 
 $update->selectUser();

@@ -101,4 +101,28 @@ class UserController extends Controller
 
 		return response()->json(['success' => true]);
 	}
+
+	public function changeAffPayout(Request $request) {
+		$message = null;
+
+		$userID = $request->rep;
+		$offer = $request->offer_id;
+		$payout = $request->payout;
+
+		if(\LeadMax\TrackYourStats\System\Session::userType() != Privilege::ROLE_AFFILIATE) {
+
+			DB::table('rep_has_offer')
+			  ->where('rep_idrep', '=', $userID)
+			  ->where('offer_idoffer', '=', $offer)
+			  ->update([
+				  'payout' => $payout
+			  ]);
+
+			$success = true;
+		} else {
+			$success = false;
+			$message = "You don't have permissions to do this";
+		}
+		return response()->json(['success' => $success, 'message' => $message]);
+	}
 }

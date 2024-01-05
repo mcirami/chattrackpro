@@ -244,7 +244,7 @@ class Update
                 INNER JOIN offer
                  ON offer.idoffer = rep_has_offer.offer_idoffer 
                  WHERE rep_has_offer.rep_idrep = :repID
-                 ORDER BY offer.payout desc, repPayout desc";
+                 ORDER BY offer.idoffer";
 
         $prep = $db->prepare($sql);
 
@@ -263,10 +263,17 @@ class Update
             if ($this->userType == Privilege::ROLE_AFFILIATE) {
                 echo "<td>{$row['repPayout']}</td>";
             } else {
-                echo '<td><input style="width:100px;" type="number" step="0.25" id="offer_'.$row["idoffer"].'"
-                                    onchange="window.location = \''.parse_url($_SERVER["REQUEST_URI"])["path"].'?offerid='.$row["idoffer"].'&idrep='.$this->selectedUser->idrep.'&out=\' + this.value;"
-                                    
-                                    value="'.$row["repPayout"].'"/></td>';
+                echo '<td>
+						<input
+						class="update_aff_payout"
+						style="width:100px;" 
+						type="number" 
+						step="0.25" 
+						id="offer_'.$row["idoffer"].'"
+						data-offer="' . $row["idoffer"] . '" 
+                        data-rep="' . $this->selectedUser->idrep . '" 
+                        value="'.$row["repPayout"].'"/>
+                     </td>';
             }
             echo "</tr>";
 
@@ -280,7 +287,7 @@ class Update
         Global $userType;
 
 
-// update rep specific offer payout
+		// update rep specific offer payout
         if (isset($_GET["offerid"]) && isset($_GET["out"]) && isset($_GET["idrep"]) && $userType != Privilege::ROLE_AFFILIATE) {
             $db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
             $sql = "UPDATE rep_has_offer SET payout=:payout WHERE rep_idrep = :repID AND offer_idoffer=:idoffer";
