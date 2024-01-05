@@ -56,7 +56,7 @@ $navBar = new \LeadMax\TrackYourStats\System\NavBar(\LeadMax\TrackYourStats\Syst
 
     <script type="text/javascript" src="<?php echo $webroot; ?>js/jscolor.min.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.min.css"/>
-    <script type="text/javascript" src="<?php echo $webroot; ?>js/main.js"></script>
+    <script type="text/javascript" src="<?php echo $webroot; ?>js/main.js?v=2"></script>
     <script type="text/javascript" src="<?php echo $webroot; ?>js/drawer.js"></script>
     <script type="text/javascript" src="<?php echo $webroot; ?>js/iscroll.min.js"></script>
 
