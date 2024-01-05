@@ -2481,7 +2481,7 @@ table.offer_clicks th:first-child {
 }
 
 #tab-contents .white_box {
-	max-height: 800px;
+	max-height: 700px;
 	overflow-y: scroll;
 }
 
