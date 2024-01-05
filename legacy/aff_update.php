@@ -71,7 +71,7 @@ $update->dumpPermissionsToJavascript();
 
 ?>
 <script type = "text/javascript" src = "js/aff.js"></script>
-
+<script src="https://cdn.tailwindcss.com"></script>
 <!--right_panel-->
 <div class = "right_panel">
 	<div class = "white_box_outer">
