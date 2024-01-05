@@ -96,4 +96,35 @@ jQuery(document).ready(function ($) {
         $('#notification_box').toggleClass('open');
     });
 
+    let tabsContainer = document.querySelector("#tabs");
+    if(tabsContainer) {
+        let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
+        tabTogglers.forEach(function(toggler) {
+            toggler.addEventListener("click", function(e) {
+                e.preventDefault();
+
+                let tabName = this.getAttribute("href");
+
+                let tabContents = document.querySelector("#tab-contents");
+
+                for (let i = 0; i < tabContents.children.length; i++) {
+
+                    tabTogglers[i].parentElement.classList.remove("border-t",
+                        "border-r", "border-l", "-mb-px", "value_span6-1");
+                    tabTogglers[i].classList.remove("value_span2");
+                    tabContents.children[i].classList.remove("hidden");
+                    if ("#" + tabContents.children[i].id === tabName) {
+                        continue;
+                    }
+                    tabContents.children[i].classList.add("hidden");
+
+                }
+
+                e.target.parentElement.classList.add("border-t", "border-r",
+                    "border-l", "-mb-px", "value_span6-1");
+                e.target.classList.add("value_span2");
+            });
+        });
+    }
+
 });

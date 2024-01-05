@@ -32,8 +32,6 @@ $navBar = new \LeadMax\TrackYourStats\System\NavBar(\LeadMax\TrackYourStats\Syst
 
     <link rel="shortcut icon" type="image/ico"
           href="<?PHP echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
-    <link rel="shortcut icon" type="image/ico"
-          href="<?PHP echo \LeadMax\TrackYourStats\System\Company::loadFromSession()->getImgDir() . "/favicon.ico"; ?>"/>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!--    <link href="css/bootstrap-theme.min.css" rel="stylesheet">-->
     <link href="css/animate.css" rel="stylesheet">
@@ -64,7 +62,7 @@ $navBar = new \LeadMax\TrackYourStats\System\NavBar(\LeadMax\TrackYourStats\Syst
 
     <script type="text/javascript" src="<?php echo $webroot; ?>js/tables.js"></script>
     <script type="text/javascript" src="<?php echo $webroot; ?>js/bootstrap-notify.min.js"></script>
-
+	<script src="https://cdn.tailwindcss.com"></script>
     <?php
     if (!env('APP_DEBUG') && env('APP_ENV') == 'production') {
         echo "
