@@ -2479,3 +2479,18 @@ table.offer_clicks th:first-child {
 .right_panel table.sub_ids thead th:last-child {
 	width: 80%;
 }
+
+#tab-contents .white_box {
+	max-height: 800px;
+	overflow-y: scroll;
+}
+
+#tab-contents .left_con01, #tab-contents .right_con01 {
+	padding: 0;
+}
+
+@media screen and (max-width: 992px) {
+	.right_panel table.sub_ids .button_wrap button {
+		margin-left: 10px
+	}
+}
