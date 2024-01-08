@@ -44,8 +44,9 @@ if (isset($_POST['button']) && $user->count < 5)
 			send_to('dashboard');
 		}
 		
-	}
-	else
+	} else if  ($result == \LeadMax\TrackYourStats\User\Login::RESULT_PENDING){
+		send_to('signup_success.php?pending=1');
+	} else
 	{
 
 		$user->badLoginAttempt();

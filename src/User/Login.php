@@ -28,11 +28,13 @@ class Login
     const RESULT_SUCCESS = 1;
     const RESULT_UNKNOWN_USER = 2;
 
+	const RESULT_PENDING = 3;
+
     //Logins
     public function login($user_name, $email, $password)
     {
         $db = DatabaseConnection::getInstance();
-        $sql = "SELECT * FROM rep WHERE user_name=:user_name OR email=:email AND status = 1 LIMIT 1";
+        $sql = "SELECT * FROM rep WHERE user_name=:user_name OR email=:email LIMIT 1";
         $stmt = $db->prepare($sql);
         $stmt->bindparam(":user_name", $user_name);
         $stmt->bindparam(":email", $email);
@@ -40,61 +42,68 @@ class Login
 
         $user_row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
         if ($stmt->rowCount() > 0) {
 
             if (BanUser::isUserBanned($user_row["idrep"]) == true) {
                 return self::RESULT_BANNED;
             }
 
-            if (password_verify($password, $user_row['password'])) {
-//            if (($password = $user_row['password'])) {
-                $_SESSION['user_session'] = $user_row['user_name'];
-                $_SESSION['email'] = $user_row['email'];
-                $_SESSION['repid'] = $user_row['idrep'];
+	        if ($user_row["status"]) {
+
+		        if ( password_verify( $password, $user_row['password'] ) ) {
+			        //            if (($password = $user_row['password'])) {
+			        $_SESSION['user_session'] = $user_row['user_name'];
+			        $_SESSION['email']        = $user_row['email'];
+			        $_SESSION['repid']        = $user_row['idrep'];
 
 
-                $new_privileges = new Privileges();
+			        $new_privileges = new Privileges();
 
 
-                $user = new User();
+			        $user = new User();
 
-                $_SESSION["userData"] = serialize(User::SelectOne($_SESSION["repid"]));
-
-
-                $_SESSION["usr"] = serialize($new_privileges->SelectOneRepId($_SESSION["repid"]));
+			        $_SESSION["userData"] = serialize( User::SelectOne( $_SESSION["repid"] ) );
 
 
-                $_SESSION["userType"] = $this->findUserType(unserialize($_SESSION["usr"]));
+			        $_SESSION["usr"] = serialize( $new_privileges->SelectOneRepId( $_SESSION["repid"] ) );
 
 
-                $per = new Permissions($user_row["idrep"]);
-                $_SESSION["permissions"] = serialize($per);
+			        $_SESSION["userType"] = $this->findUserType( unserialize( $_SESSION["usr"] ) );
 
 
-                $user = $_SESSION['user_session'];
-                $repid = $_SESSION['repid'];
+			        $per                     = new Permissions( $user_row["idrep"] );
+			        $_SESSION["permissions"] = serialize( $per );
 
 
-                setcookie("user_name", "$user", "0", "/");
-                setcookie("repid", "$repid", "0", "/");
+			        $user  = $_SESSION['user_session'];
+			        $repid = $_SESSION['repid'];
 
 
-                $_SESSION["salt"] = $this->generateSalt(32);
-
-                if (Session::userType() != \App\Privilege::ROLE_GOD) {
-                    $this->clearPreviousLoginAttempts($user_row["user_name"]);
-                }
+			        setcookie( "user_name", "$user", "0", "/" );
+			        setcookie( "repid", "$repid", "0", "/" );
 
 
-                $this->createLoginSession($user_row['idrep'], $_POST["txt_uname_email"], 1);
+			        $_SESSION["salt"] = $this->generateSalt( 32 );
+
+			        if ( Session::userType() != \App\Privilege::ROLE_GOD ) {
+				        $this->clearPreviousLoginAttempts( $user_row["user_name"] );
+			        }
 
 
-                return self::RESULT_SUCCESS;
+			        $this->createLoginSession( $user_row['idrep'], $_POST["txt_uname_email"], 1 );
 
 
-            } else {
-                return self::RESULT_INVALID_CRED;
-            }
+			        return self::RESULT_SUCCESS;
+
+
+		        } else {
+			        return self::RESULT_INVALID_CRED;
+		        }
+
+	        } else {
+		        return self::RESULT_PENDING;
+	        }
         }
 
         return self::RESULT_INVALID_CRED;
