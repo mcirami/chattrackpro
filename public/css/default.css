@@ -2577,3 +2577,28 @@ table.offer_clicks th:first-child {
 	font-size: 2.5rem;
 	font-weight: bold;
 }
+
+.manage_user_table {
+	min-width: unset;
+}
+
+.manage_user_table th {
+	width: 20%;
+}
+
+.manage_user_table td.actions {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.manage_user_table td.actions a {
+	width: 7rem;
+}
