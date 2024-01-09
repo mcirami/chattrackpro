@@ -109,20 +109,59 @@ class UserController extends Controller
 		$offer = $request->offer_id;
 		$payout = $request->payout;
 
+		// TODO: check if already has access or not.
+
 		if(\LeadMax\TrackYourStats\System\Session::userType() != Privilege::ROLE_AFFILIATE) {
 
-			DB::table('rep_has_offer')
-			  ->where('rep_idrep', '=', $userID)
-			  ->where('offer_idoffer', '=', $offer)
-			  ->update([
-				  'payout' => $payout
-			  ]);
+			$offerAccess = DB::table('rep_has_offer')
+			                 ->where('rep_idrep', '=', $userID)
+			                 ->where('offer_idoffer', '=', $offer)->get();
+			if (count($offerAccess) > 0) {
+				DB::table('rep_has_offer')
+				  ->where('rep_idrep', '=', $userID)
+				  ->where('offer_idoffer', '=', $offer)
+				  ->update([
+					  'payout' => $payout
+				  ]);
+				$success = true;
+			} else {
+				$success = false;
+				$message = "User does not have access to offer yet!";
+			}
+
+		} else {
+			$success = false;
+			$message = "You don't have permissions to do this!";
+		}
+		return response()->json(['success' => $success, 'message' => $message]);
+	}
+
+	public function updateAffOfferAccess(Request $request) {
+		$userID = $request->rep;
+		$offer = $request->offer_id;
+		$access = $request->access;
+		$message = "";
+
+		if(\LeadMax\TrackYourStats\System\Session::userType() != Privilege::ROLE_AFFILIATE) {
+
+			if ($access) {
+				DB::table('rep_has_offer')->insert([
+					'rep_idrep'     => $userID,
+					'offer_idoffer' => $offer,
+					'payout'        => $request->payout
+				]);
+			} else {
+				DB::table('rep_has_offer')
+				  ->where('rep_idrep', '=', $userID)
+				  ->where('offer_idoffer', '=', $offer)->delete();
+			}
 
 			$success = true;
 		} else {
 			$success = false;
 			$message = "You don't have permissions to do this";
 		}
+
 		return response()->json(['success' => $success, 'message' => $message]);
 	}
 }

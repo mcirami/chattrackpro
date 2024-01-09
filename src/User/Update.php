@@ -240,11 +240,13 @@ class Update
 
         $db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
 
-        $sql = "SELECT offer.offer_name, offer.idoffer, offer.payout, rep_has_offer.payout as repPayout FROM rep_has_offer
+        /*$sql = "SELECT offer.offer_name, offer.idoffer, offer.payout, rep_has_offer.payout as repPayout FROM rep_has_offer
                 INNER JOIN offer
                  ON offer.idoffer = rep_has_offer.offer_idoffer 
                  WHERE rep_has_offer.rep_idrep = :repID
-                 ORDER BY offer.idoffer";
+                 ORDER BY offer.idoffer";*/
+
+	    $sql = "SELECT offer.offer_name, offer.idoffer, offer.payout FROM offer ORDER BY offer.idoffer";
 
         $prep = $db->prepare($sql);
 
@@ -252,6 +254,23 @@ class Update
         $prep->execute();
 
         $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+
+		foreach($result as $index => $row ) {
+			$affHasOffer = "SELECT rep_has_offer.payout FROM rep_has_offer WHERE rep_has_offer.rep_idrep = :repID AND rep_has_offer.offer_idoffer = :offerID";
+			$prepHasOffer = $db->prepare($affHasOffer);
+			$prepHasOffer->bindParam(":repID", $this->selectedUser->idrep);
+			$prepHasOffer->bindParam(":offerID", $row['idoffer']);
+			$prepHasOffer->execute();
+			$resultHasOffer = $prepHasOffer->fetchAll(PDO::FETCH_ASSOC);
+
+			if (count($resultHasOffer) > 0) {
+				$result[$index]["has_offer"] = true;
+				$result[$index]["repPayout"] = $resultHasOffer[0]["payout"];
+			} else {
+				$result[$index]["has_offer"] = false;
+				$result[$index]["repPayout"] = 1.00;
+			}
+		}
 
         foreach ($result as $row) {
             echo "<tr>";
@@ -275,9 +294,23 @@ class Update
                         value="'.$row["repPayout"].'"/>
                      </td>';
             }
+
+			if($this->userType != Privilege::ROLE_AFFILIATE) {
+				$hasAccess = $row['has_offer'] ? "checked" : "";
+				echo '<td class="offer_access">
+						<input 
+						class="offer_access_check" 
+						type="checkbox" 
+						id="offer_access"
+						data-rep="'. $this->selectedUser->idrep . '"
+						data-offer="' . $row["idoffer"] .'"
+						name="offer_access"' .
+				        $hasAccess . '>
+						<label for="offer_access">Allow Access</label>
+					</td>';
+			}
+
             echo "</tr>";
-
-
         }
     }
 

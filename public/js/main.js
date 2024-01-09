@@ -96,6 +96,67 @@ jQuery(document).ready(function ($) {
         $('#notification_box').toggleClass('open');
     });
 
+    const blockButtons = document.querySelectorAll('.block_sub_id');
+    if (blockButtons) {
+        blockButtons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const button = e.target;
+                const userID = button.dataset.rep;
+                const subID = button.dataset.subid;
+
+                const packets = {
+                    user_id: userID,
+                    sub_id: subID
+                }
+
+                axios.post('user/block-sub-id', packets).then((response) => {
+                    if (response.data.success) {
+                        button.innerHTML = "Blocked"
+                        button.disabled = true;
+                        button.classList.remove("value_span6-2", "value_span2", "value_span1-2");
+                        const unblockButton = button.nextElementSibling;
+                        unblockButton.disabled = false;
+                        unblockButton.style.display = "block";
+                    } else {
+                        console.log(response);
+                    }
+                })
+
+            })
+        });
+    }
+    const unblock_buttons = document.querySelectorAll('.unblock_button');
+    if(unblock_buttons) {
+        unblock_buttons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const button = e.target;
+                const userID = button.dataset.rep;
+                const subID = button.dataset.subid;
+
+                const packets = {
+                    user_id: userID,
+                    sub_id: subID
+                }
+
+                axios.post('user/unblock-sub-id', packets).then((response) => {
+                    if (response.data.success) {
+                        button.disabled = true;
+                        button.style.display = "none";
+                        const blockButton = button.previousElementSibling;
+                        blockButton.innerHTML = "Block ID";
+                        blockButton.disabled = false;
+                        blockButton.classList.add("value_span6-2", "value_span2", "value_span1-2");
+                    } else {
+                        console.log(response);
+                    }
+                })
+
+            })
+        });
+    }
+
     let tabsContainer = document.querySelector("#tabs");
     if(tabsContainer) {
         let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
@@ -151,7 +212,11 @@ jQuery(document).ready(function ($) {
                                    e.target.classList.remove('updated_animation');
                                },3000)
                            } else {
-                               console.log(response);
+                               document.querySelector('#error_message p').innerHTML = response.data.message;
+                               document.querySelector('#error_message').classList.add('active');
+                               setTimeout(() => {
+                                   document.querySelector('#error_message').classList.remove('active');
+                               },5000)
                            }
                        })
                    }
@@ -159,7 +224,38 @@ jQuery(document).ready(function ($) {
                 })
             });
         })
+    }
 
+    const offerAccessCheck = document.querySelectorAll('.offer_access_check');
+    if (offerAccessCheck) {
+        offerAccessCheck.forEach((check) => {
+            check.addEventListener('change', (e) => {
+
+                const offerID = e.target.dataset.offer;
+                const access = e.target.checked
+                const packets = {
+                    access: access,
+                    rep: e.target.dataset.rep,
+                    offer_id: offerID,
+                }
+
+                if(access) {
+                    packets["payout"] = document.querySelector('#offer_' + offerID).value
+                }
+
+                axios.post('user/update-offer-access', packets).then((response) => {
+                    if (response.data.success) {
+                        console.log("SUCCESS!");
+                    } else {
+                        document.querySelector('#error_message p').innerHTML = response.data.message;
+                        document.querySelector('#error_message').classList.add('active');
+                        setTimeout(() => {
+                            document.querySelector('#error_message').classList.remove('active');
+                        },5000)
+                    }
+                })
+            })
+        })
     }
 
 });

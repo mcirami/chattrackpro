@@ -72,6 +72,14 @@ $update->dumpPermissionsToJavascript();
 ?>
 <script type = "text/javascript" src = "js/aff.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<div id="error_message">
+	<svg  style="color: red" width="34" height="34" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg">
+		<path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12z" fill="red"/>
+		<path d="M12 14a1 1 0 0 1-1-1V7a1 1 0 1 1 2 0v6a1 1 0 0 1-1 1zm-1.5 2.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z" fill="red"/>
+	</svg>
+	<p></p>
+</div>
 <!--right_panel-->
 <div class = "right_panel">
 	<div class = "white_box_outer">
@@ -316,18 +324,22 @@ $update->dumpPermissionsToJavascript();
 												<button class="block_sub_id"
 												        disabled="disabled"
 												        data-subid=<?php echo $subId["subId"]; ?>
+												        data-rep=<?php echo $idrep; ?>
 												>Blocked</button>
 												<button class="unblock_button value_span6-2 value_span2 value_span1-2"
 												        data-subid=<?php echo $subId["subId"]; ?>
+												        data-rep=<?php echo $idrep; ?>
 												>UnBlock</button>
 											<?php else : ?>
 												<button class="block_sub_id value_span6-2 value_span2 value_span1-2"
 												        data-subid=<?php echo $subId["subId"]; ?>
+												        data-rep=<?php echo $idrep; ?>
 												>Block ID</button>
 												<button style="display: none;"
 												        disabled="disabled"
 												        class="unblock_button value_span6-2 value_span2 value_span1-2"
 												        data-subid=<?php echo $subId["subId"]; ?>
+												        data-rep=<?php echo $idrep; ?>
 												>UnBlock</button>
 											<?php endif; ?>
 
@@ -368,6 +380,10 @@ $update->dumpPermissionsToJavascript();
 											echo "<th class=\"value_span9\">Change Aff Payout</th>";
 										}
 
+										if (\LeadMax\TrackYourStats\System\Session::permissions()->can("edit_aff_payout"))
+										{
+											echo "<th class=\"value_span9\">Offer Access</th>";
+										}
 
 										echo "
 				
@@ -426,67 +442,6 @@ $update->dumpPermissionsToJavascript();
 
 		if ($('#affRadio').is(':checked'))
 			$("#referralP").show();
-
-		const blockButtons = document.querySelectorAll('.block_sub_id');
-		if (blockButtons) {
-			blockButtons.forEach((button) => {
-				button.addEventListener('click', (e) => {
-					e.preventDefault();
-					const button = e.target;
-					const userID = '<?php echo $idrep; ?>';
-					const subID = button.dataset.subid;
-
-					const packets = {
-						user_id: userID,
-						sub_id: subID
-					}
-
-					axios.post('user/block-sub-id', packets).then((response) => {
-						if (response.data.success) {
-							button.innerHTML = "Blocked"
-							button.disabled = true;
-							button.classList.remove("value_span6-2", "value_span2", "value_span1-2");
-							const unblockButton = button.nextElementSibling;
-							unblockButton.disabled = false;
-							unblockButton.style.display = "block";
-						} else {
-							console.log(response);
-						}
-					})
-
-				})
-			});
-		}
-		const unblock_buttons = document.querySelectorAll('.unblock_button');
-		if(unblock_buttons) {
-			unblock_buttons.forEach((button) => {
-				button.addEventListener('click', (e) => {
-					e.preventDefault();
-					const button = e.target;
-					const userID = '<?php echo $idrep; ?>';
-					const subID = button.dataset.subid;
-
-					const packets = {
-						user_id: userID,
-						sub_id: subID
-					}
-
-					axios.post('user/unblock-sub-id', packets).then((response) => {
-						if (response.data.success) {
-							button.disabled = true;
-							button.style.display = "none";
-							const blockButton = button.previousElementSibling;
-							blockButton.innerHTML = "Block ID";
-							blockButton.disabled = false;
-							blockButton.classList.add("value_span6-2", "value_span2", "value_span1-2");
-						} else {
-							console.log(response);
-						}
-					})
-
-				})
-			});
-		}
 	});
 
 	function setTwoNumberDecimal(event) {
