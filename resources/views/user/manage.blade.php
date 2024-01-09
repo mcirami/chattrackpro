@@ -44,7 +44,7 @@
                     @foreach($users as $user)
                         <tr>
                             <td>{{$user->idrep}}</td>
-                            <td>{{$user->user_name}}</td>
+                            <td class="username">{{$user->user_name}}</td>
                             <td class="actions">
                                 @if(\LeadMax\TrackYourStats\System\Session::permissions()->can(\LeadMax\TrackYourStats\User\Permissions::EDIT_AFFILIATES))
                                     <a class="btn btn-default btn-sm value_span6-1 value_span4 " data-toggle="tooltip" title="Edit User"

@@ -2602,3 +2602,7 @@ table.offer_clicks th:first-child {
 .manage_user_table td.actions a {
 	width: 7rem;
 }
+
+.manage_user_table td.username {
+	word-break: break-all;
+}
