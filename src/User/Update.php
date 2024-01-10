@@ -233,20 +233,13 @@ class Update
 
     public function getaffiliatePayouts()
     {
-
         if ($this->selectedUserType != Privilege::ROLE_AFFILIATE) {
             return false;
         }
 
         $db = \LeadMax\TrackYourStats\Database\DatabaseConnection::getInstance();
 
-        /*$sql = "SELECT offer.offer_name, offer.idoffer, offer.payout, rep_has_offer.payout as repPayout FROM rep_has_offer
-                INNER JOIN offer
-                 ON offer.idoffer = rep_has_offer.offer_idoffer 
-                 WHERE rep_has_offer.rep_idrep = :repID
-                 ORDER BY offer.idoffer";*/
-
-	    $sql = "SELECT offer.offer_name, offer.idoffer, offer.payout FROM offer ORDER BY offer.idoffer";
+	    $sql = "SELECT offer.offer_name, offer.idoffer, offer.payout FROM offer WHERE offer.status = 1 ORDER BY offer.idoffer";
 
         $prep = $db->prepare($sql);
 

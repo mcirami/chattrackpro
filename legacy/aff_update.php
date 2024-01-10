@@ -102,7 +102,7 @@ $update->dumpPermissionsToJavascript();
 			</ul>
 
 			<!-- Tab Contents -->
-			<div id="tab-contents" class="columns-1">
+			<div id="user_info" class="columns-1">
 				<div id="account" class="p-4 columns-1">
 					<div class = "heading_holder value_span9">
 						<span class = "lft">

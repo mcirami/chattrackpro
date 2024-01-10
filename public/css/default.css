@@ -2480,12 +2480,12 @@ table.offer_clicks th:first-child {
 	width: 80%;
 }
 
-#tab-contents .white_box {
+#user_info .white_box {
 	max-height: 700px;
 	overflow-y: scroll;
 }
 
-#tab-contents .left_con01, #tab-contents .right_con01 {
+#user_info .left_con01, #user_info .right_con01 {
 	padding: 0;
 }
 
@@ -2495,7 +2495,7 @@ table.offer_clicks th:first-child {
 	}
 }
 
-#tab-contents .update_aff_payout.updated_animation {
+#user_info .update_aff_payout.updated_animation {
 	animation: pulse 2s;
 }
 
@@ -2521,7 +2521,7 @@ table.offer_clicks th:first-child {
 	}
 }
 
-#tab-contents td.offer_access {
+#user_info td.offer_access {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -2537,12 +2537,16 @@ table.offer_clicks th:first-child {
 	-webkit-align-items: center;
 	gap: 5px;
 }
-#tab-contents td.offer_access input[type="checkbox"] {
+#user_info td.offer_access input[type="checkbox"] {
 	display: block;
 	width: auto;
 }
-#tab-contents td.offer_access label {
+#user_info td.offer_access label {
 	margin: 0;
+}
+
+#user_info.edit_user_offers {
+	margin-top: 40px;
 }
 
 #error_message {

@@ -166,7 +166,7 @@ jQuery(document).ready(function ($) {
 
                 let tabName = this.getAttribute("href");
 
-                let tabContents = document.querySelector("#tab-contents");
+                let tabContents = document.querySelector("#user_info");
 
                 for (let i = 0; i < tabContents.children.length; i++) {
 
@@ -204,7 +204,7 @@ jQuery(document).ready(function ($) {
                            rep: rep
                        }
 
-                       axios.post('user/change-aff-payout', packets).then((response) => {
+                       axios.post('/user/change-aff-payout', packets).then((response) => {
                            if (response.data.success) {
                                e.target.classList.add('updated_animation');
 
@@ -243,7 +243,7 @@ jQuery(document).ready(function ($) {
                     packets["payout"] = document.querySelector('#offer_' + offerID).value
                 }
 
-                axios.post('user/update-offer-access', packets).then((response) => {
+                axios.post('/user/update-offer-access', packets).then((response) => {
                     if (response.data.success) {
                         console.log("SUCCESS!");
                     } else {

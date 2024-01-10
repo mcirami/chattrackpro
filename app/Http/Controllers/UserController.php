@@ -164,4 +164,27 @@ class UserController extends Controller
 
 		return response()->json(['success' => $success, 'message' => $message]);
 	}
+
+	public function editUserOffers(User $user) {
+		$userID = $user->idrep;
+		$userFName = $user->first_name;
+
+		$offers = DB::table('offer')->where('status', '=', 1)->select('idoffer', 'offer_name', 'payout')->get()->toArray();
+
+		foreach($offers as $index => $offer ) {
+			$affHasOffer = DB::table('rep_has_offer')->where('rep_idrep', '=', $userID)->where('offer_idoffer', '=', $offer->idoffer)->get()->toArray();
+
+			if (count($affHasOffer) > 0) {
+				$offers[$index]->has_offer = true;
+				$offers[$index]->reppayout = $affHasOffer[0]->payout;
+			} else {
+				$offers[$index]->has_offer = false;
+				$offers[$index]->reppayout = 1.00;
+			}
+			$offers[$index]->idrep = $userID;
+		}
+
+
+		return view('user.offers')->with(['offers' => $offers, 'name' => $userFName]);
+	}
 }

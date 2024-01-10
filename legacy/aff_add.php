@@ -27,7 +27,7 @@ $assign->setGlobals();
 
 
 $na     = new \LeadMax\TrackYourStats\User\User();
-$result = $na->RegisterAndSetPriviliges('/user/manage');
+$result = $na->RegisterAndSetPriviliges('/user/offers');
 
 
 $create->dumpAssignablesToJavaScript();
@@ -62,7 +62,6 @@ switch ($result)
 ?>
 
 <script type = "text/javascript" src = "js/aff.js"></script>
-
 
 <!--right_panel-->
 <div class = "right_panel">
@@ -229,7 +228,6 @@ switch ($result)
 						>Cancel</a></span>
 					<p>
 				</div>
-
 			</form>
 
 
