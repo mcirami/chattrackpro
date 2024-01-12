@@ -12,10 +12,4 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	public function index() {
-
-		$clicks = factory(Click::class, 20)->create();
-
-		dd($clicks);
-	}
 }

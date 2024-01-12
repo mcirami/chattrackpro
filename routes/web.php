@@ -14,7 +14,6 @@
 use App\Privilege;
 use LeadMax\TrackYourStats\User\Permissions;
 
-Route::get('/addClicks', 'Controller@index');
 Route::get('/', 'IndexController@index');
 Route::post('/', 'IndexController@index');
 Route::any('/resources/landers/{subDomain}/{asset}', 'LanderController@getAsset')->where('asset', '.*');
