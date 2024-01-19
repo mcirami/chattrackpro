@@ -62,6 +62,7 @@ Route::group(['middleware' => 'legacy.auth'], function () {
             });
         Route::group(['middleware' => 'role:' . Privilege::ROLE_AFFILIATE], function () {
             Route::get('sub', 'Report\SubReportController@show');
+	        Route::get('sub/conversions', 'Report\SubReportController@showSubConversions');
             Route::group(['prefix' => 'payout'], function () {
                 Route::get('', 'Report\PayoutReportController@report');
                 Route::get('pdf', 'Report\PayoutReportController@invoice');
