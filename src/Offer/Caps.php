@@ -7,6 +7,7 @@
  * Time: 3:52 PM
  */
 
+use Carbon\Carbon;
 use PDO;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -241,9 +242,14 @@ class Caps
 
             case self::daily:
 	            $tz = 'America/New_York';
-	            $timeNow = \Illuminate\Support\Carbon::today('America/New_York')->format('Y-m-d');
-	            $dateFrom = $timeNow . " 00:00:00";
-	            $dateTo = $timeNow . " 23:59:59";
+	            $timeNow = \Illuminate\Support\Carbon::today($tz)->format('Y-m-d');
+	            $from = $timeNow . " 00:00:00";
+	            $to = $timeNow . " 23:59:59";
+
+	            $carbonFrom = Carbon::createFromFormat('Y-m-d H:i:s', $from, $tz);
+	            $carbonTo = Carbon::createFromFormat('Y-m-d H:i:s', $to, $tz);
+	            $dateFrom = $carbonFrom->setTimezone("UTC");
+	            $dateTo = $carbonTo->setTimezone("UTC");
 
                 return ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'query' => $query];
 
