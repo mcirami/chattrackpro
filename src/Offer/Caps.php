@@ -239,8 +239,10 @@ class Caps
                 return ['dateFrom' => null, 'dateTo' => null, 'query' => ''];
 
             case self::daily:
-                $dateFrom = date("Y-m-d")." 00:00:00";
-                $dateTo = date("Y-m-d")." 23:59:59";
+	            $tz = 'America/New_York';
+	            $timeNow = \Illuminate\Support\Carbon::today('America/New_York')->format('Y-m-d');
+	            $dateFrom = $timeNow . " 00:00:00";
+	            $dateTo = $timeNow . " 23:59:59";
 
                 return ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'query' => $query];
 
