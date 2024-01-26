@@ -8,7 +8,8 @@
  */
 
 use PDO;
-
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class Caps
 {
@@ -300,6 +301,8 @@ class Caps
         $calculated = $this->calculateTimeInterval();
         $sql .= $calculated["query"];
 
+		$clicksLog = new Logger('clicks');
+		$clicksLog->pushHandler(new StreamHandler(storage_path('logs/clicks.log')), Logger::INFO);
 
         $prep = $db->prepare($sql);
         $prep->bindParam(":offerID", $this->offerID);
@@ -313,6 +316,12 @@ class Caps
 
         if ($prep->execute()) {
 
+	        $log = [
+		        'dateFrom' => $calculated["dateFrom"],
+		        'dateTo'   => $calculated["dateTo"],
+		        'count'     => $prep->rowCount()
+	        ];
+	        $clicksLog->info('Click', $log);
 
             if ($prep->rowCount() !== 0) {
 
