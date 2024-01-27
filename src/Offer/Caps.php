@@ -325,7 +325,8 @@ class Caps
 	        $log = [
 		        'dateFrom' => $calculated["dateFrom"],
 		        'dateTo'   => $calculated["dateTo"],
-		        'count'     => $prep->rowCount()
+		        'count'    => $prep->rowCount(),
+		        'offerID'  => $this->offerID
 	        ];
 	        $clicksLog->info('Click', $log);
 
