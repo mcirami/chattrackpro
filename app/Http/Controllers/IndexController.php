@@ -82,13 +82,13 @@ class IndexController extends Controller
 
     public function clickRegistration(Request $request)
     {
-        if ( ! $request->get('repid') && ! $request->get('offerid')) {
+        /*if ( ! $request->get('repid') && ! $request->get('offerid')) {
             return redirect('404')->setStatusCode('404');
-        }
+        }*/
 
-		$subId = $request->get('sub1');
+		/*$subId = $request->get('sub1');
 
-	    /*$blocked = DB::table('blocked_sub_ids')
+	    $blocked = DB::table('blocked_sub_ids')
 	                 ->where('rep_idrep', '=', $request->get('repid'))
 	                 ->where('sub_id', '=', $subId)
 	                 ->distinct()->get()->pluck('sub_id');
