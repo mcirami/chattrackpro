@@ -98,9 +98,9 @@ class IndexController extends Controller
 
         $clickRegistrationEvent = new ClickRegistrationEvent($request->get('repid'), $request->get('offerid'),
             $request->query());
-        /*if ( ! $clickRegistrationEvent->fire()) {
+        if ( ! $clickRegistrationEvent->fire()) {
             return redirect('404');
-        }*/
+        }
     }
 
 }
