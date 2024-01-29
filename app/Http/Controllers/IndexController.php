@@ -88,13 +88,13 @@ class IndexController extends Controller
 
 		$subId = $request->get('sub1');
 
-	    $blocked = DB::table('blocked_sub_ids')
+	    /*$blocked = DB::table('blocked_sub_ids')
 	                 ->where('rep_idrep', '=', $request->get('repid'))
 	                 ->where('sub_id', '=', $subId)
 	                 ->distinct()->get()->pluck('sub_id');
 		if (!$blocked->isEmpty()) {
 			return redirect('404')->setStatusCode('404');
-		}
+		}*/
 
         $clickRegistrationEvent = new ClickRegistrationEvent($request->get('repid'), $request->get('offerid'),
             $request->query());
