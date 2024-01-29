@@ -345,7 +345,7 @@ class Rules
 
     private function buildRedirectUrl($offid)
     {
-        $url = "https://".$_SERVER["HTTP_HOST"];
+        $url = "http://".$_SERVER["HTTP_HOST"];
 
         $url .= "/?";
 
